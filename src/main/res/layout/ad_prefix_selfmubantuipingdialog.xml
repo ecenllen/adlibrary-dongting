@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/oval_dialog_background"
     android:theme="@style/ad_prefix_dialog">
 
     <TextView
@@ -32,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_gravity="center_horizontal"
-        android:background="#A8A8A8" />
+        android:background="#EEEEEE" />
     <LinearLayout
         android:id="@+id/lyt_bottom"
         android:layout_width="fill_parent"
@@ -43,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@color/ad_prefix_white"
+            android:background="@drawable/white_selector"
             android:gravity="center"
             android:text="退出"
             android:textColor="@color/ad_prefix_black" />
@@ -52,7 +53,7 @@
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:background="#A8A8A8" />
+            android:background="#EEEEEE" />
 
         <TextView
             android:id="@+id/bt_look"
@@ -61,7 +62,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/ad_prefix_black"
-            android:background="@color/ad_prefix_white"
+            android:background="@drawable/white_selector"
             android:text="去看看" />
     </LinearLayout>
 
