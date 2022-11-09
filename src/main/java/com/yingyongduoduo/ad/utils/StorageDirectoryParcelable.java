@@ -22,8 +22,7 @@ package com.yingyongduoduo.ad.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 
 /** Identifies a mounted volume */
