@@ -7,7 +7,7 @@
         <!-- 设置无边框 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 设置无标题 -->
-        <item name="android:windowBackground">@color/ad_prefix_touming</item>
+        <item name="android:windowBackground">@drawable/oval_dialog_background</item>
         <!-- 设置完全透明 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 设置屏幕变暗 -->
