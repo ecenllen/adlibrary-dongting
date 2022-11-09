@@ -89,52 +89,13 @@ public class AppConfig {
     public static boolean isshowHDPicture = true;
     public static String GZHPath;
     public static float decimal = 0.05f;//广告内容百分比
-    public static String[] qingxiduArray = new String[]{"标清", "高清", "超清", "1008P"};
 
-    public static String getDownload_qingxidu(Context context) {
-        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        AppConfig.download_qingxidu = mSettings.getString("download_qingxidu", "2");
-        return AppConfig.download_qingxidu;
-    }
 
-    public static String getDownload_qingxidu() {
-        return AppConfig.download_qingxidu;
-    }
-
-    public static void setDownload_qingxidu(Context context, String qingxidu) {
-        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putString("download_qingxidu", qingxidu);
-        editor.commit();
-        AppConfig.download_qingxidu = qingxidu;
-    }
-
-    public static String getPlay_Qingxidu(Context context) {
-        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        AppConfig.play_qingxidu = mSettings.getString("play_qingxidu", "2");
-        return AppConfig.play_qingxidu;
-    }
-
-    public static String getPlay_Qingxidu() {
-        return AppConfig.play_qingxidu;
-    }
-
-    public static void setPlay_Qingxidu(Context context, String qingxidu) {
-        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putString("play_qingxidu", qingxidu);
-        editor.commit();
-        AppConfig.play_qingxidu = qingxidu;
-    }
-
-    //    public static List<DownloadInfo> downloadInfos = new ArrayList<DownloadInfo>();
-    //    public static String ConfigJson = "";
-//    public static String VideoJson = "";
-//    public static String SelfadJson = "";
-//    public static String wxgzhJson = "";
     public static String versioncode = "";
     public static String Channel = "error";
     public static String APPKEY = "error";
+    private final static String DEFAULT_APPLICATION = "ROOT";
+    private static String APPLICATION = DEFAULT_APPLICATION;
 
 
     private static boolean isOldServer = false;
@@ -173,6 +134,12 @@ public class AppConfig {
         baseURL1 = String.format(baseURL1, configFolder);
         baseURL2 = String.format(baseURL2, configFolder);
         baseURL3 = String.format(baseURL3, configFolder);
+
+        APPLICATION = PublicUtil.metadata(context, "application");
+        if (TextUtils.isEmpty(APPLICATION)) {
+            APPLICATION = DEFAULT_APPLICATION;
+        }
+
         initConfigJson(context);
         initPublicConfigJson(context);
         initVideoJson(context);
@@ -231,6 +198,11 @@ public class AppConfig {
     public static void initLocalConfig(Context context) {
         ApplicationInfo appInfo;
         try {
+            isShowBanner = true;
+            APPLICATION = PublicUtil.metadata(context, "application");
+            if (TextUtils.isEmpty(APPLICATION)) {
+                APPLICATION = DEFAULT_APPLICATION;
+            }
             appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             AppConfig.versioncode = GetVersionCode(context);
             AppConfig.APPKEY = appInfo.metaData.getString("UMENG_APPKEY");
@@ -264,7 +236,6 @@ public class AppConfig {
     }
 
     public static void InitLocal(Context context) {
-        isShowBanner = true;
         initConfigBean(context, getPreferencesJson(context, KEY_CONFIG));
         initPublicConfigBean(context, getPreferencesJson(context, KEY_PUBLIC));
         initselfadBeans(context, getPreferencesJson(context, KEY_SELF));
@@ -670,16 +641,12 @@ public class AppConfig {
 
 
     private static String getParameters(Context context) {
-        String application = PublicUtil.metadata(context, "application");
-        if (TextUtils.isEmpty(application)) {
-            application = "ROOT";
-        }
         String umeng_channel = PublicUtil.metadata(context, "UMENG_CHANNEL");
         if (TextUtils.isEmpty(umeng_channel)) {
             umeng_channel = PublicUtil.metadata(context, "APP_MARKET");
         }
 
-        return "?application=" + application
+        return "?application=" + APPLICATION
                 + "&apppackage=" + PublicUtil.getAppPackage(context)
                 + "&appversion=" + PublicUtil.getVersionCode(context)
                 + "&appmarket=" + umeng_channel
@@ -767,7 +734,7 @@ public class AppConfig {
 
         String VideoJson = "";
         try {
-            VideoJson = new HttpUtil().getJson(url);
+            VideoJson = HttpUtil.getJson(url);
             List<VideoBean> currentVideoBeans = getVideoBean(VideoJson);
             if (currentVideoBeans.size() == 0) {
                 VideoJson = "";
@@ -1006,7 +973,7 @@ public class AppConfig {
             if (!wxgzhJson.isEmpty()) {
                 List<WXGZHBean> currentSelfAdBeans = getWXGZHBeans(wxgzhJson);
                 for (WXGZHBean bean : currentSelfAdBeans) {
-                    initGZHPic(bean);
+                    initGZHPic(context, bean);
                 }
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("wxgzhJson", wxgzhJson);
@@ -1019,30 +986,35 @@ public class AppConfig {
         for (WXGZHBean bean : currentSelfAdBeans) {
             // Boolean isSuccess = true;//成功与否不重要，不成功的不用就是
             if (!new File(GZHPath + bean.id + ".jpg").exists()) {//如果文件不存在
-                initGZHPic(bean);
+                initGZHPic(context, bean);
             }
         }
         initwxgzhBeans(context);//初始化之后需要判断图片是否存在
     }
 
-    private static void initGZHPic(WXGZHBean bean) {
+    private static void initGZHPic(Context context, WXGZHBean bean) {
 
         try {
             downloadgzhjpg(bean, bean.thumb);
         } catch (Exception ethumb) {//这一步则表示下载失败
-            deleteFile(GZHPath + bean.id + ".jpg");
-
             try {
-                downloadgzhjpg(bean, gzhImageUrl + bean.id + ".jpg");
+                deleteFile(GZHPath + bean.id + ".jpg");
+                if (!AppConfig.isOldServer) {
+                    downloadgzhjpg(bean, String.format(gzhImageUrl, APPLICATION) + bean.id + ".jpg");
+                } else {
+                    throw new IOException("旧后台，正常报错，莫慌");
+                }
+            } catch (Exception e) {
                 try {
+                    deleteFile(GZHPath + bean.id + ".jpg");
                     downloadgzhjpg(bean, baseURL1 + "wxgzh/" + bean.id + ".jpg");
                 } catch (Exception e1) {
-                    deleteFile(GZHPath + bean.id + ".jpg");
                     try {
+                        deleteFile(GZHPath + bean.id + ".jpg");
                         downloadgzhjpg(bean, baseURL2 + "wxgzh/" + bean.id + ".jpg");
                     } catch (Exception e2) {
-                        deleteFile(GZHPath + bean.id + ".jpg");
                         try {
+                            deleteFile(GZHPath + bean.id + ".jpg");
                             downloadgzhjpg(bean, baseURL3 + "wxgzh/" + bean.id + ".jpg");
                         } catch (Exception e3) {//这一步则表示下载失败
                             // isSuccess = false;
@@ -1050,8 +1022,6 @@ public class AppConfig {
                         }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
@@ -1096,11 +1066,7 @@ public class AppConfig {
             Boolean isSuccess = true;
             try {
                 if (!AppConfig.isOldServer) {
-                    String application = PublicUtil.metadata(context, "application");
-                    if (TextUtils.isEmpty(application)) {
-                        application = "RED_PACKET";
-                    }
-                    downloadjar(String.format(videoDownloadUrl, application), youkulibPath);
+                    downloadjar(String.format(videoDownloadUrl, APPLICATION), youkulibPath);
                 } else {
                     throw new IOException("旧后台，正常报错，莫慌");
                 }
@@ -1146,11 +1112,7 @@ public class AppConfig {
             Boolean isSuccess = true;
             try {
                 if (!AppConfig.isOldServer) {
-                    String application = PublicUtil.metadata(context, "application");
-                    if (TextUtils.isEmpty(application)) {
-                        application = "RED_PACKET";
-                    }
-                    downloadjar(String.format(qhbDownloadUrl, application), qhblibPath);
+                    downloadjar(String.format(qhbDownloadUrl, APPLICATION), qhblibPath);
                 } else {
                     throw new IOException("旧后台，正常报错，莫慌");
                 }
