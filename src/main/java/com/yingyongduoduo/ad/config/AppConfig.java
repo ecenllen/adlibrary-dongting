@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.qq.e.comm.managers.GDTAdSdk;
-import com.umeng.analytics.MobclickAgent;
 import com.yingyongduoduo.ad.TTAdManagerHolder;
 import com.yingyongduoduo.ad.bean.ADBean;
 import com.yingyongduoduo.ad.bean.ConfigBean;
@@ -132,8 +131,8 @@ public class AppConfig {
 //    public static String SelfadJson = "";
 //    public static String wxgzhJson = "";
     public static String versioncode = "";
-    public static String Channel = "";
-    public static String APPKEY = "";
+    public static String Channel = "error";
+    public static String APPKEY = "error";
 
 
     private final static String baseURL1 = "http://120.25.224.76/appstore/";
@@ -638,10 +637,19 @@ public class AppConfig {
     private final static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
 
     private static String getParameters(Context context) {
-        return "?application=" + "ROOT"
+        String application = PublicUtil.metadata(context, "application");
+        if(TextUtils.isEmpty(application)) {
+            application = "ROOT";
+        }
+        String umeng_channel = PublicUtil.metadata(context, "UMENG_CHANNEL");
+        if(TextUtils.isEmpty(umeng_channel)) {
+            umeng_channel = PublicUtil.metadata(context, "APP_MARKET");
+        }
+
+        return "?application=" + application
                 + "&apppackage=" + PublicUtil.getAppPackage(context)
                 + "&appversion=" + PublicUtil.getVersionCode(context)
-                + "&appmarket=" + PublicUtil.metadata(context, "UMENG_CHANNEL")
+                + "&appmarket=" + umeng_channel
                 + "&agencychannel=" + PublicUtil.metadata(context, "AGENCY_CHANNEL");
     }
 
@@ -1257,7 +1265,7 @@ public class AppConfig {
      *
      * @return
      */
-    public static boolean isShowShipng() {
+    public static boolean isShowShiping() {
         if (configBean == null) {
             return false;
         }
@@ -1663,11 +1671,11 @@ public class AppConfig {
                 selfADs.add(ok_selfadBeans.get(i));
             }
         }
-        for (ADBean bean : selfADs) {
-            Map<String, String> map_ekv = new HashMap<String, String>();
-            map_ekv.put("show", bean.getAd_name());
-            MobclickAgent.onEvent(context, event_id, map_ekv);
-        }
+//        for (ADBean bean : selfADs) {
+//            Map<String, String> map_ekv = new HashMap<String, String>();
+//            map_ekv.put("show", bean.getAd_name());
+//            MobclickAgent.onEvent(context, event_id, map_ekv);
+//        }
         return selfADs;
     }
 
@@ -1961,7 +1969,7 @@ public class AppConfig {
         if (adbean == null) return;
         Map<String, String> map_ekv = new HashMap<String, String>();
         map_ekv.put("click", adbean.getAd_name());
-        MobclickAgent.onEvent(context, tag, map_ekv);
+//        MobclickAgent.onEvent(context, tag, map_ekv);
 
 
         int type = adbean.getAd_type();

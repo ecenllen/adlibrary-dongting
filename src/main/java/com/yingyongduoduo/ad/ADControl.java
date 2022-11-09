@@ -916,7 +916,7 @@ public class ADControl {
 
     public void showShiPingAD(final Activity activity, KPAdListener kpAdListener) {
         boolean isShow = false;
-        if (AppConfig.isShowShipng()) {//展示开屏广告
+        if (AppConfig.isShowShiping()) {//展示开屏广告
             if (activity != null) {
                 String spType = AppConfig.getShipingType();
                 String banner_String = AppConfig.configBean.ad_shiping_idMap.get(spType);

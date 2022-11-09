@@ -87,12 +87,12 @@ dependencies {
 //    api 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
 
     // androidX 用最新 4.11.0, 不然使用4.8.0
-    api "com.github.bumptech.glide:glide:4.8.0"
-    api("com.github.bumptech.glide:recyclerview-integration:4.8.0") {
+    api "com.github.bumptech.glide:glide:4.9.0"
+    api("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
-    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
 
     // 穿山甲
     api 'com.pangle.cn:ads-sdk-pro:4.8.0.8'

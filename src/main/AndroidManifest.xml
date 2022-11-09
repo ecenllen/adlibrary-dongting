@@ -19,9 +19,9 @@
         </provider>
 
         <!--广点通结束-->
-        <!--<meta-data-->
-        <!--android:name="UMENG_APPKEY"-->
-        <!--android:value="5b96a23bb27b0a39f70002fc" />-->
+        <meta-data
+            android:name="application"
+            android:value="${application}" />
 
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
