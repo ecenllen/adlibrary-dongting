@@ -137,9 +137,10 @@ public class AppConfig {
     public static String APPKEY = "error";
 
 
-    private final static String baseURL1 = "http://120.25.224.76/appstore/";
-    public final static String baseURL2 = "http://videodata.gz.bcebos.com/appstore/";
-    public final static String baseURL3 = "http://www.yingyongduoduo.com/appstore/";
+    private static boolean isOldServer = false;
+    private static String baseURL1 = "http://120.25.224.76/%s/";
+    private static String baseURL2 = "http://videodata.gz.bcebos.com/%s/";
+    private static String baseURL3 = "http://www.yingyongduoduo.com/%s/";
     private final static String configbaseURL1 = baseURL1 + "%s/";
     private final static String configbaseURL2 = baseURL2 + "%s/";
     private final static String configbaseURL3 = baseURL3 + "%s/";
@@ -158,8 +159,20 @@ public class AppConfig {
      * @param context
      */
     public static void Init(Context context) {
-        ///storage/emulated/0/Android/data/cn.uproxy.ox/files/testJson.html
-//        INDEX_HTML_LOCAL_PATH = context.getExternalFilesDir(null).getAbsolutePath() + "/index.html";
+        Init(context, false, "");
+    }
+
+    public static void Init(Context context, boolean isOldServer, String configFolder) {
+        AppConfig.isOldServer = isOldServer;
+        if (TextUtils.isEmpty(configFolder)) {
+            configFolder = PublicUtil.metadata(context, "config");
+        }
+        if (TextUtils.isEmpty(configFolder)) {
+            configFolder = "appstore";
+        }
+        baseURL1 = String.format(baseURL1, configFolder);
+        baseURL2 = String.format(baseURL2, configFolder);
+        baseURL3 = String.format(baseURL3, configFolder);
         initConfigJson(context);
         initPublicConfigJson(context);
         initVideoJson(context);
@@ -651,9 +664,9 @@ public class AppConfig {
     private final static String selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
     private final static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
     private final static String gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
-    private final static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/libqhb.so";
-    private final static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/videoparse.jar";
-    private final static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/";
+    private final static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
+    private final static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
+    private final static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
 
 
     private static String getParameters(Context context) {
@@ -679,7 +692,8 @@ public class AppConfig {
 
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        ConfigJson = getConfigJson(configAPI + getParameters(context));
+        if (!AppConfig.isOldServer)
+            ConfigJson = getConfigJson(configAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson))
             ConfigJson = getConfigJson(String.format(configbaseURL1, APPKEY) + "config.json");
         if (TextUtils.isEmpty(ConfigJson)) {
@@ -702,7 +716,8 @@ public class AppConfig {
     public static void initPublicConfigJson(Context context) {
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        ConfigJson = getPubConfigJson(publicAPI + getParameters(context));
+        if (!AppConfig.isOldServer)
+            ConfigJson = getPubConfigJson(publicAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(baseURL1 + "publicconfig.json");
         }
@@ -768,7 +783,9 @@ public class AppConfig {
         if (context == null) return;
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (publicConfigBean != null && !"".equals(publicConfigBean.onlineVideoParseVersion) && !publicConfigBean.onlineVideoParseVersion.equals(mSettings.getString("onlineVideoParseVersion", ""))) {//需要更新videosourceVersion
-            String VideoJson = getVideoJson(videoAPI + getParameters(context));
+            String VideoJson = "";
+            if (!AppConfig.isOldServer)
+                VideoJson = getVideoJson(videoAPI + getParameters(context));
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL1 + "video/video.json");
             }
@@ -863,7 +880,9 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
 
         if (publicConfigBean != null && !"".equals(publicConfigBean.selfadVersion) && !publicConfigBean.selfadVersion.equals(mSettings.getString("selfadVersion", ""))) {//需要更新
-            String SelfadJson = getSelfadJson(selfadAPI + getParameters(context));
+            String SelfadJson = "";
+            if (!AppConfig.isOldServer)
+                SelfadJson = getSelfadJson(selfadAPI + getParameters(context));
 
             if (TextUtils.isEmpty(SelfadJson))
                 SelfadJson = getSelfadJson(baseURL1 + "selfad/selfad.json");
@@ -907,7 +926,8 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         String SelfadJson = "";
         if (publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.zixunVersion) && !publicConfigBean.zixunVersion.equals(mSettings.getString("zixunVersion", ""))) {//需要更新
-            SelfadJson = getZixunJson(zixunAPI + getParameters(context));
+            if (!AppConfig.isOldServer)
+                SelfadJson = getZixunJson(zixunAPI + getParameters(context));
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(baseURL1 + "zixun/zixun.json");
             }
@@ -970,7 +990,9 @@ public class AppConfig {
         if (context == null) return;
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (publicConfigBean != null && mSettings.getString("wxgzhversion", "").equals(publicConfigBean.wxgzhversion)) {//需要更新
-            String wxgzhJson = getWXGZHJson(gzhAPI + getParameters(context));
+            String wxgzhJson = "";
+            if (!AppConfig.isOldServer)
+                wxgzhJson = getWXGZHJson(gzhAPI + getParameters(context));
 
             if (TextUtils.isEmpty(wxgzhJson)) {
                 wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
@@ -1069,11 +1091,20 @@ public class AppConfig {
 
     public static void initvideosourceVersion(Context context) {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        Boolean isneedUpdate = publicConfigBean != null && !"".equals(publicConfigBean.videosourceVersion) && !publicConfigBean.videosourceVersion.equals(mSettings.getString("videosourceVersion", ""));
+        Boolean isneedUpdate = publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.videosourceVersion) && !publicConfigBean.videosourceVersion.equals(mSettings.getString("videosourceVersion", ""));
         if (isneedUpdate || (!(new File(youkulibPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.videosourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
             try {
-                downloadjar(videoDownloadUrl, youkulibPath);
+                if (!AppConfig.isOldServer) {
+                    String application = PublicUtil.metadata(context, "application");
+                    if (TextUtils.isEmpty(application)) {
+                        application = "RED_PACKET";
+                    }
+                    downloadjar(String.format(videoDownloadUrl, application), youkulibPath);
+                } else {
+                    throw new IOException("旧后台，正常报错，莫慌");
+                }
+
             } catch (Exception e) {
                 try {
                     downloadjar(baseURL1 + "video/videoparse.jar", youkulibPath);
@@ -1110,11 +1141,19 @@ public class AppConfig {
      */
     public static void initQhbsourceVersion(Context context) {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        Boolean isneedUpdate = publicConfigBean != null && !mSettings.getString(QHB_VERSION_SP_KEY, "").equals(publicConfigBean.qhbsourceVersion);
+        Boolean isneedUpdate = publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion) && !publicConfigBean.qhbsourceVersion.equals(mSettings.getString(QHB_VERSION_SP_KEY, ""));
         if (isneedUpdate || (!(new File(qhblibPath).exists()) && publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
             try {
-                downloadjar(qhbDownloadUrl, qhblibPath);
+                if (!AppConfig.isOldServer) {
+                    String application = PublicUtil.metadata(context, "application");
+                    if (TextUtils.isEmpty(application)) {
+                        application = "RED_PACKET";
+                    }
+                    downloadjar(String.format(qhbDownloadUrl, application), qhblibPath);
+                } else {
+                    throw new IOException("旧后台，正常报错，莫慌");
+                }
             } catch (Exception e) {
                 try {
                     downloadjar(baseURL1 + "video/libqhb.so", qhblibPath);
