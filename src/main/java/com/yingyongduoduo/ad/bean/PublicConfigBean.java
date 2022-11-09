@@ -8,6 +8,7 @@ public class PublicConfigBean {
     public String selfadVersion = "";
     public String zixunVersion = "";
     public String dashangContent = "";
+    public String qhbsourceVersion = "";
     public String appjarversion="";
     public String wxgzhversion = "";
     public String goodPinglunVersion = "";

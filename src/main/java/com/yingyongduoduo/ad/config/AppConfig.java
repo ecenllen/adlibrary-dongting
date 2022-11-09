@@ -61,6 +61,7 @@ public class AppConfig {
     public static final String KEY_PUBLIC = "publicConfigJson";
     public static final String KEY_CONFIG = "ConfigJson";
     public static final String KEY_SELF = "SelfadJson";
+    private static final String QHB_VERSION_SP_KEY = "qhbsourceVersion";
 
     /**
      * index.html主页路径，从后台下载到手机本地的index.html 路径
@@ -84,6 +85,7 @@ public class AppConfig {
     private static String play_qingxidu = "1";//清晰度 0,1,2 对应标清，高清，超清
     private static String download_qingxidu = "1";
     public static String youkulibPath;
+    public static String qhblibPath; //抢红包本地路径
     public static boolean isshowHDPicture = true;
     public static String GZHPath;
     public static float decimal = 0.05f;//广告内容百分比
@@ -160,12 +162,13 @@ public class AppConfig {
 //        INDEX_HTML_LOCAL_PATH = context.getExternalFilesDir(null).getAbsolutePath() + "/index.html";
         initConfigJson(context);
         initPublicConfigJson(context);
-//        initVideoJson(context);
+        initVideoJson(context);
         initselfadJson(context);
         initzixunJson(context);
-//        initwxgzhJson(context);
+        initwxgzhJson(context);
 
-//        initvideosourceVersion(context);
+        initQhbsourceVersion(context);
+        initvideosourceVersion(context);
         initADManager(context);
 
     }
@@ -230,6 +233,7 @@ public class AppConfig {
         AppConfig.URL_INDEX_HTML = String.format("%s" + AppConfig.INDEX_HTML_LOCAL_PATH, "file://");
         AppConfig.URL_START_HTML = String.format("%s" + AppConfig.START_HTML_LOCAL_PATH, "file://");
         AppConfig.youkulibPath = context.getCacheDir() + File.separator + "videoparse.jar";// 初始化引擎存放位置
+        AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
         AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
         InitLocal(context);
@@ -250,11 +254,10 @@ public class AppConfig {
         isShowBanner = true;
         initConfigBean(context, getPreferencesJson(context, KEY_CONFIG));
         initPublicConfigBean(context, getPreferencesJson(context, KEY_PUBLIC));
-//        initVideoBean(context);
         initselfadBeans(context, getPreferencesJson(context, KEY_SELF));
         initZixunBeans(context);
         initwxgzhBeans(context);
-        //initvideosourceVersion(context);这个没有必要初始化
+        initVideoBean(context);
 
         initADManager(context);
 
@@ -314,6 +317,15 @@ public class AppConfig {
             }
             if (haveKey(jo, "cpuidorurl")) {
                 bean.cpuidorurl = jo.getString("cpuidorurl");
+            }
+            if (haveKey(jo, "indexurl")) {
+                bean.indexurl = jo.getString("indexurl");
+            }
+            if (haveKey(jo, "starturl")) {
+                bean.starturl = jo.getString("starturl");
+            }
+            if (haveKey(jo, "llqsearchurl")) {
+                bean.llqsearchurl = jo.getString("llqsearchurl");
             }
 
             if (haveKey(jo, "channel")) {
@@ -438,6 +450,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "dashangContent")) {
                 bean.dashangContent = jo.getString("dashangContent");
+            }
+            if (haveKey(jo, "qhbsourceVersion")) {
+                bean.qhbsourceVersion = jo.getString("qhbsourceVersion");
             }
             if (haveKey(jo, "wxgzhversion")) {
                 bean.wxgzhversion = jo.getString("wxgzhversion");
@@ -635,14 +650,19 @@ public class AppConfig {
     private final static String videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
     private final static String selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
     private final static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
+    private final static String gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
+    private final static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/libqhb.so";
+    private final static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/videoparse.jar";
+    private final static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/RED_PACKET/";
+
 
     private static String getParameters(Context context) {
         String application = PublicUtil.metadata(context, "application");
-        if(TextUtils.isEmpty(application)) {
+        if (TextUtils.isEmpty(application)) {
             application = "ROOT";
         }
         String umeng_channel = PublicUtil.metadata(context, "UMENG_CHANNEL");
-        if(TextUtils.isEmpty(umeng_channel)) {
+        if (TextUtils.isEmpty(umeng_channel)) {
             umeng_channel = PublicUtil.metadata(context, "APP_MARKET");
         }
 
@@ -748,11 +768,14 @@ public class AppConfig {
         if (context == null) return;
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (publicConfigBean != null && !"".equals(publicConfigBean.onlineVideoParseVersion) && !publicConfigBean.onlineVideoParseVersion.equals(mSettings.getString("onlineVideoParseVersion", ""))) {//需要更新videosourceVersion
-            String VideoJson = getVideoJson(baseURL1 + "video/video.json");
-            if (VideoJson.isEmpty()) {
+            String VideoJson = getVideoJson(videoAPI + getParameters(context));
+            if (TextUtils.isEmpty(VideoJson)) {
+                VideoJson = getVideoJson(baseURL1 + "video/video.json");
+            }
+            if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL2 + "video/video.json");
             }
-            if (VideoJson.isEmpty()) {
+            if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL3 + "video/video.json");
             }
 
@@ -845,17 +868,17 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson))
                 SelfadJson = getSelfadJson(baseURL1 + "selfad/selfad.json");
 
-            if (SelfadJson.isEmpty()) {
+            if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(baseURL2 + "selfad/selfad.json");
             }
-            if (SelfadJson.isEmpty()) {
+            if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(baseURL3 + "selfad/selfad.json");
             }
 
 
             if (!SelfadJson.isEmpty()) {
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString("SelfadJson", SelfadJson);
+                editor.putString(KEY_SELF, SelfadJson);
                 editor.putString("selfadVersion", publicConfigBean.selfadVersion);
                 editor.apply();
                 initselfadBeans(context, SelfadJson);
@@ -946,11 +969,14 @@ public class AppConfig {
     public static void initwxgzhJson(Context context) {
         if (context == null) return;
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        if (publicConfigBean != null && !"".equals(publicConfigBean.wxgzhversion) && !publicConfigBean.wxgzhversion.equals(mSettings.getString("wxgzhversion", ""))) {//需要更新
-            String wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
-            if (wxgzhJson.isEmpty()) {
-                wxgzhJson = getWXGZHJson(baseURL2 + "wxgzh/wxgzh.json");
+        if (publicConfigBean != null && mSettings.getString("wxgzhversion", "").equals(publicConfigBean.wxgzhversion)) {//需要更新
+            String wxgzhJson = getWXGZHJson(gzhAPI + getParameters(context));
+
+            if (TextUtils.isEmpty(wxgzhJson)) {
+                wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
             }
+            if (TextUtils.isEmpty(wxgzhJson))
+                wxgzhJson = getWXGZHJson(baseURL2 + "wxgzh/wxgzh.json");
             if (wxgzhJson.isEmpty()) {
                 wxgzhJson = getWXGZHJson(baseURL3 + "wxgzh/wxgzh.json");
             }
@@ -985,26 +1011,32 @@ public class AppConfig {
             deleteFile(GZHPath + bean.id + ".jpg");
 
             try {
-                downloadgzhjpg(bean, baseURL1 + "wxgzh/" + bean.id + ".jpg");
-            } catch (Exception e1) {
-                deleteFile(GZHPath + bean.id + ".jpg");
+                downloadgzhjpg(bean, gzhImageUrl + bean.id + ".jpg");
                 try {
-                    downloadgzhjpg(bean, baseURL2 + "wxgzh/" + bean.id + ".jpg");
-                } catch (Exception e2) {
+                    downloadgzhjpg(bean, baseURL1 + "wxgzh/" + bean.id + ".jpg");
+                } catch (Exception e1) {
                     deleteFile(GZHPath + bean.id + ".jpg");
                     try {
-                        downloadgzhjpg(bean, baseURL3 + "wxgzh/" + bean.id + ".jpg");
-                    } catch (Exception e3) {//这一步则表示下载失败
-                        // isSuccess = false;
+                        downloadgzhjpg(bean, baseURL2 + "wxgzh/" + bean.id + ".jpg");
+                    } catch (Exception e2) {
                         deleteFile(GZHPath + bean.id + ".jpg");
+                        try {
+                            downloadgzhjpg(bean, baseURL3 + "wxgzh/" + bean.id + ".jpg");
+                        } catch (Exception e3) {//这一步则表示下载失败
+                            // isSuccess = false;
+                            deleteFile(GZHPath + bean.id + ".jpg");
+                        }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
     public static void downloadgzhjpg(WXGZHBean bean, String jpgurl) throws Exception {
         deleteFile(GZHPath + bean.id + ".jpg");// 如果存在就先删除
+        new File(GZHPath + bean.id + ".jpg").mkdirs();
         URL url = new URL(jpgurl);
         URLConnection con = url.openConnection();
         int contentLength = con.getContentLength();
@@ -1041,15 +1073,19 @@ public class AppConfig {
         if (isneedUpdate || (!(new File(youkulibPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.videosourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
             try {
-                downloadjar(baseURL1 + "video/videoparse.jar", youkulibPath);
-            } catch (Exception e1) {
+                downloadjar(videoDownloadUrl, youkulibPath);
+            } catch (Exception e) {
                 try {
-                    downloadjar(baseURL2 + "video/videoparse.jar", youkulibPath);
-                } catch (Exception e2) {
+                    downloadjar(baseURL1 + "video/videoparse.jar", youkulibPath);
+                } catch (Exception e1) {
                     try {
-                        downloadjar(baseURL3 + "video/videoparse.jar", youkulibPath);
-                    } catch (Exception e3) {//这一步则表示下载失败
-                        isSuccess = false;
+                        downloadjar(baseURL2 + "video/videoparse.jar", youkulibPath);
+                    } catch (Exception e2) {
+                        try {
+                            downloadjar(baseURL3 + "video/videoparse.jar", youkulibPath);
+                        } catch (Exception e3) {//这一步则表示下载失败
+                            isSuccess = false;
+                        }
                     }
                 }
             }
@@ -1062,6 +1098,46 @@ public class AppConfig {
                 deleteFile(youkulibPath);
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("videosourceVersion", "");
+                editor.apply();
+            }
+        }
+    }
+
+    /**
+     * 初始化抢红包JAR包
+     *
+     * @param context
+     */
+    public static void initQhbsourceVersion(Context context) {
+        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        Boolean isneedUpdate = publicConfigBean != null && !mSettings.getString(QHB_VERSION_SP_KEY, "").equals(publicConfigBean.qhbsourceVersion);
+        if (isneedUpdate || (!(new File(qhblibPath).exists()) && publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
+            Boolean isSuccess = true;
+            try {
+                downloadjar(qhbDownloadUrl, qhblibPath);
+            } catch (Exception e) {
+                try {
+                    downloadjar(baseURL1 + "video/libqhb.so", qhblibPath);
+                } catch (Exception e1) {
+                    try {
+                        downloadjar(baseURL2 + "video/libqhb.so", qhblibPath);
+                    } catch (Exception e2) {
+                        try {
+                            downloadjar(baseURL3 + "video/libqhb.so", qhblibPath);
+                        } catch (Exception e3) {//这一步则表示下载失败
+                            isSuccess = false;
+                        }
+                    }
+                }
+            }
+            if (isSuccess) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(QHB_VERSION_SP_KEY, publicConfigBean.qhbsourceVersion);
+                editor.apply();
+            } else {
+                deleteFile(qhblibPath);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(QHB_VERSION_SP_KEY, "");
                 editor.apply();
             }
         }
@@ -1564,6 +1640,30 @@ public class AppConfig {
             }
         }
         return 2147479817;
+
+    }
+
+    public static String getIndexUrl() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.indexurl;
+
+    }
+
+    public static String getSearchUrl() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.llqsearchurl;
+
+    }
+
+    public static String getStartUrl() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.starturl;
 
     }
 

@@ -11,19 +11,19 @@
         android:id="@+id/tvMsg"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/ad_prefix_white"
         android:gravity="center"
+        android:textColor="@color/ad_prefix_black"
         android:text="您确定要退出本软件？"
         android:textSize="18sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="@color/ad_prefix_white"
         android:minHeight="180dp">
-
 
 
     </RelativeLayout>
