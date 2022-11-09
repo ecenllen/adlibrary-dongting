@@ -61,8 +61,7 @@
     <LinearLayout
         android:id="@+id/lyt_bottom"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/ad_prefix_white">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/bt_quit"
