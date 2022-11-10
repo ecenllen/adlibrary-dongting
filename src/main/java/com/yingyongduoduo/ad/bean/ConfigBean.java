@@ -36,6 +36,7 @@ public class ConfigBean implements Serializable {
  public String nopaychannel = "";//不用付费的版本
  public String showselflogochannel = "";//没有LOGO遮挡的版本
  public String noshowdschannel = "";//打开应用，不显示打赏对话框版本
+ public String noadfrontchannel = "";
  public String noupdatechannel = "";
  public String noselfadchannel = "";
  public String norootpaychannel = "";

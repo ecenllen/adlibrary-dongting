@@ -347,6 +347,9 @@ public class AppConfig {
                     if (haveKey(jo_channelInfo, "noshowdschannel")) {
                         bean.noshowdschannel = jo_channelInfo.getString("noshowdschannel");
                     }
+                    if (haveKey(jo_channelInfo, "noadfrontchannel")) {
+                        bean.noadfrontchannel = jo_channelInfo.getString("noadfrontchannel");
+                    }
                     if (haveKey(jo_channelInfo, "noupdatechannel")) {
                         bean.noupdatechannel = jo_channelInfo.getString("noupdatechannel");
                     }
@@ -1331,6 +1334,23 @@ public class AppConfig {
         if (TextUtils.isEmpty(configBean.noshipingadchannel))
             return false;
         for (String version : configBean.noshipingadchannel.split(",")) {
+            if (version.equals(versioncode)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 是否展示后台到前台开屏广告
+     *
+     * @return
+     */
+    public static boolean isShowFrontAD() {
+        if (configBean == null) {//如果configbean都没有获取到
+            return false;
+        }
+        for (String version : configBean.noadfrontchannel.split(",")) {
             if (version.equals(versioncode)) {
                 return false;
             }

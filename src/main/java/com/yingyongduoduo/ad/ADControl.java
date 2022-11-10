@@ -68,6 +68,8 @@ public class ADControl {
 
     public static long lastshowadTime = 0;
 
+    public static int AD_DELAY = 700; // 后台到前台间隔时间弹出广告
+    public static boolean isFront = false; // 后台到前台
     public static Boolean isonshow = false;
     public static boolean ISGiveHaoping = false;
     private static HashMap<String, String> giveHaoping = new HashMap<String, String>();
@@ -637,6 +639,7 @@ public class ADControl {
     public void ShowCp(Activity context, boolean isShow) {
         if (AppConfig.isShowCP())//展示开屏广告
         {
+            if (isFront) return;
             if (!isShow) {
                 if (System.currentTimeMillis() - lastshowadTime < showadTimeDuration) {
                     System.out.println("广告时间没到" + (System.currentTimeMillis() - lastshowadTime));
@@ -1365,7 +1368,7 @@ public class ADControl {
             return;
         }
 
-        if (isonshow)
+        if (isonshow || isFront)
             return;
 
         if (System.currentTimeMillis() - lastshowHaopingTime < showadTimeDuration) {
