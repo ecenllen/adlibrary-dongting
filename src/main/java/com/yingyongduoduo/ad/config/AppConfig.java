@@ -199,7 +199,9 @@ public class AppConfig {
             if (TextUtils.isEmpty(APPLICATION)) APPLICATION = DEFAULT_APPLICATION;
             AppConfig.APPKEY = appInfo.metaData.getString("UMENG_APPKEY");
             AppConfig.Channel = appInfo.metaData.getString("UMENG_CHANNEL");
-            if (TextUtils.isEmpty(Channel)) Channel = "baidu";
+            if (TextUtils.isEmpty(Channel) || TextUtils.isEmpty(APPKEY)){
+                throw new RuntimeException("UEMNG_CHANNEL 不能为空 或者 UEMNG_APPKEY 不能为空");
+            }
         } catch (PackageManager.NameNotFoundException e1) {
             e1.printStackTrace();
         }
