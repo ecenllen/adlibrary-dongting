@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -92,8 +91,8 @@ public class AppConfig {
 
 
     public static String versioncode = "";
-    public static String Channel = "error";
-    public static String APPKEY = "error";
+    public static String Channel = "";
+    public static String APPKEY = "";
     private final static String DEFAULT_APPLICATION = "ROOT";
     private static String APPLICATION = DEFAULT_APPLICATION;
 
@@ -123,22 +122,17 @@ public class AppConfig {
         Init(context, false, "");
     }
 
-    public static void Init(Context context, boolean isOldServer, String configFolder) {
+    public static void Init(Context context, boolean isOldServer, String configPrefix) {
         AppConfig.isOldServer = isOldServer;
-        if (TextUtils.isEmpty(configFolder)) {
-            configFolder = PublicUtil.metadata(context, "config");
+        if (TextUtils.isEmpty(configPrefix)) {
+            configPrefix = PublicUtil.metadata(context, "config");
         }
-        if (TextUtils.isEmpty(configFolder)) {
-            configFolder = "appstore";
+        if (TextUtils.isEmpty(configPrefix)) {
+            configPrefix = "appstore";
         }
-        baseURL1 = String.format(baseURL1, configFolder);
-        baseURL2 = String.format(baseURL2, configFolder);
-        baseURL3 = String.format(baseURL3, configFolder);
-
-        APPLICATION = PublicUtil.metadata(context, "application");
-        if (TextUtils.isEmpty(APPLICATION)) {
-            APPLICATION = DEFAULT_APPLICATION;
-        }
+        baseURL1 = String.format(baseURL1, configPrefix);
+        baseURL2 = String.format(baseURL2, configPrefix);
+        baseURL3 = String.format(baseURL3, configPrefix);
 
         initConfigJson(context);
         initPublicConfigJson(context);
@@ -199,14 +193,13 @@ public class AppConfig {
         ApplicationInfo appInfo;
         try {
             isShowBanner = true;
-            APPLICATION = PublicUtil.metadata(context, "application");
-            if (TextUtils.isEmpty(APPLICATION)) {
-                APPLICATION = DEFAULT_APPLICATION;
-            }
             appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            AppConfig.versioncode = GetVersionCode(context);
+            AppConfig.versioncode = String.valueOf(PublicUtil.getVersionCode(context));
+            APPLICATION = appInfo.metaData.getString("application");
+            if (TextUtils.isEmpty(APPLICATION)) APPLICATION = DEFAULT_APPLICATION;
             AppConfig.APPKEY = appInfo.metaData.getString("UMENG_APPKEY");
             AppConfig.Channel = appInfo.metaData.getString("UMENG_CHANNEL");
+            if (TextUtils.isEmpty(Channel)) Channel = "baidu";
         } catch (PackageManager.NameNotFoundException e1) {
             e1.printStackTrace();
         }
@@ -222,17 +215,6 @@ public class AppConfig {
         AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
         InitLocal(context);
-    }
-
-    private static String GetVersionCode(Context context) {
-        PackageManager manager = context.getPackageManager();
-        try {
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return String.valueOf(info.versionCode); //获取版本cood
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     public static void InitLocal(Context context) {
