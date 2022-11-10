@@ -101,9 +101,9 @@ public class AppConfig {
     private static String baseURL1 = "http://120.25.224.76/%s/";
     private static String baseURL2 = "http://videodata.gz.bcebos.com/%s/";
     private static String baseURL3 = "http://www.yingyongduoduo.com/%s/";
-    private final static String configbaseURL1 = baseURL1 + "%s/";
-    private final static String configbaseURL2 = baseURL2 + "%s/";
-    private final static String configbaseURL3 = baseURL3 + "%s/";
+    private static String configbaseURL1;
+    private static String configbaseURL2;
+    private static String configbaseURL3;
 
     public static ConfigBean configBean;
     public static PublicConfigBean publicConfigBean;
@@ -133,6 +133,9 @@ public class AppConfig {
         baseURL1 = String.format(baseURL1, configPrefix);
         baseURL2 = String.format(baseURL2, configPrefix);
         baseURL3 = String.format(baseURL3, configPrefix);
+        configbaseURL1 = baseURL1 + "%s/";
+        configbaseURL2 = baseURL2 + "%s/";
+        configbaseURL3 = baseURL3 + "%s/";
 
         initConfigJson(context);
         initPublicConfigJson(context);
