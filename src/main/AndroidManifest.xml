@@ -22,9 +22,6 @@
         <meta-data
             android:name="application"
             android:value="${application}" />
-        <meta-data
-            android:name="config"
-            android:value="${config}" />
 
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
