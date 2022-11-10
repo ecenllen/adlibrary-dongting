@@ -10,12 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 /**
  * Created by shanlin on 2017/10/12.
@@ -28,10 +26,7 @@ public class PublicUtil {
             ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(),
                     PackageManager.GET_META_DATA);
             String value = appInfo.metaData.getString(key);
-            if(TextUtils.isEmpty(value)) {
-                value = appInfo.metaData.getInt(key, 0) + "";
-            }
-            return Objects.requireNonNull(value).replace("QQ", "");
+            return value;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
