@@ -785,16 +785,15 @@ public class ADControl {
     }
 
     private void addGDTBanner2(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
-        if (lyt != null)
-            lyt.removeAllViews();
+
         if (unifiedBannerView != null && unifiedBannerView.isValid()) {
             Log.e(context.getClass().getSimpleName(), "banner 广告还有效");
-            if (lyt != null)
-                lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
-            // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
-            unifiedBannerView.loadAD();
             return;
         }
+
+        if (lyt != null)
+            lyt.removeAllViews();
+
         if (unifiedBannerView != null) {
             unifiedBannerView.destroy();
             unifiedBannerView = null;

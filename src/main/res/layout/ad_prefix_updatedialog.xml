@@ -5,13 +5,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/oval_dialog_background"
-    android:theme="@style/ad_prefix_dialog">
+    android:background="@drawable/oval_dialog_background">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/ad_prefix_white">
+        android:layout_height="150dp">
 
         <TextView
             android:id="@+id/tvMsg"
