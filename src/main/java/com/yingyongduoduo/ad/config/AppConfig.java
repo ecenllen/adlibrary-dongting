@@ -1467,8 +1467,6 @@ public class AppConfig {
         if (configBean == null) {
             return false;
         }
-        if (TextUtils.isEmpty(configBean.noshowdschannel))
-            return false;
         for (String version : configBean.noshowdschannel.split(",")) {
             if (version.equals(versioncode)) {
                 return false;
