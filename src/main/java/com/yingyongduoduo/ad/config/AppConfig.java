@@ -1712,7 +1712,7 @@ public class AppConfig {
 
     }
 
-    public static String getBaiduMapNO() {
+    public static String getGaodeMapNO() {
         if (configBean == null) {
             return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
@@ -1730,6 +1730,26 @@ public class AppConfig {
         }
         return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
+
+    }
+    public static String getBaiduMapNO() {
+        if (configBean == null) {
+//            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
+        }
+        for (String str : configBean.mapno.split(",")) {
+            String[] a = str.split(":");
+            if (a.length == 2) {
+                String versionItem = a[0];
+                String adNameItem = a[1];
+                if (versioncode.equals(versionItem)) {//平台与版本对应了，因为渠道已经选定了
+                    return adNameItem;
+                }
+
+            }
+        }
+//        return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
     }
 
