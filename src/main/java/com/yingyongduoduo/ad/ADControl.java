@@ -333,7 +333,10 @@ public class ADControl {
     }
 
     private void ShowSelfKP(final Context context, RelativeLayout adsParent, final KPAdListener kpAdListener) {
-
+        if(!AppConfig.isShowSelfAD()) {
+            kpAdListener.onAdDismissed();
+            return;
+        }
         SelfKPAdListener listener = new SelfKPAdListener() {
             @Override
             public void onAdDismissed(ADBean bean) {//广告展示完毕
@@ -612,6 +615,9 @@ public class ADControl {
     }
 
     private void ShowSelfCP(final Context context) {
+        if(!AppConfig.isShowSelfAD()) {
+            return;
+        }
 
         SelfCPDialog sfCP = new SelfCPDialog(context);
         sfCP.setADListener(new SelfBannerAdListener() {
@@ -807,6 +813,7 @@ public class ADControl {
                     if (lyt != null) {
                         lyt.removeAllViews();
                         if ("gdt2".equals(AppConfig.getBannerType())) {
+
                             String banner_String = AppConfig.configBean.ad_banner_idMap.get("csj");
                             if (!TextUtils.isEmpty(banner_String)) {
                                 String[] a = banner_String.split(",");
@@ -880,6 +887,9 @@ public class ADControl {
     public void addSelfBanner(LinearLayout lyt, final Activity context) {
         if (lyt != null) {
             lyt.removeAllViews();
+        }
+        if(!AppConfig.isShowSelfAD()) {
+            return;
         }
         if (context == null || context.isFinishing()) return;
         try {
