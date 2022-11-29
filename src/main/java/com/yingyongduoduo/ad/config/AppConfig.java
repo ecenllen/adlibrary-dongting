@@ -290,12 +290,6 @@ public class AppConfig {
             if (haveKey(jo, "cpuidorurl")) {
                 bean.cpuidorurl = jo.getString("cpuidorurl");
             }
-            if (haveKey(jo, "navigationid")) {
-                bean.navigationid = jo.getString("navigationid");
-            }
-            if (haveKey(jo, "navigationid2")) {
-                bean.navigationid2 = jo.getString("navigationid2");
-            }
             if (haveKey(jo, "indexurl")) {
                 bean.indexurl = jo.getString("indexurl");
             }
@@ -399,6 +393,12 @@ public class AppConfig {
                     }
                     if (haveKey(jo_channelInfo, "shipingtype")) {
                         bean.shipingtype = jo_channelInfo.getString("shipingtype");
+                    }
+                    if (haveKey(jo_channelInfo, "navigationid")) {
+                        bean.navigationid = jo_channelInfo.getString("navigationid");
+                    }
+                    if (haveKey(jo_channelInfo, "navigationid2")) {
+                        bean.navigationid2 = jo_channelInfo.getString("navigationid2");
                     }
 
 
@@ -1651,13 +1651,17 @@ public class AppConfig {
         if (configBean == null) {
             return id;
         }
-        try {
-            int i = Integer.parseInt(configBean.navigationid);
-            return TextUtils.isEmpty(configBean.navigationid) ? id : i;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        for (String str : configBean.navigationid.split(",")) {
+            String[] a = str.split(":");
+            if (a.length == 2) {
+                String versionItem = a[0];
+                String adNameItem = a[1];
+                if (versioncode.equals(versionItem)) {//平台与版本对应了，因为渠道已经选定了
+                    return Integer.parseInt(adNameItem);
+                }
 
+            }
+        }
         return id;
 
     }
@@ -1665,15 +1669,18 @@ public class AppConfig {
         if (configBean == null) {
             return id;
         }
-        try {
-            int i = Integer.parseInt(configBean.navigationid2);
-            return TextUtils.isEmpty(configBean.navigationid2) ? id : i;
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (String str : configBean.navigationid2.split(",")) {
+            String[] a = str.split(":");
+            if (a.length == 2) {
+                String versionItem = a[0];
+                String adNameItem = a[1];
+                if (versioncode.equals(versionItem)) {//平台与版本对应了，因为渠道已经选定了
+                    return Integer.parseInt(adNameItem);
+                }
+
+            }
         }
-
         return id;
-
     }
 
     public static String getIndexUrl() {
