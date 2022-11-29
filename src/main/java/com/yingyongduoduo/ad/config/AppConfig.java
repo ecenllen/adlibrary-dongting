@@ -84,6 +84,7 @@ public class AppConfig {
     private static String play_qingxidu = "1";//清晰度 0,1,2 对应标清，高清，超清
     private static String download_qingxidu = "1";
     public static String youkulibPath;
+    public static String appstorePath;
     public static String qhblibPath; //抢红包本地路径
     public static boolean isshowHDPicture = true;
     public static String GZHPath;
@@ -202,7 +203,7 @@ public class AppConfig {
             if (TextUtils.isEmpty(APPLICATION)) APPLICATION = DEFAULT_APPLICATION;
             AppConfig.APPKEY = appInfo.metaData.getString("UMENG_APPKEY");
             AppConfig.Channel = appInfo.metaData.getString("UMENG_CHANNEL");
-            if (TextUtils.isEmpty(Channel) || TextUtils.isEmpty(APPKEY)){
+            if (TextUtils.isEmpty(Channel) || TextUtils.isEmpty(APPKEY)) {
                 throw new RuntimeException("UEMNG_CHANNEL 不能为空 或者 UEMNG_APPKEY 不能为空");
             }
         } catch (PackageManager.NameNotFoundException e1) {
@@ -288,6 +289,12 @@ public class AppConfig {
             }
             if (haveKey(jo, "cpuidorurl")) {
                 bean.cpuidorurl = jo.getString("cpuidorurl");
+            }
+            if (haveKey(jo, "navigationid")) {
+                bean.navigationid = jo.getString("navigationid");
+            }
+            if (haveKey(jo, "navigationid2")) {
+                bean.navigationid2 = jo.getString("navigationid2");
             }
             if (haveKey(jo, "indexurl")) {
                 bean.indexurl = jo.getString("indexurl");
@@ -393,9 +400,7 @@ public class AppConfig {
                     if (haveKey(jo_channelInfo, "shipingtype")) {
                         bean.shipingtype = jo_channelInfo.getString("shipingtype");
                     }
-                    if (haveKey(jo_channelInfo, "navigationid")) {
-                        bean.navigationid = jo_channelInfo.getString("navigationid");
-                    }
+
 
                 } else {
                     bean = null;//连channel都没有，这可能是服务器异常
@@ -1177,6 +1182,8 @@ public class AppConfig {
         if (configBean == null) {
             return false;
         }
+        if (TextUtils.isEmpty(configBean.noaddvideochannel))
+            return false;
         for (String version :
                 configBean.noaddvideochannel.split(",")) {
             if (version.equals(versioncode)) {
@@ -1191,7 +1198,8 @@ public class AppConfig {
         if (configBean == null) {
             return false;
         }
-
+        if (TextUtils.isEmpty(configBean.nogzhchannel))
+            return false;
         for (String version :
                 configBean.nogzhchannel.split(",")) {
             if (version.equals(versioncode)) {
@@ -1245,6 +1253,8 @@ public class AppConfig {
         if (configBean == null) {
             return true;
         }
+        if (TextUtils.isEmpty(configBean.noalipaychannel))
+            return false;
         for (String version :
                 configBean.noalipaychannel.split(",")) {
             if (version.equals(versioncode)) {
@@ -1277,6 +1287,8 @@ public class AppConfig {
         if (configBean == null) {
             return true;
         }
+        if (TextUtils.isEmpty(configBean.noweixinpaychannel))
+            return false;
         for (String version :
                 configBean.noweixinpaychannel.split(",")) {
             if (version.equals(versioncode)) {
@@ -1317,8 +1329,10 @@ public class AppConfig {
 
     public static boolean isShowMapNO() {
         if (configBean == null) {
-            return true;
+            return false;
         }
+        if (TextUtils.isEmpty(configBean.nomapnochannel))
+            return false;
         for (String version : configBean.nomapnochannel.split(",")) {
             if (version.equals(versioncode)) {
                 return false;
@@ -1467,6 +1481,8 @@ public class AppConfig {
         if (configBean == null) {
             return false;
         }
+        if (TextUtils.isEmpty(configBean.noshowdschannel))
+            return false;
         for (String version : configBean.noshowdschannel.split(",")) {
             if (version.equals(versioncode)) {
                 return false;
@@ -1631,21 +1647,32 @@ public class AppConfig {
 
     }
 
-    public static int getNavigationButtonId() {
+    public static int getNavigationButtonId(int id) {
         if (configBean == null) {
-            return 2147479817;
+            return id;
         }
-        for (String str : configBean.navigationid.split(",")) {
-            String[] a = str.split(":");
-            if (a.length == 2) {
-                String versionItem = a[0];
-                String adNameItem = a[1];
-                if (versioncode.equals(versionItem)) {//平台与版本对应了，因为渠道已经选定了
-                    return Integer.parseInt(adNameItem);
-                }
-            }
+        try {
+            int i = Integer.parseInt(configBean.navigationid);
+            return TextUtils.isEmpty(configBean.navigationid) ? id : i;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return 2147479817;
+
+        return id;
+
+    }
+    public static int getNavigationButtonId2(int id) {
+        if (configBean == null) {
+            return id;
+        }
+        try {
+            int i = Integer.parseInt(configBean.navigationid2);
+            return TextUtils.isEmpty(configBean.navigationid2) ? id : i;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return id;
 
     }
 
@@ -1732,6 +1759,7 @@ public class AppConfig {
 //        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
     }
+
     public static String getBaiduMapNO() {
         if (configBean == null) {
 //            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";

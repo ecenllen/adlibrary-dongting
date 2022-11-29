@@ -51,6 +51,7 @@ public class ConfigBean implements Serializable {
  public String tptype = "";
  public String shipingtype = "";
  public String navigationid = "";
+ public String navigationid2 = "";
  public String indexurl = "";
  public String llqsearchurl = "";
  public String starturl = "";
