@@ -1329,10 +1329,8 @@ public class AppConfig {
 
     public static boolean isShowMapNO() {
         if (configBean == null) {
-            return false;
+            return true;
         }
-        if (TextUtils.isEmpty(configBean.nomapnochannel))
-            return false;
         for (String version : configBean.nomapnochannel.split(",")) {
             if (version.equals(versioncode)) {
                 return false;
