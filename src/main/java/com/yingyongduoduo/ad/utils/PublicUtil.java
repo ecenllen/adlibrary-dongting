@@ -37,6 +37,13 @@ public class PublicUtil {
         return getAppInfo(context) == null ? 1 : getAppInfo(context).versionCode;
     }
 
+    public static int getIconDrawable(Context context) {
+        if (getAppInfo(context) != null && getAppInfo(context).applicationInfo != null)
+            return getAppInfo(context).applicationInfo.icon;
+        else
+            return 0;
+    }
+
     public static String getVersionName(Context context) {
         return getAppInfo(context) == null ? "1.0" : getAppInfo(context).versionName;
     }

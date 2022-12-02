@@ -41,11 +41,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -298,6 +300,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "llqsearchurl")) {
                 bean.llqsearchurl = jo.getString("llqsearchurl");
+            }
+            if (haveKey(jo, "greythemechannel")) {
+                bean.greythemechannel = jo.getString("greythemechannel");
             }
 
             if (haveKey(jo, "channel")) {
@@ -1445,6 +1450,26 @@ public class AppConfig {
             }
         }
         return true;
+    }
+
+    public static boolean isGreyTheme() {
+        if (configBean == null) {
+            return false;
+        }
+        if (TextUtils.isEmpty(configBean.greythemechannel))
+            return false;
+        String yyyyMMdd = getSystemTime("yyyyMMdd");
+        for (String version : configBean.greythemechannel.split(",")) {
+            if (version.equals(yyyyMMdd)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String getSystemTime(String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.CHINESE);
+        return formatter.format(System.currentTimeMillis());
     }
 
     public static boolean isFirstFreeUse() {
