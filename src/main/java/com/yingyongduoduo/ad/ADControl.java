@@ -707,6 +707,7 @@ public class ADControl {
             mTTAdNative.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
                 @Override
                 public void onError(int code, String message) {
+                    Log.e("lhp", "addCSJBanner onError = " + message);
                     if (lyt != null) {
                         lyt.removeAllViews();
                         if ("csj".equals(AppConfig.getBannerType())) {

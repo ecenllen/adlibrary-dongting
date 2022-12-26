@@ -468,6 +468,21 @@ public class AppConfig {
             if (haveKey(jo, "searchbaidudomestic")) {
                 bean.searchbaidudomestic = jo.getString("searchbaidudomestic");
             }
+            if (haveKey(jo, "mar3dUrl")) {
+                bean.mar3dUrl = jo.getString("mar3dUrl");
+            }
+            if (haveKey(jo, "googlestreetip")) {
+                bean.googlestreetip = jo.getString("googlestreetip");
+            }
+            if (haveKey(jo, "mar3dserver")) {
+                bean.mar3dserver = jo.getString("mar3dserver");
+            }
+            if (haveKey(jo, "mar3ddomain")) {
+                bean.mar3ddomain = jo.getString("mar3ddomain");
+            }
+            if (haveKey(jo, "regionurl")) {
+                bean.regionurl = jo.getString("regionurl");
+            }
         } catch (Exception e) {
             bean = null;
         }
@@ -1486,6 +1501,21 @@ public class AppConfig {
         return false;
     }
 
+    public static boolean isContainer(String url) {
+        if (TextUtils.isEmpty(url)) return false;
+        if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.regionurl)) {
+            String[] mConfigUrl = AppConfig.publicConfigBean.regionurl.split(",");
+            for (int i = 0; i < mConfigUrl.length; i++) {
+                String s = mConfigUrl[i];
+                if (url.contains(s)) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
     public static boolean isShowSelfLogo() {
         if (configBean == null) {
             return false;
@@ -1771,7 +1801,7 @@ public class AppConfig {
 
     public static String getGaodeMapNO() {
         if (configBean == null) {
-            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+            return "高德软件有限公司\n©2022 GS(2021)6375号 - 甲测资字11111093";
 //            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
         }
         for (String str : configBean.mapno.split(",")) {
@@ -1785,7 +1815,7 @@ public class AppConfig {
 
             }
         }
-        return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+        return "高德软件有限公司\n©2022 GS(2021)6375号 - 甲测资字11111093";
 //        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
     }

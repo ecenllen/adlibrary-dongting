@@ -94,7 +94,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
 
     // 穿山甲
-    api 'com.pangle.cn:ads-sdk-pro:4.8.0.8'
+    api 'com.pangle.cn:ads-sdk-pro:5.0.0.4'
 
 }
 
