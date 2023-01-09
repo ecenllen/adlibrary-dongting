@@ -132,6 +132,15 @@ public class AppConfig {
         AppConfig.isOldServer = isOldServer;
         if(isOldServer) {
             dongtingBaseURL1 = xgkjBaseURL1;
+            configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
+            publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
+            videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
+            selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
+            zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
+            gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
+            qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
+            videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
+            gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
         }
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = PublicUtil.metadata(context, "config");
@@ -651,15 +660,15 @@ public class AppConfig {
 
     private static String dongtingBaseURL1 = "https://api.csdtkj.cn/xly/webcloud/";
     private final static String xgkjBaseURL1 = "https://api.xgkjdytt.cn/xly/webcloud/";
-    private final static String configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
-    private final static String publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
-    private final static String videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
-    private final static String selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
-    private final static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
-    private final static String gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
-    private final static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
-    private final static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
-    private final static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
+    private static String configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
+    private static String publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
+    private static String videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
+    private static String selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
+    private static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
+    private static String gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
+    private static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
+    private static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
+    private static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
 
 
     private static String getParameters(Context context) {
