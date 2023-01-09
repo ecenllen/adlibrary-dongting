@@ -122,11 +122,17 @@ public class AppConfig {
      * @param context
      */
     public static void Init(Context context) {
-        Init(context, false, "");
+        Init(context, "");
+    }
+    public static void Init(Context context, String configPrefix) {
+        Init(context, false, configPrefix);
     }
 
     public static void Init(Context context, boolean isOldServer, String configPrefix) {
         AppConfig.isOldServer = isOldServer;
+        if(isOldServer) {
+            dongtingBaseURL1 = xgkjBaseURL1;
+        }
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = PublicUtil.metadata(context, "config");
         }
@@ -643,7 +649,8 @@ public class AppConfig {
         return getpubConfigJson;
     }
 
-    private final static String dongtingBaseURL1 = "https://api.csdtkj.cn/xly/webcloud/";
+    private static String dongtingBaseURL1 = "https://api.csdtkj.cn/xly/webcloud/";
+    private final static String xgkjBaseURL1 = "https://api.xgkjdytt.cn/xly/webcloud/";
     private final static String configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
     private final static String publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
     private final static String videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
@@ -684,6 +691,9 @@ public class AppConfig {
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getConfigJson(String.format(configbaseURL3, APPKEY) + "config.json");
         }
+        if (TextUtils.isEmpty(ConfigJson)) {
+            ConfigJson = getConfigJson(configAPI + getParameters(context));
+        }
         if (!TextUtils.isEmpty(ConfigJson)) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("ConfigJson", ConfigJson);
@@ -708,6 +718,9 @@ public class AppConfig {
         }
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(baseURL3 + "publicconfig.json");
+        }
+        if (TextUtils.isEmpty(ConfigJson)) {
+            ConfigJson = getPubConfigJson(publicAPI + getParameters(context));
         }
         if (!ConfigJson.isEmpty()) {
             SharedPreferences.Editor editor = mSettings.edit();
