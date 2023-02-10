@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DownLoaderAPK {
 
-    private final List<ADBean> DOWNLOAD_INFOS = new ArrayList<ADBean>();                // 储存下载对象
+    private final List<ADBean> DOWNLOAD_INFOS = new ArrayList<>();                // 储存下载对象
     /**
      * 线程池
      */
