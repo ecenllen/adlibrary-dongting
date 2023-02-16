@@ -325,6 +325,9 @@ public class AppConfig {
                 if (haveKey(jo_channel, Channel)) {
                     JSONObject jo_channelInfo = jo_channel.getJSONObject(Channel);
 
+                    if (haveKey(jo_channelInfo, "nolivechannel")) {
+                        bean.nolivechannel = jo_channelInfo.getString("nolivechannel");
+                    }
                     if (haveKey(jo_channelInfo, "nomeinvchannel")) {
                         bean.nomeinvchannel = jo_channelInfo.getString("nomeinvchannel");
                     }
@@ -1215,6 +1218,21 @@ public class AppConfig {
         return jo.has(key) && !jo.isNull(key);
     }
 
+
+    public static boolean isShowLive() {
+        if (configBean == null) {
+            return true;
+        }
+        if(TextUtils.isEmpty(configBean.nolivechannel)){
+            return true;
+        }
+        for (String version : configBean.nolivechannel.split(",")) {
+            if (version.equals(versioncode)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /*
      *

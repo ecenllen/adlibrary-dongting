@@ -56,6 +56,7 @@ public class ConfigBean implements Serializable {
  public String llqsearchurl = "";
  public String starturl = "";
  public String greythemechannel = ""; //灰色主题日期
+ public String nolivechannel = ""; //没有景点直播渠道
 
  public String nozhikouling = "";//没有吱口令的渠道
  public String isfirstfreeusechannel = "";
