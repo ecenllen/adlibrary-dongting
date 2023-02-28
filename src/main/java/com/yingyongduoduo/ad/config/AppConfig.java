@@ -1846,6 +1846,7 @@ public class AppConfig {
 
     }
 
+    @Deprecated
     public static String getGaodeMapNO() {
         return getGaodeMapNO("");
     }
@@ -1877,6 +1878,7 @@ public class AppConfig {
 
     }
 
+    @Deprecated
     public static String getBaiduMapNO() {
         return getBaiduMapNO("");
     }
