@@ -333,7 +333,7 @@ public class ADControl {
     }
 
     private void ShowSelfKP(final Context context, RelativeLayout adsParent, final KPAdListener kpAdListener) {
-        if(!AppConfig.isShowSelfAD()) {
+        if (!AppConfig.isShowSelfAD()) {
             kpAdListener.onAdDismissed();
             return;
         }
@@ -507,8 +507,9 @@ public class ADControl {
             @Override
             public void onFullScreenVideoAdLoad(TTFullScreenVideoAd ad) {
                 if (context == null || context.isFinishing() || context.isDestroyed()) return;
-                if (ad != null)
+                if (ad != null) {
                     ad.showFullScreenVideoAd(context);
+                }
             }
 
             @Override
@@ -615,7 +616,7 @@ public class ADControl {
     }
 
     private void ShowSelfCP(final Context context) {
-        if(!AppConfig.isShowSelfAD()) {
+        if (!AppConfig.isShowSelfAD()) {
             return;
         }
 
@@ -889,7 +890,7 @@ public class ADControl {
         if (lyt != null) {
             lyt.removeAllViews();
         }
-        if(!AppConfig.isShowSelfAD()) {
+        if (!AppConfig.isShowSelfAD()) {
             return;
         }
         if (context == null || context.isFinishing()) return;

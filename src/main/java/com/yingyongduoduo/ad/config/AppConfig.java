@@ -124,13 +124,19 @@ public class AppConfig {
     public static void Init(Context context) {
         Init(context, "");
     }
+
     public static void Init(Context context, String configPrefix) {
-        Init(context, false, configPrefix);
+        Init(context, true, configPrefix);
     }
 
+    /**
+     * @param context
+     * @param isOldServer  true 为 http://120.25.224.76后台，友盟拼接成路径获取广告参数；false 为 长沙动力后台，接口方式用包名拼接获取广告参数
+     * @param configPrefix 对应文件夹
+     */
     public static void Init(Context context, boolean isOldServer, String configPrefix) {
         AppConfig.isOldServer = isOldServer;
-        if(isOldServer) {
+        if (isOldServer) {
             dongtingBaseURL1 = xgkjBaseURL1;
             configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
             publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
@@ -1223,7 +1229,7 @@ public class AppConfig {
         if (configBean == null) {
             return true;
         }
-        if(TextUtils.isEmpty(configBean.nolivechannel)){
+        if (TextUtils.isEmpty(configBean.nolivechannel)) {
             return true;
         }
         for (String version : configBean.nolivechannel.split(",")) {
@@ -1758,6 +1764,7 @@ public class AppConfig {
         return id;
 
     }
+
     public static int getNavigationButtonId2(int id) {
         if (configBean == null) {
             return id;
@@ -1840,8 +1847,18 @@ public class AppConfig {
     }
 
     public static String getGaodeMapNO() {
+        return getGaodeMapNO("");
+    }
+
+    public static String getGaodeMapNO(Context context) {
+        return getGaodeMapNO(PublicUtil.metadata(context, "MAP_NO"));
+    }
+
+    public static String getGaodeMapNO(String mapNo) {
+        if (!TextUtils.isEmpty(mapNo))
+            return mapNo;
         if (configBean == null) {
-            return "高德软件有限公司\n©2023 GS京(2022)1061号 - 甲测资字11111093";
+            return "高德软件有限公司\n©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
         }
         for (String str : configBean.mapno.split(",")) {
@@ -1855,12 +1872,21 @@ public class AppConfig {
 
             }
         }
-        return "高德软件有限公司\n©2023 GS京(2022)1061号 - 甲测资字11111093";
+        return "高德软件有限公司\n©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
     }
 
     public static String getBaiduMapNO() {
+        return getBaiduMapNO("");
+    }
+    public static String getBaiduMapNO(Context context) {
+        return getBaiduMapNO(PublicUtil.metadata(context, "MAP_NO"));
+    }
+
+    public static String getBaiduMapNO(String mapNo) {
+        if (!TextUtils.isEmpty(mapNo))
+            return mapNo;
         if (configBean == null) {
 //            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
             return "北京百度网讯科技有限公司\n©2023 Baidu - GS(2021)6026号 - 甲测资字11111342";

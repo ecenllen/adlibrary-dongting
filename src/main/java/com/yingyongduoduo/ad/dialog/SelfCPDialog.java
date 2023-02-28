@@ -44,10 +44,8 @@ public class SelfCPDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(view);
         setCanceledOnTouchOutside(false);
-        setCancelable(false);
         if (bean == null) {
             setCanceledOnTouchOutside(true);
-            setCancelable(true);
             this.dismiss(); // 这个关闭没效果的
 //            return;// 把return 去掉，不然点击X不能关闭
         }
