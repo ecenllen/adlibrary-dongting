@@ -101,9 +101,9 @@ public class AppConfig {
 
 
     private static boolean isOldServer = false;
-    private static String baseURL1 = "http://120.25.224.76/%s/";
-    private static String baseURL2 = "http://videodata.gz.bcebos.com/%s/";
-    private static String baseURL3 = "http://www.yingyongduoduo.com/%s/";
+    private static String baseURL1 = "http://120.25.224.76/";
+    private static String baseURL2 = "http://videodata.gz.bcebos.com/";
+    private static String baseURL3 = "http://www.yingyongduoduo.com/";
     private static String configbaseURL1;
     private static String configbaseURL2;
     private static String configbaseURL3;
@@ -122,7 +122,7 @@ public class AppConfig {
      * @param context
      */
     public static void Init(Context context) {
-        Init(context, "");
+        Init(context, false, "");
     }
 
     public static void Init(Context context, String configPrefix) {
@@ -136,30 +136,16 @@ public class AppConfig {
      */
     public static void Init(Context context, boolean isOldServer, String configPrefix) {
         AppConfig.isOldServer = isOldServer;
-        if (isOldServer) {
-            dongtingBaseURL1 = xgkjBaseURL1;
-            configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
-            publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
-            videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
-            selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
-            zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
-            gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
-            qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
-            videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
-            gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
-        }
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = PublicUtil.metadata(context, "config");
         }
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = "appstore";
         }
-        baseURL1 = String.format(baseURL1, configPrefix);
-        baseURL2 = String.format(baseURL2, configPrefix);
-        baseURL3 = String.format(baseURL3, configPrefix);
-        configbaseURL1 = baseURL1 + "%s/";
-        configbaseURL2 = baseURL2 + "%s/";
-        configbaseURL3 = baseURL3 + "%s/";
+
+        configbaseURL1 = baseURL1 + configPrefix + "/%s/";
+        configbaseURL2 = baseURL2 + configPrefix + "/%s/";
+        configbaseURL3 = baseURL3 + configPrefix + "/%s/";
 
         initConfigJson(context);
         initPublicConfigJson(context);
@@ -667,18 +653,25 @@ public class AppConfig {
         return getpubConfigJson;
     }
 
-    private static String dongtingBaseURL1 = "https://api.csdtkj.cn/xly/webcloud/";
+    private final static String dongtingBaseURL1 = "https://api.csdtkj.cn/xly/webcloud/";
     private final static String xgkjBaseURL1 = "https://api.xgkjdytt.cn/xly/webcloud/";
-    private static String configAPI = dongtingBaseURL1 + "jsonadconfig/getadconfig";
-    private static String publicAPI = dongtingBaseURL1 + "jsonadconfig/getpublic";
-    private static String videoAPI = dongtingBaseURL1 + "jsonadconfig/getvideo";
-    private static String selfadAPI = dongtingBaseURL1 + "jsonadconfig/getselfad";
-    private static String zixunAPI = dongtingBaseURL1 + "jsonadconfig/getzixun";
-    private static String gzhAPI = dongtingBaseURL1 + "jsonadconfig/getgzh";
-    private static String qhbDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/libqhb.so";
-    private static String videoDownloadUrl = dongtingBaseURL1 + "jsonadconfig/%s/videoparse.jar";
-    private static String gzhImageUrl = dongtingBaseURL1 + "jsonadconfig/%s/";
+    private final static String configAPI = "jsonadconfig/getadconfig";
+    private final static String publicAPI = "jsonadconfig/getpublic";
+    private final static String videoAPI = "jsonadconfig/getvideo";
+    private final static String selfadAPI = "jsonadconfig/getselfad";
+    private final static String zixunAPI = "jsonadconfig/getzixun";
+    private final static String gzhAPI = "jsonadconfig/getgzh";
+    private final static String qhbDownloadUrl = "jsonadconfig/%s/libqhb.so";
+    private final static String videoDownloadUrl = "jsonadconfig/%s/videoparse.jar";
+    private final static String gzhImageUrl = "jsonadconfig/%s/";
 
+    private static String getOldServerBaseUrl() {
+        return xgkjBaseURL1;
+    }
+
+    private static String getDongTingServerBaseUrl() {
+        return dongtingBaseURL1;
+    }
 
     private static String getParameters(Context context) {
         String umeng_channel = PublicUtil.metadata(context, "UMENG_CHANNEL");
@@ -700,7 +693,7 @@ public class AppConfig {
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (!AppConfig.isOldServer)
-            ConfigJson = getConfigJson(configAPI + getParameters(context));
+            ConfigJson = getConfigJson(getDongTingServerBaseUrl() + configAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson))
             ConfigJson = getConfigJson(String.format(configbaseURL1, APPKEY) + "config.json");
         if (TextUtils.isEmpty(ConfigJson)) {
@@ -710,7 +703,7 @@ public class AppConfig {
             ConfigJson = getConfigJson(String.format(configbaseURL3, APPKEY) + "config.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getConfigJson(configAPI + getParameters(context));
+            ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
         }
         if (!TextUtils.isEmpty(ConfigJson)) {
             SharedPreferences.Editor editor = mSettings.edit();
@@ -727,7 +720,7 @@ public class AppConfig {
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (!AppConfig.isOldServer)
-            ConfigJson = getPubConfigJson(publicAPI + getParameters(context));
+            ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(baseURL1 + "publicconfig.json");
         }
@@ -738,7 +731,7 @@ public class AppConfig {
             ConfigJson = getPubConfigJson(baseURL3 + "publicconfig.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(publicAPI + getParameters(context));
+            ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
         }
         if (!ConfigJson.isEmpty()) {
             SharedPreferences.Editor editor = mSettings.edit();
@@ -798,7 +791,7 @@ public class AppConfig {
         if (publicConfigBean != null && !"".equals(publicConfigBean.onlineVideoParseVersion) && !publicConfigBean.onlineVideoParseVersion.equals(mSettings.getString("onlineVideoParseVersion", ""))) {//需要更新videosourceVersion
             String VideoJson = "";
             if (!AppConfig.isOldServer)
-                VideoJson = getVideoJson(videoAPI + getParameters(context));
+                VideoJson = getVideoJson(getDongTingServerBaseUrl() + videoAPI + getParameters(context));
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL1 + "video/video.json");
             }
@@ -808,6 +801,8 @@ public class AppConfig {
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL3 + "video/video.json");
             }
+            if (TextUtils.isEmpty(VideoJson))
+                VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
 
             if (!VideoJson.isEmpty()) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -895,7 +890,7 @@ public class AppConfig {
         if (publicConfigBean != null && !"".equals(publicConfigBean.selfadVersion) && !publicConfigBean.selfadVersion.equals(mSettings.getString("selfadVersion", ""))) {//需要更新
             String SelfadJson = "";
             if (!AppConfig.isOldServer)
-                SelfadJson = getSelfadJson(selfadAPI + getParameters(context));
+                SelfadJson = getSelfadJson(getDongTingServerBaseUrl() + selfadAPI + getParameters(context));
 
             if (TextUtils.isEmpty(SelfadJson))
                 SelfadJson = getSelfadJson(baseURL1 + "selfad/selfad.json");
@@ -905,6 +900,9 @@ public class AppConfig {
             }
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(baseURL3 + "selfad/selfad.json");
+            }
+            if (TextUtils.isEmpty(SelfadJson)) {
+                SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
             }
 
 
@@ -940,7 +938,7 @@ public class AppConfig {
         String SelfadJson = "";
         if (publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.zixunVersion) && !publicConfigBean.zixunVersion.equals(mSettings.getString("zixunVersion", ""))) {//需要更新
             if (!AppConfig.isOldServer)
-                SelfadJson = getZixunJson(zixunAPI + getParameters(context));
+                SelfadJson = getZixunJson(getDongTingServerBaseUrl() + zixunAPI + getParameters(context));
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(baseURL1 + "zixun/zixun.json");
             }
@@ -950,6 +948,10 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(baseURL3 + "zixun/zixun.json");
             }
+            if (TextUtils.isEmpty(SelfadJson)) {
+                SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
+            }
+
             if (!TextUtils.isEmpty(SelfadJson)) {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("zixunJson", SelfadJson);
@@ -1005,7 +1007,7 @@ public class AppConfig {
         if (publicConfigBean != null && mSettings.getString("wxgzhversion", "").equals(publicConfigBean.wxgzhversion)) {//需要更新
             String wxgzhJson = "";
             if (!AppConfig.isOldServer)
-                wxgzhJson = getWXGZHJson(gzhAPI + getParameters(context));
+                wxgzhJson = getWXGZHJson(getDongTingServerBaseUrl() + gzhAPI + getParameters(context));
 
             if (TextUtils.isEmpty(wxgzhJson)) {
                 wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
@@ -1014,6 +1016,9 @@ public class AppConfig {
                 wxgzhJson = getWXGZHJson(baseURL2 + "wxgzh/wxgzh.json");
             if (wxgzhJson.isEmpty()) {
                 wxgzhJson = getWXGZHJson(baseURL3 + "wxgzh/wxgzh.json");
+            }
+            if (wxgzhJson.isEmpty()) {
+                wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
             }
 
             if (!wxgzhJson.isEmpty()) {
@@ -1046,7 +1051,7 @@ public class AppConfig {
             try {
                 deleteFile(GZHPath + bean.id + ".jpg");
                 if (!AppConfig.isOldServer) {
-                    downloadgzhjpg(bean, String.format(gzhImageUrl, APPLICATION) + bean.id + ".jpg");
+                    downloadgzhjpg(bean, String.format(getDongTingServerBaseUrl() + gzhImageUrl, APPLICATION) + bean.id + ".jpg");
                 } else {
                     throw new IOException("旧后台，正常报错，莫慌");
                 }
@@ -1112,7 +1117,7 @@ public class AppConfig {
             Boolean isSuccess = true;
             try {
                 if (!AppConfig.isOldServer) {
-                    downloadjar(String.format(videoDownloadUrl, APPLICATION), youkulibPath);
+                    downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
                 } else {
                     throw new IOException("旧后台，正常报错，莫慌");
                 }
@@ -1882,6 +1887,7 @@ public class AppConfig {
     public static String getBaiduMapNO() {
         return getBaiduMapNO("");
     }
+
     public static String getBaiduMapNO(Context context) {
         return getBaiduMapNO(PublicUtil.metadata(context, "MAP_NO"));
     }
