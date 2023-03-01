@@ -131,8 +131,8 @@ public class AppConfig {
 
     /**
      * @param context
-     * @param isOldServer  true 为 http://120.25.224.76后台，友盟拼接成路径获取广告参数；false 为 长沙动力后台，接口方式用包名拼接获取广告参数
-     * @param configPrefix 对应文件夹
+     * @param isOldServer  true 为旧后台，false 为动听后台
+     * @param configPrefix 广告项目对应文件夹-->daohang、appstore、dingwei 等。
      */
     public static void Init(Context context, boolean isOldServer, String configPrefix) {
         AppConfig.isOldServer = isOldServer;
