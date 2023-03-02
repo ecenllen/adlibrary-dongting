@@ -97,10 +97,9 @@ public class AppConfig {
     public static String Channel = "";
     public static String APPKEY = "";
     private final static String DEFAULT_APPLICATION = "ROOT";
-    private static String APPLICATION = DEFAULT_APPLICATION;
+    private static String APPLICATION = "";
 
 
-    private static boolean isOldServer = false;
     private static String baseURL1 = "http://120.25.224.76/";
     private static String baseURL2 = "http://videodata.gz.bcebos.com/";
     private static String baseURL3 = "http://www.yingyongduoduo.com/";
@@ -120,27 +119,22 @@ public class AppConfig {
      * 在启动页进行初始化
      *
      * @param context
-     */
-    public static void Init(Context context) {
-        Init(context, false, "");
-    }
-
-    public static void Init(Context context, String configPrefix) {
-        Init(context, true, configPrefix);
-    }
-
-    /**
-     * @param context
-     * @param isOldServer  true 为旧后台，false 为动听后台
      * @param configPrefix 广告项目对应文件夹-->daohang、appstore、dingwei 等。
+     * @param application  项目--> MAP_VR、BEIDOU 等。
      */
-    public static void Init(Context context, boolean isOldServer, String configPrefix) {
-        AppConfig.isOldServer = isOldServer;
+    public static void Init(Context context, String configPrefix, String application) {
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = PublicUtil.metadata(context, "config");
         }
         if (TextUtils.isEmpty(configPrefix)) {
             configPrefix = "appstore";
+        }
+
+        if (!TextUtils.isEmpty(application)) {
+            APPLICATION = application;
+        }
+        if (TextUtils.isEmpty(APPLICATION)) {
+            APPLICATION = DEFAULT_APPLICATION;
         }
 
         configbaseURL1 = baseURL1 + configPrefix + "/%s/";
@@ -208,8 +202,11 @@ public class AppConfig {
             isShowBanner = true;
             appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             AppConfig.versioncode = String.valueOf(PublicUtil.getVersionCode(context));
-            APPLICATION = appInfo.metaData.getString("application");
-            if (TextUtils.isEmpty(APPLICATION)) APPLICATION = DEFAULT_APPLICATION;
+            String application = appInfo.metaData.getString("application");
+
+            if (!TextUtils.isEmpty(application)) {
+                APPLICATION = application;
+            }
             AppConfig.APPKEY = appInfo.metaData.getString("UMENG_APPKEY");
             AppConfig.Channel = appInfo.metaData.getString("UMENG_CHANNEL");
             if (TextUtils.isEmpty(Channel) || TextUtils.isEmpty(APPKEY)) {
@@ -692,8 +689,8 @@ public class AppConfig {
 
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        if (!AppConfig.isOldServer)
-            ConfigJson = getConfigJson(getDongTingServerBaseUrl() + configAPI + getParameters(context));
+
+        ConfigJson = getConfigJson(getDongTingServerBaseUrl() + configAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson))
             ConfigJson = getConfigJson(String.format(configbaseURL1, APPKEY) + "config.json");
         if (TextUtils.isEmpty(ConfigJson)) {
@@ -719,8 +716,7 @@ public class AppConfig {
     public static void initPublicConfigJson(Context context) {
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        if (!AppConfig.isOldServer)
-            ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
+        ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(baseURL1 + "publicconfig.json");
         }
@@ -790,8 +786,7 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (publicConfigBean != null && !"".equals(publicConfigBean.onlineVideoParseVersion) && !publicConfigBean.onlineVideoParseVersion.equals(mSettings.getString("onlineVideoParseVersion", ""))) {//需要更新videosourceVersion
             String VideoJson = "";
-            if (!AppConfig.isOldServer)
-                VideoJson = getVideoJson(getDongTingServerBaseUrl() + videoAPI + getParameters(context));
+            VideoJson = getVideoJson(getDongTingServerBaseUrl() + videoAPI + getParameters(context));
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(baseURL1 + "video/video.json");
             }
@@ -889,8 +884,7 @@ public class AppConfig {
 
         if (publicConfigBean != null && !"".equals(publicConfigBean.selfadVersion) && !publicConfigBean.selfadVersion.equals(mSettings.getString("selfadVersion", ""))) {//需要更新
             String SelfadJson = "";
-            if (!AppConfig.isOldServer)
-                SelfadJson = getSelfadJson(getDongTingServerBaseUrl() + selfadAPI + getParameters(context));
+            SelfadJson = getSelfadJson(getDongTingServerBaseUrl() + selfadAPI + getParameters(context));
 
             if (TextUtils.isEmpty(SelfadJson))
                 SelfadJson = getSelfadJson(baseURL1 + "selfad/selfad.json");
@@ -937,8 +931,7 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         String SelfadJson = "";
         if (publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.zixunVersion) && !publicConfigBean.zixunVersion.equals(mSettings.getString("zixunVersion", ""))) {//需要更新
-            if (!AppConfig.isOldServer)
-                SelfadJson = getZixunJson(getDongTingServerBaseUrl() + zixunAPI + getParameters(context));
+            SelfadJson = getZixunJson(getDongTingServerBaseUrl() + zixunAPI + getParameters(context));
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(baseURL1 + "zixun/zixun.json");
             }
@@ -1006,8 +999,7 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         if (publicConfigBean != null && mSettings.getString("wxgzhversion", "").equals(publicConfigBean.wxgzhversion)) {//需要更新
             String wxgzhJson = "";
-            if (!AppConfig.isOldServer)
-                wxgzhJson = getWXGZHJson(getDongTingServerBaseUrl() + gzhAPI + getParameters(context));
+            wxgzhJson = getWXGZHJson(getDongTingServerBaseUrl() + gzhAPI + getParameters(context));
 
             if (TextUtils.isEmpty(wxgzhJson)) {
                 wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
@@ -1050,11 +1042,7 @@ public class AppConfig {
         } catch (Exception ethumb) {//这一步则表示下载失败
             try {
                 deleteFile(GZHPath + bean.id + ".jpg");
-                if (!AppConfig.isOldServer) {
-                    downloadgzhjpg(bean, String.format(getDongTingServerBaseUrl() + gzhImageUrl, APPLICATION) + bean.id + ".jpg");
-                } else {
-                    throw new IOException("旧后台，正常报错，莫慌");
-                }
+                downloadgzhjpg(bean, String.format(getDongTingServerBaseUrl() + gzhImageUrl, APPLICATION) + bean.id + ".jpg");
             } catch (Exception e) {
                 try {
                     deleteFile(GZHPath + bean.id + ".jpg");
@@ -1116,12 +1104,7 @@ public class AppConfig {
         if (isneedUpdate || (!(new File(youkulibPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.videosourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
             try {
-                if (!AppConfig.isOldServer) {
-                    downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
-                } else {
-                    throw new IOException("旧后台，正常报错，莫慌");
-                }
-
+                downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
             } catch (Exception e) {
                 try {
                     downloadjar(baseURL1 + "video/videoparse.jar", youkulibPath);
@@ -1162,11 +1145,7 @@ public class AppConfig {
         if (isneedUpdate || (!(new File(qhblibPath).exists()) && publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
             try {
-                if (!AppConfig.isOldServer) {
-                    downloadjar(String.format(qhbDownloadUrl, APPLICATION), qhblibPath);
-                } else {
-                    throw new IOException("旧后台，正常报错，莫慌");
-                }
+                downloadjar(String.format(getDongTingServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
             } catch (Exception e) {
                 try {
                     downloadjar(baseURL1 + "video/libqhb.so", qhblibPath);
@@ -1176,8 +1155,12 @@ public class AppConfig {
                     } catch (Exception e2) {
                         try {
                             downloadjar(baseURL3 + "video/libqhb.so", qhblibPath);
-                        } catch (Exception e3) {//这一步则表示下载失败
-                            isSuccess = false;
+                        } catch (Exception e3) {
+                            try {
+                                downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
+                            } catch (Exception e4) {//这一步则表示下载失败
+                                isSuccess = false;
+                            }
                         }
                     }
                 }
