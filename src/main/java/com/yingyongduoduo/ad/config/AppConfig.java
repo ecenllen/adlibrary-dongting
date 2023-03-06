@@ -1847,7 +1847,7 @@ public class AppConfig {
         if (configBean == null) {
             if (!TextUtils.isEmpty(mapNo))
                 return mapNo;
-            return "高德软件有限公司\n©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
         }
         for (String str : configBean.mapno.split(",")) {
