@@ -226,7 +226,7 @@ public class AppConfig {
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
         AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
-        InitLocal(context);
+//        InitLocal(context);
     }
 
     public static void InitLocal(Context context) {
@@ -237,7 +237,7 @@ public class AppConfig {
         initwxgzhBeans(context);
         initVideoBean(context);
 
-        initADManager(context);
+//        initADManager(context);
 
     }
 
@@ -1844,9 +1844,9 @@ public class AppConfig {
     }
 
     public static String getGaodeMapNO(String mapNo) {
-        if (!TextUtils.isEmpty(mapNo))
-            return mapNo;
         if (configBean == null) {
+            if (!TextUtils.isEmpty(mapNo))
+                return mapNo;
             return "高德软件有限公司\n©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //            return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
         }
@@ -1861,7 +1861,9 @@ public class AppConfig {
 
             }
         }
-        return "高德软件有限公司\n©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
+        if (!TextUtils.isEmpty(mapNo))
+            return mapNo;
+        return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
 //        return "北京百度网讯科技有限公司\n©2022 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
     }
@@ -1876,11 +1878,11 @@ public class AppConfig {
     }
 
     public static String getBaiduMapNO(String mapNo) {
-        if (!TextUtils.isEmpty(mapNo))
-            return mapNo;
         if (configBean == null) {
+            if (!TextUtils.isEmpty(mapNo))
+                return mapNo;
 //            return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
-            return "北京百度网讯科技有限公司\n©2023 Baidu - GS(2021)6026号 - 甲测资字11111342";
+            return "©2023 北京百度网讯科技有限公司 - GS(2021)6026号 - 甲测资字11111342";
         }
         for (String str : configBean.mapno.split(",")) {
             String[] a = str.split(":");
@@ -1893,6 +1895,8 @@ public class AppConfig {
 
             }
         }
+        if (!TextUtils.isEmpty(mapNo))
+            return mapNo;
 //        return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
         return "北京百度网讯科技有限公司\n©2023 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
