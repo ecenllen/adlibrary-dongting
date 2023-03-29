@@ -794,11 +794,6 @@ public class ADControl {
 
     private void addGDTBanner2(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
 
-        if (unifiedBannerView != null && unifiedBannerView.isValid()) {
-            Log.e(context.getClass().getSimpleName(), "banner 广告还有效");
-            return;
-        }
-
         if (lyt != null)
             lyt.removeAllViews();
 
