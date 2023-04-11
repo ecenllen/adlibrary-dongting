@@ -27,7 +27,6 @@ import com.yingyongduoduo.ad.bean.ZiXunItemBean;
 import com.yingyongduoduo.ad.bean.ZiXunListItemBean;
 import com.yingyongduoduo.ad.utils.DownLoaderAPK;
 import com.yingyongduoduo.ad.utils.HttpUtil;
-import com.yingyongduoduo.ad.utils.IData;
 import com.yingyongduoduo.ad.utils.PackageUtil;
 import com.yingyongduoduo.ad.utils.PublicUtil;
 
@@ -224,7 +223,7 @@ public class AppConfig {
         AppConfig.URL_START_HTML = String.format("%s" + AppConfig.START_HTML_LOCAL_PATH, "file://");
         AppConfig.youkulibPath = context.getCacheDir() + File.separator + "videoparse.jar";// 初始化引擎存放位置
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
-        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
+//        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
 //        InitLocal(context);
     }
@@ -593,7 +592,7 @@ public class AppConfig {
     }
 
     public static List<WXGZHBean> getWXGZHBeans(String wxgzhJson) {
-        List<WXGZHBean> beans = new ArrayList<WXGZHBean>();
+        List<WXGZHBean> beans = new ArrayList<>();
 
         try {
             final JSONArray ja = new JSONArray(wxgzhJson);
