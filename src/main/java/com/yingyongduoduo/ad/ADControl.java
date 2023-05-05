@@ -833,7 +833,10 @@ public class ADControl {
 
                 @Override
                 public void onADExposure() {
-
+//                    if (lyt != null){
+//                        lyt.removeAllViews();
+//                        lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
+//                    }
                 }
 
                 @Override
@@ -855,8 +858,10 @@ public class ADControl {
                 }
 
             });
-            if (lyt != null)
+
+            if (lyt != null){
                 lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
+            }
             // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
             unifiedBannerView.loadAD();
 

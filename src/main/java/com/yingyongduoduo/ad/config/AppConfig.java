@@ -172,7 +172,7 @@ public class AppConfig {
                                 if ("csj".equals(adType)) {
                                     TTAdManagerHolder.init(context.getApplicationContext(), appid);
                                 } else if ("gdt".equals(adType)) {
-                                    GDTAdSdk.init(context, appid);
+                                    GDTAdSdk.init(context.getApplicationContext(), appid);
                                 }
                                 isHasAppId = true;
                             }
@@ -225,7 +225,7 @@ public class AppConfig {
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
 //        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
-//        InitLocal(context);
+        InitLocal(context);
     }
 
     public static void InitLocal(Context context) {
@@ -306,6 +306,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "greythemechannel")) {
                 bean.greythemechannel = jo.getString("greythemechannel");
+            }
+            if (haveKey(jo, "tbsKey")) {
+                bean.tbsKey = jo.getString("tbsKey");
             }
 
             if (haveKey(jo, "channel")) {
@@ -1899,6 +1902,13 @@ public class AppConfig {
 //        return "©2022 高德软件有限公司 GS(2021)6375号 - 甲测资字11111093";
         return "北京百度网讯科技有限公司\n©2023 Baidu - GS(2021)6026号 - 甲测资字11111342";
 
+    }
+
+    public static String getTBSKey() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.tbsKey;
     }
 
     private static List<Integer> GetRandomList(int size, int max) {
