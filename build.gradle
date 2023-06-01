@@ -75,7 +75,7 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // 广点通
-    api 'com.qq.e.union:union:4.492.1362'
+    api 'com.qq.e.union:union:4.500.1370'
 
     // 下面各SDK根据宿主App是否使用相关业务按需引入。
     // OAID目前为目前国内市场主流的Android Q设备标识，可根据需要选择。
@@ -94,7 +94,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
 
     // 穿山甲
-    api 'com.pangle.cn:ads-sdk-pro:5.3.0.3'
+    api 'com.pangle.cn:ads-sdk-pro:5.2.0.5'
 
 }
 
