@@ -310,6 +310,12 @@ public class AppConfig {
             if (haveKey(jo, "tbsKey")) {
                 bean.tbsKey = jo.getString("tbsKey");
             }
+            if (haveKey(jo, "baiduCloudId")) {
+                bean.baiduCloudId = jo.getString("baiduCloudId");
+            }
+            if (haveKey(jo, "baiduCloudSecret")) {
+                bean.baiduCloudSecret = jo.getString("baiduCloudSecret");
+            }
 
             if (haveKey(jo, "channel")) {
                 JSONObject jo_channel = jo.getJSONObject("channel");
@@ -1816,6 +1822,15 @@ public class AppConfig {
 
     }
 
+    public static String getBaiduCloudId() {
+        if (configBean == null) return "";
+        return configBean.baiduCloudId;
+    }
+
+    public static String getBaiduCloudSecret() {
+        if (configBean == null) return "";
+        return configBean.baiduCloudSecret;
+    }
 
     public static String getShipingType() {
         if (configBean == null) {

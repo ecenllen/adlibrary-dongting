@@ -74,7 +74,6 @@
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.6.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.pangle.cn:ads-sdk-pro:5.1.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment:27.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable:27.1.1@aar" level="project" />
