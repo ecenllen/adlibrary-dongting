@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pangle.cn:ads-sdk-pro:5.2.0.5@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/6198d7d73dd1db3a8103fbe050106310/ads-sdk-pro-5.2.0.5/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/6198d7d73dd1db3a8103fbe050106310/ads-sdk-pro-5.2.0.5/res" />
+      <root url="file://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/6198d7d73dd1db3a8103fbe050106310/ads-sdk-pro-5.2.0.5/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

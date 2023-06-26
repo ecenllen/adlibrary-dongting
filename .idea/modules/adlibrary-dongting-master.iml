@@ -70,7 +70,7 @@
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:annotations:4.9.0" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:common:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.500.1370@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.530.1400@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.6.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
