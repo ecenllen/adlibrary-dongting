@@ -14,13 +14,12 @@
         android:id="@+id/tv_close"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:gravity="center"
-        android:layout_alignRight="@+id/my_image_view"
-        android:text="111"
-        android:visibility="visible"
         android:layout_alignTop="@+id/my_image_view"
+        android:layout_alignRight="@+id/my_image_view"
         android:background="@color/ad_prefix_blue"
-         />
+        android:gravity="center"
+        android:text="111"
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/ad_log"

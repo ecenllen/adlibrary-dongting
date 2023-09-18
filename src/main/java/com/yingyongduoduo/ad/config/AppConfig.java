@@ -483,6 +483,9 @@ public class AppConfig {
             if (haveKey(jo, "searchbaidudomestic")) {
                 bean.searchbaidudomestic = jo.getString("searchbaidudomestic");
             }
+            if (haveKey(jo, "searchbaiduworld")) {
+                bean.searchbaiduworld = jo.getString("searchbaiduworld");
+            }
             if (haveKey(jo, "mar3dUrl")) {
                 bean.mar3dUrl = jo.getString("mar3dUrl");
             }

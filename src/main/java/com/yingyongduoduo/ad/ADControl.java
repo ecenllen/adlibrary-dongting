@@ -441,6 +441,7 @@ public class ADControl {
         if (AppConfig.isShowKP())//展示开屏广告
         {
             String kpType = AppConfig.getKPType();//获取开屏广告类型，baidu，gdt，google
+
             String kp_String = AppConfig.configBean.ad_kp_idMap.get(kpType);
 
             if (!TextUtils.isEmpty(kp_String)) {
@@ -453,6 +454,10 @@ public class ADControl {
                     } else if ("csj".equals(kpType)) {
                         ShowCSJKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
                     } else if ("gdt".equals(kpType)) {
+                        ShowGDTKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
+                    } else if (kpType.startsWith("csj")) {
+                        ShowCSJKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
+                    } else if (kpType.startsWith("gdt")) {
                         ShowGDTKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
                     } else {
                         kpAdListener.onAdFailed("其他不支持广告类型" + kp_String);
@@ -670,6 +675,10 @@ public class ADControl {
                         ShowGDTCP2(context, appid, adplaceid);
                     } else if ("self".equals(cpType)) {
                         ShowSelfCP(context);
+                    } else if (cpType.startsWith("csj")) {
+                        ShowCSJCP2(context, appid, adplaceid);
+                    } else if (cpType.startsWith("gdt")) {
+                        ShowGDTCP2(context, appid, adplaceid);
                     } else {
                         // kpAdListener.onAdFailed("其他不支持广告类型" + kp_String);
                     }
@@ -774,7 +783,7 @@ public class ADControl {
                             AppConfig.isShowBanner = false;
                             if (lyt != null)
                                 lyt.removeAllViews();
-                            //用户选择不喜欢原因后，移除广告展示
+                            //用户选择不喜原因后，移除广告展示
                             if (enforce) {
 //                                TToast.show(mContext, "模版Banner 穿山甲sdk强制将view关闭了");
                             }
@@ -859,7 +868,7 @@ public class ADControl {
 
             });
 
-            if (lyt != null){
+            if (lyt != null) {
                 lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
             }
             // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
@@ -1325,6 +1334,10 @@ public class ADControl {
                         addGoogleBanner(lyt, context, appid, adplaceid);
                     } else if ("self".equals(bannerType)) {
                         addSelfBanner(lyt, context);
+                    } else if (bannerType.startsWith("csj")) {
+                        addCSJBanner(lyt, context, appid, adplaceid);
+                    } else if (bannerType.startsWith("gdt")) {
+                        addGDTBanner2(lyt, context, appid, adplaceid);
                     } else {
 //                        kpAdListener.onAdFailed("其他不支持广告类型" + kp_String);
                     }
