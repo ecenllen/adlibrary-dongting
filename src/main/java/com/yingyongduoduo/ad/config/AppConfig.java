@@ -99,9 +99,9 @@ public class AppConfig {
     private static String APPLICATION = "";
 
 
-    private static String baseURL1 = "http://120.25.224.76/";
-    private static String baseURL2 = "http://videodata.gz.bcebos.com/";
-    private static String baseURL3 = "http://www.yingyongduoduo.com/";
+    private static final String baseURL1 = "http://120.25.224.76/";
+    private static final String baseURL2 = "http://videodata.gz.bcebos.com/";
+    private static final String baseURL3 = "http://www.yingyongduoduo.com/";
     private static String configbaseURL1;
     private static String configbaseURL2;
     private static String configbaseURL3;
@@ -136,9 +136,9 @@ public class AppConfig {
             APPLICATION = DEFAULT_APPLICATION;
         }
 
-        configbaseURL1 = baseURL1 + configPrefix + "/%s/";
-        configbaseURL2 = baseURL2 + configPrefix + "/%s/";
-        configbaseURL3 = baseURL3 + configPrefix + "/%s/";
+        configbaseURL1 = baseURL1 + configPrefix + File.separator;
+        configbaseURL2 = baseURL2 + configPrefix + File.separator;
+        configbaseURL3 = baseURL3 + configPrefix + File.separator;
 
         initConfigJson(context);
         initPublicConfigJson(context);
@@ -703,12 +703,12 @@ public class AppConfig {
 
         ConfigJson = getConfigJson(getDongTingServerBaseUrl() + configAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson))
-            ConfigJson = getConfigJson(String.format(configbaseURL1, APPKEY) + "config.json");
+            ConfigJson = getConfigJson(configbaseURL1 + APPKEY + "/" + "config.json");
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getConfigJson(String.format(configbaseURL2, APPKEY) + "config.json");
+            ConfigJson = getConfigJson(configbaseURL2 + APPKEY + "/" + "config.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getConfigJson(String.format(configbaseURL3, APPKEY) + "config.json");
+            ConfigJson = getConfigJson(configbaseURL3 + APPKEY + "/" + "config.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
@@ -729,13 +729,13 @@ public class AppConfig {
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
         ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(baseURL1 + "publicconfig.json");
+            ConfigJson = getPubConfigJson(configbaseURL1 + "publicconfig.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(baseURL2 + "publicconfig.json");
+            ConfigJson = getPubConfigJson(configbaseURL2 + "publicconfig.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(baseURL3 + "publicconfig.json");
+            ConfigJson = getPubConfigJson(configbaseURL3 + "publicconfig.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
@@ -799,13 +799,13 @@ public class AppConfig {
             String VideoJson = "";
             VideoJson = getVideoJson(getDongTingServerBaseUrl() + videoAPI + getParameters(context));
             if (TextUtils.isEmpty(VideoJson)) {
-                VideoJson = getVideoJson(baseURL1 + "video/video.json");
+                VideoJson = getVideoJson(configbaseURL1 + "video/video.json");
             }
             if (TextUtils.isEmpty(VideoJson)) {
-                VideoJson = getVideoJson(baseURL2 + "video/video.json");
+                VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
             }
             if (TextUtils.isEmpty(VideoJson)) {
-                VideoJson = getVideoJson(baseURL3 + "video/video.json");
+                VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
             }
             if (TextUtils.isEmpty(VideoJson))
                 VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
@@ -898,13 +898,13 @@ public class AppConfig {
             SelfadJson = getSelfadJson(getDongTingServerBaseUrl() + selfadAPI + getParameters(context));
 
             if (TextUtils.isEmpty(SelfadJson))
-                SelfadJson = getSelfadJson(baseURL1 + "selfad/selfad.json");
+                SelfadJson = getSelfadJson(configbaseURL1 + "selfad/selfad.json");
 
             if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getSelfadJson(baseURL2 + "selfad/selfad.json");
+                SelfadJson = getSelfadJson(configbaseURL2 + "selfad/selfad.json");
             }
             if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getSelfadJson(baseURL3 + "selfad/selfad.json");
+                SelfadJson = getSelfadJson(configbaseURL3 + "selfad/selfad.json");
             }
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
@@ -944,13 +944,13 @@ public class AppConfig {
         if (publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.zixunVersion) && !publicConfigBean.zixunVersion.equals(mSettings.getString("zixunVersion", ""))) {//需要更新
             SelfadJson = getZixunJson(getDongTingServerBaseUrl() + zixunAPI + getParameters(context));
             if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getZixunJson(baseURL1 + "zixun/zixun.json");
+                SelfadJson = getZixunJson(configbaseURL1 + "zixun/zixun.json");
             }
             if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getZixunJson(baseURL2 + "zixun/zixun.json");
+                SelfadJson = getZixunJson(configbaseURL2 + "zixun/zixun.json");
             }
             if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getZixunJson(baseURL3 + "zixun/zixun.json");
+                SelfadJson = getZixunJson(configbaseURL3 + "zixun/zixun.json");
             }
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
@@ -1013,12 +1013,12 @@ public class AppConfig {
             wxgzhJson = getWXGZHJson(getDongTingServerBaseUrl() + gzhAPI + getParameters(context));
 
             if (TextUtils.isEmpty(wxgzhJson)) {
-                wxgzhJson = getWXGZHJson(baseURL1 + "wxgzh/wxgzh.json");
+                wxgzhJson = getWXGZHJson(configbaseURL1 + "wxgzh/wxgzh.json");
             }
             if (TextUtils.isEmpty(wxgzhJson))
-                wxgzhJson = getWXGZHJson(baseURL2 + "wxgzh/wxgzh.json");
+                wxgzhJson = getWXGZHJson(configbaseURL2 + "wxgzh/wxgzh.json");
             if (wxgzhJson.isEmpty()) {
-                wxgzhJson = getWXGZHJson(baseURL3 + "wxgzh/wxgzh.json");
+                wxgzhJson = getWXGZHJson(configbaseURL3 + "wxgzh/wxgzh.json");
             }
             if (wxgzhJson.isEmpty()) {
                 wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
@@ -1057,15 +1057,15 @@ public class AppConfig {
             } catch (Exception e) {
                 try {
                     deleteFile(GZHPath + bean.id + ".jpg");
-                    downloadgzhjpg(bean, baseURL1 + "wxgzh/" + bean.id + ".jpg");
+                    downloadgzhjpg(bean, configbaseURL1 + "wxgzh/" + bean.id + ".jpg");
                 } catch (Exception e1) {
                     try {
                         deleteFile(GZHPath + bean.id + ".jpg");
-                        downloadgzhjpg(bean, baseURL2 + "wxgzh/" + bean.id + ".jpg");
+                        downloadgzhjpg(bean, configbaseURL2 + "wxgzh/" + bean.id + ".jpg");
                     } catch (Exception e2) {
                         try {
                             deleteFile(GZHPath + bean.id + ".jpg");
-                            downloadgzhjpg(bean, baseURL3 + "wxgzh/" + bean.id + ".jpg");
+                            downloadgzhjpg(bean, configbaseURL3 + "wxgzh/" + bean.id + ".jpg");
                         } catch (Exception e3) {//这一步则表示下载失败
                             // isSuccess = false;
                             deleteFile(GZHPath + bean.id + ".jpg");
@@ -1118,13 +1118,13 @@ public class AppConfig {
                 downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
             } catch (Exception e) {
                 try {
-                    downloadjar(baseURL1 + "video/videoparse.jar", youkulibPath);
+                    downloadjar(configbaseURL1 + "video/videoparse.jar", youkulibPath);
                 } catch (Exception e1) {
                     try {
-                        downloadjar(baseURL2 + "video/videoparse.jar", youkulibPath);
+                        downloadjar(configbaseURL2 + "video/videoparse.jar", youkulibPath);
                     } catch (Exception e2) {
                         try {
-                            downloadjar(baseURL3 + "video/videoparse.jar", youkulibPath);
+                            downloadjar(configbaseURL3 + "video/videoparse.jar", youkulibPath);
                         } catch (Exception e3) {//这一步则表示下载失败
                             isSuccess = false;
                         }
@@ -1159,13 +1159,13 @@ public class AppConfig {
                 downloadjar(String.format(getDongTingServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
             } catch (Exception e) {
                 try {
-                    downloadjar(baseURL1 + "video/libqhb.so", qhblibPath);
+                    downloadjar(configbaseURL1 + "video/libqhb.so", qhblibPath);
                 } catch (Exception e1) {
                     try {
-                        downloadjar(baseURL2 + "video/libqhb.so", qhblibPath);
+                        downloadjar(configbaseURL2 + "video/libqhb.so", qhblibPath);
                     } catch (Exception e2) {
                         try {
-                            downloadjar(baseURL3 + "video/libqhb.so", qhblibPath);
+                            downloadjar(configbaseURL3 + "video/libqhb.so", qhblibPath);
                         } catch (Exception e3) {
                             try {
                                 downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
