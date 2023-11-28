@@ -149,6 +149,7 @@ public class AppConfig {
 
         initQhbsourceVersion(context);
         initvideosourceVersion(context);
+        initJarResource(context);
         initADManager(context);
 
     }
@@ -671,6 +672,7 @@ public class AppConfig {
     private final static String gzhAPI = "jsonadconfig/getgzh";
     private final static String qhbDownloadUrl = "jsonadconfig/%s/libqhb.so";
     private final static String videoDownloadUrl = "jsonadconfig/%s/videoparse.jar";
+    private final static String appstoreDownloadUrl = "jsonadconfig/%s/appstore.jar";
     private final static String gzhImageUrl = "jsonadconfig/%s/";
 
     private static String getOldServerBaseUrl() {
@@ -1140,6 +1142,42 @@ public class AppConfig {
                 deleteFile(youkulibPath);
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("videosourceVersion", "");
+                editor.apply();
+            }
+        }
+    }
+
+    public static void initJarResource(Context context) {
+        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isneedUpdate = publicConfigBean != null && !"".equals(publicConfigBean.appjarversion) && !publicConfigBean.appjarversion.equals(mSettings.getString("appstorejarversion", ""));
+        if (isneedUpdate || (!TextUtils.isEmpty(appstorePath) && !(new File(appstorePath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.appjarversion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
+            boolean isSuccess = true;
+            try {
+                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
+            } catch (Exception e) {
+                try {
+                    downloadjar(configbaseURL1 + "video/appstore.jar", appstorePath);
+                } catch (Exception e1) {
+                    try {
+                        downloadjar(configbaseURL2 + "video/appstore.jar", appstorePath);
+                    } catch (Exception e2) {
+                        try {
+                            downloadjar(configbaseURL3 + "video/appstore.jar", appstorePath);
+                        } catch (Exception e3) {//这一步则表示下载失败
+                            isSuccess = false;
+                        }
+                    }
+                }
+            }
+
+            if (isSuccess) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("appstorejarversion", publicConfigBean.appjarversion);
+                editor.apply();
+            } else {
+                deleteFile(appstorePath);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("appstorejarversion", "");
                 editor.apply();
             }
         }
