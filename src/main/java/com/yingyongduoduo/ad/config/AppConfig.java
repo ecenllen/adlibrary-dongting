@@ -174,6 +174,10 @@ public class AppConfig {
                                     TTAdManagerHolder.init(context.getApplicationContext(), appid);
                                 } else if ("gdt".equals(adType)) {
                                     GDTAdSdk.init(context.getApplicationContext(), appid);
+                                } else if (adType.startsWith("gdt")) {
+                                    GDTAdSdk.init(context, appid);
+                                } else if (adType.startsWith("csj")) {
+                                    TTAdManagerHolder.init(context.getApplicationContext(), appid);
                                 }
                                 isHasAppId = true;
                             }
@@ -236,8 +240,6 @@ public class AppConfig {
         initZixunBeans(context);
         initwxgzhBeans(context);
         initVideoBean(context);
-
-//        initADManager(context);
 
     }
 
