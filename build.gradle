@@ -109,7 +109,7 @@ dependencies {
 
     // 穿山甲
 //    api 'com.pangle.cn:ads-sdk-pro:5.8.0.7'
-    implementation "com.pangle.cn:mediation-sdk:5.8.0.7"  //融合SDK
+    implementation "com.pangle.cn:mediation-sdk:5.9.2.8"  //融合SDK
 
 }
 

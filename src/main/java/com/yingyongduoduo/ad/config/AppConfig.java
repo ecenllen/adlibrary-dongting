@@ -175,7 +175,7 @@ public class AppConfig {
                                 } else if ("gdt".equals(adType)) {
                                     GDTAdSdk.init(context.getApplicationContext(), appid);
                                 } else if (adType.startsWith("gdt")) {
-                                    GDTAdSdk.init(context, appid);
+                                    GDTAdSdk.init(context.getApplicationContext(), appid);
                                 } else if (adType.startsWith("csj")) {
                                     TTAdManagerHolder.init(context.getApplicationContext(), appid);
                                 }
