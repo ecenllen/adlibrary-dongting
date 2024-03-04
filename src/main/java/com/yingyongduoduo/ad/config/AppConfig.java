@@ -1829,6 +1829,13 @@ public class AppConfig {
         return configBean.indexurl;
 
     }
+    public static String getCpuIdOrUrl() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.cpuidorurl;
+
+    }
 
     public static String getSearchUrl() {
         if (configBean == null) {

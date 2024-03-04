@@ -1,12 +1,12 @@
 package com.yingyongduoduo.ad;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTCustomController;
-import com.bytedance.sdk.openadsdk.mediation.init.MediationPrivacyConfig;
 
 
 /**
@@ -31,18 +31,18 @@ public class TTAdManagerHolder {
 
     //step1:接入网盟广告sdk的初始化操作，详情见接入文档和穿山甲平台说明
     private static void doInit(Context context) {
-        if (!TTAdSdk.isInitSuccess()) {
+        if (!sInit) {
             //TTAdSdk.init(context, buildConfig(context));
             sInit = TTAdSdk.init(context, buildConfig(context));
             TTAdSdk.start(new TTAdSdk.Callback() {
                 @Override
                 public void success() {
-
+                    Log.i(TAG, "success: "+ TTAdSdk.isInitSuccess());
                 }
 
                 @Override
                 public void fail(int i, String s) {
-
+                    Log.i(TAG, "fail: "+  s);
                 }
             });
 //            TTAdSdk.isInitSuccess();
@@ -106,22 +106,6 @@ public class TTAdManagerHolder {
             @Override
             public String getAndroidId() {
                 return super.getAndroidId();
-            }
-
-            @Override
-            public MediationPrivacyConfig getMediationPrivacyConfig() {
-                return new MediationPrivacyConfig() {
-
-                    @Override
-                    public boolean isLimitPersonalAds() {
-                        return super.isLimitPersonalAds();
-                    }
-
-                    @Override
-                    public boolean isProgrammaticRecommend() {
-                        return super.isProgrammaticRecommend();
-                    }
-                };
             }
 
             @Override
