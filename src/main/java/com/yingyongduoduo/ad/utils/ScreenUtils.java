@@ -2,6 +2,7 @@ package com.yingyongduoduo.ad.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -32,6 +33,16 @@ public class ScreenUtils {
     public static int dp2px(Context context, float dp) {
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()) + 0.5f);
     }
+
+    public static int dp2px(float dpValue) {
+        return (int)(0.5F + dpValue * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+
+    public static float px2dp(int pxValue) {
+        return (float)pxValue / Resources.getSystem().getDisplayMetrics().density;
+    }
+
 
     /**
      * 获得状态栏的高度

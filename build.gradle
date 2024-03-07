@@ -108,8 +108,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
 
     // 穿山甲
-    api 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
-//    implementation "com.pangle.cn:mediation-sdk:5.9.2.8"  //融合SDK
+//    api 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
+    implementation "com.pangle.cn:mediation-sdk:5.9.2.8"  //融合SDK
 
 }
 
