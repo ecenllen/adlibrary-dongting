@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.huawei.hms.ads.HwAds;
 import com.qq.e.comm.managers.GDTAdSdk;
 import com.yingyongduoduo.ad.TTAdManagerHolder;
 import com.yingyongduoduo.ad.bean.ADBean;
@@ -170,14 +171,24 @@ public class AppConfig {
                         if (a.length == 2) {
                             String appid = a[0];
                             if (!TextUtils.isEmpty(appid)) {
-                                if ("csj".equals(adType)) {
+                                if ("csj".equals(adType) || adType.startsWith("csj")) {
                                     TTAdManagerHolder.init(context.getApplicationContext(), appid);
-                                } else if ("gdt".equals(adType)) {
-                                    GDTAdSdk.init(context.getApplicationContext(), appid);
-                                } else if (adType.startsWith("gdt")) {
-                                    GDTAdSdk.init(context.getApplicationContext(), appid);
-                                } else if (adType.startsWith("csj")) {
-                                    TTAdManagerHolder.init(context.getApplicationContext(), appid);
+                                } else if ("gdt".equals(adType) || adType.startsWith("gdt")) {
+                                    GDTAdSdk.initWithoutStart(context.getApplicationContext(), appid);
+                                    GDTAdSdk.start(new GDTAdSdk.OnStartListener() {
+                                        @Override
+                                        public void onStartSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onStartFailed(Exception e) {
+
+                                        }
+                                    });
+                                } else if("huawei".equals(adType) || adType.startsWith("huawei")){
+                                    // 初始化鲸鸿动能SDK
+                                    HwAds.init(context.getApplicationContext(), appid);
                                 }
                                 isHasAppId = true;
                             }
@@ -1730,6 +1741,9 @@ public class AppConfig {
 
     public static String getKPType() {
         if (configBean == null) {
+            if(Channel.startsWith("huawei")){
+                return "huawei";
+            }
             return "csj";
         }
         for (String str : configBean.kptype.split(",")) {
@@ -1743,12 +1757,18 @@ public class AppConfig {
 
             }
         }
+        if(Channel.startsWith("huawei")){
+            return "huawei";
+        }
         return "csj";
 
     }
 
     public static String getTPType() {
         if (configBean == null) {
+            if(Channel.startsWith("huawei")){
+                return "huawei";
+            }
             return "gdtmb";
         }
         for (String str : configBean.tptype.split(",")) {
@@ -1762,12 +1782,18 @@ public class AppConfig {
 
             }
         }
+        if(Channel.startsWith("huawei")){
+            return "huawei";
+        }
         return "gdtmb";
 
     }
 
     public static String getCPType() {
         if (configBean == null) {
+            if(Channel.startsWith("huawei")){
+                return "huawei";
+            }
             return "csj2";
         }
         for (String str : configBean.cptype.split(",")) {
@@ -1780,6 +1806,9 @@ public class AppConfig {
                 }
 
             }
+        }
+        if(Channel.startsWith("huawei")){
+            return "huawei";
         }
         return "csj2";
 
@@ -1855,6 +1884,9 @@ public class AppConfig {
 
     public static String getBannerType() {
         if (configBean == null) {
+//            if(Channel.startsWith("huawei")){
+//                return "huawei";
+//            }
             return "csj";
         }
         for (String str : configBean.bannertype.split(",")) {
@@ -1868,6 +1900,9 @@ public class AppConfig {
 
             }
         }
+//        if(Channel.startsWith("huawei")){
+//            return "huawei";
+//        }
         return "csj";
 
     }
