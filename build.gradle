@@ -75,7 +75,7 @@ buildscript {
                 dirs 'libs'
             }
             // 配置鲸鸿动能SDK的Maven仓地址
-            maven { url 'https://developer.huawei.com/repo/' }
+//            maven { url 'https://developer.huawei.com/repo/' }
         }
     }
 }
@@ -116,7 +116,7 @@ dependencies {
     implementation "com.pangle.cn:mediation-sdk:6.1.0.4"  //融合SDK
 
     //华为广告
-    implementation 'com.huawei.hms:ads-lite:13.4.70.300'
+//    implementation 'com.huawei.hms:ads-lite:13.4.70.300'
 
     //OPPO广告接入指引
 //    implementation(name: 'mobad_normal_pub_xxxxxx', ext: 'aar')//请使用压缩包最新版本

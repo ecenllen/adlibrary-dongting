@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.huawei.hms.ads.HwAds;
 import com.qq.e.comm.managers.GDTAdSdk;
 import com.yingyongduoduo.ad.TTAdManagerHolder;
 import com.yingyongduoduo.ad.bean.ADBean;
@@ -188,7 +187,7 @@ public class AppConfig {
                                     });
                                 } else if("huawei".equals(adType) || adType.startsWith("huawei")){
                                     // 初始化鲸鸿动能SDK
-                                    HwAds.init(context.getApplicationContext(), appid);
+//                                    HwAds.init(context.getApplicationContext(), appid);
                                 }
                                 isHasAppId = true;
                             }
