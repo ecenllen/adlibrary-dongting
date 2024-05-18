@@ -98,9 +98,9 @@ dependencies {
     // 下面各SDK根据宿主App是否使用相关业务按需引入。
     // OAID目前为目前国内市场主流的Android Q设备标识，可根据需要选择。
     // 友盟统计SDK
-    implementation 'com.umeng.umsdk:common:9.6.7' // (必选)版本号
+    api 'com.umeng.umsdk:common:9.6.7' // (必选)版本号
 //    implementation  'com.umeng.umsdk:game:9.x.x+G' // 游戏统计SDK依赖(可选)
-    implementation 'com.umeng.umsdk:asms:1.8.0' // asms包依赖(必选)
+    api 'com.umeng.umsdk:asms:1.8.0' // asms包依赖(必选)
 //    api 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
 
     // androidX 用最新 4.11.0, 不然使用4.8.0
