@@ -36,11 +36,10 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.530.1400@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.6.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.563.1433@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:common:9.6.7@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.8.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.9.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.pangle.cn:ads-sdk-pro:5.9.1.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment:27.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable:27.1.1@aar" level="project" />
@@ -52,10 +51,22 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:runtime:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:viewmodel:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.pangle.cn:mediation-sdk:6.1.0.4@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-lite:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-banner:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-native:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-interstitial:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-reward:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-splash:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-instream:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-base:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-uiengineloader:3.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-lang:13.4.70.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ads-jsbridge:3.4.70.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: D./WorkplaceF/AndroidNewADProject/adlibrary-dongting-master/libs/classes-dex2jar.jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.umeng.umsdk:common:9.5.4" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.14.9" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.17.2" level="project" />

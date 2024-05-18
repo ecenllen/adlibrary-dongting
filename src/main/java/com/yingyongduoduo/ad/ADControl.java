@@ -84,6 +84,7 @@ public class ADControl {
     public static boolean isFront = false; // 后台到前台
     public static Boolean isonshow = false;
     public static boolean ISGiveHaoping = false;
+    private boolean isRenderSuccess = false;
     private static HashMap<String, String> giveHaoping = new HashMap<String, String>();
 
     //展示5分好评广告，首次进来不展示，和插屏广告戳开，隔间10秒
@@ -867,6 +868,7 @@ public class ADControl {
                                 lyt.removeAllViews();
                                 lyt.addView(view);
                             }
+                            isRenderSuccess = true;
                         }
                     });
                     mTTAd.render();
@@ -913,7 +915,7 @@ public class ADControl {
         // "testw6vs28auh3"为测试专用的广告位ID，App正式发布时需要改为正式的广告位ID
         hwBannerView.setAdId(adplaceid);
         hwBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_ADVANCED);//屏幕宽度 x 最优高度 自适应Banner广告，根据设备的尺寸和横竖屏状态计算出合适的尺寸。
-        lyt.addView(hwBannerView);
+//        lyt.addView(hwBannerView);
         // 设置轮播时间间隔为60秒
         hwBannerView.setBannerRefresh(60);
         // 创建广告请求，加载广告
@@ -922,7 +924,10 @@ public class ADControl {
         AdListener adListener = new AdListener() {
             @Override
             public void onAdLoaded() {
+                if(lyt != null)
+                    lyt.addView(hwBannerView);
                 // 广告加载成功时调用
+                isRenderSuccess = true;
             }
 
             @Override
@@ -1016,6 +1021,7 @@ public class ADControl {
                     if (lyt != null){
                         lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
                     }
+                    isRenderSuccess = true;
                 }
 
                 @Override
@@ -1485,6 +1491,7 @@ public class ADControl {
     public void addBannerAd(LinearLayout lyt, Activity context) {
         ShowCp(context);
         homeGet5Score(context);
+        if(isRenderSuccess) return;
         if (AppConfig.isShowBanner() && lyt != null)//展示广告条广告
         {
             String bannerType = AppConfig.getBannerType();//获取开屏广告类型，baidu，gdt，google
