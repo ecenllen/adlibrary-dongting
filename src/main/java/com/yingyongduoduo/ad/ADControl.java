@@ -553,8 +553,6 @@ public class ADControl {
                         ShowCSJKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
                     } else if (kpType.startsWith("gdt")) {
                         ShowGDTKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
-                    } else if (kpType.startsWith("huawei")) {
-//                        ShowHuaWeiKP(context, adsParent, skipView, kpAdListener, appid, adplaceid);
                     } else {
                         kpAdListener.onAdFailed("其他不支持广告类型" + kp_String);
                     }

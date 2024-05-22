@@ -1740,9 +1740,9 @@ public class AppConfig {
 
     public static String getKPType() {
         if (configBean == null) {
-            if(Channel.startsWith("huawei")){
-                return "huawei";
-            }
+//            if(Channel.startsWith("huawei")){
+//                return "huawei";
+//            }
             return "csj";
         }
         for (String str : configBean.kptype.split(",")) {
@@ -1756,18 +1756,18 @@ public class AppConfig {
 
             }
         }
-        if(Channel.startsWith("huawei")){
-            return "huawei";
-        }
+//        if(Channel.startsWith("huawei")){
+//            return "huawei";
+//        }
         return "csj";
 
     }
 
     public static String getTPType() {
         if (configBean == null) {
-            if(Channel.startsWith("huawei")){
-                return "huawei";
-            }
+//            if(Channel.startsWith("huawei")){
+//                return "huawei";
+//            }
             return "gdtmb";
         }
         for (String str : configBean.tptype.split(",")) {
@@ -1781,18 +1781,18 @@ public class AppConfig {
 
             }
         }
-        if(Channel.startsWith("huawei")){
-            return "huawei";
-        }
+//        if(Channel.startsWith("huawei")){
+//            return "huawei";
+//        }
         return "gdtmb";
 
     }
 
     public static String getCPType() {
         if (configBean == null) {
-            if(Channel.startsWith("huawei")){
-                return "huawei";
-            }
+//            if(Channel.startsWith("huawei")){
+//                return "huawei";
+//            }
             return "csj2";
         }
         for (String str : configBean.cptype.split(",")) {
@@ -1806,9 +1806,9 @@ public class AppConfig {
 
             }
         }
-        if(Channel.startsWith("huawei")){
-            return "huawei";
-        }
+//        if(Channel.startsWith("huawei")){
+//            return "huawei";
+//        }
         return "csj2";
 
     }
