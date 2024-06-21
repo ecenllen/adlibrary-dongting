@@ -45,6 +45,7 @@ public class TTAdManagerHolder {
                     Log.i(TAG, "fail: "+  s);
                 }
             });
+
 //            TTAdSdk.isInitSuccess();
 //            TTAdSdk.init(context, buildConfig(context), new TTAdSdk.InitCallback() {
 //                @Override
@@ -70,6 +71,7 @@ public class TTAdManagerHolder {
 //                .debug(false) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
                 .directDownloadNetworkType() //允许直接下载的网络状态集合, 不设置代表二次确认
                 .supportMultiProcess(false)//是否支持多进程
+                .useMediation(true)//④兜底需要设置useMediation(true)，否则无效。
 //                .needClearTaskReset()
                 .build();
     }

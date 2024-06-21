@@ -22,7 +22,6 @@ package com.yingyongduoduo.ad.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 
 /** Identifies a mounted volume */
@@ -40,7 +39,6 @@ public class StorageDirectoryParcelable implements Parcelable {
     name = im.readString();
   }
 
-  @NonNull
   @Override
   public String toString() {
     return "StorageDirectory(path=" + path + ", name=" + name + ")";
