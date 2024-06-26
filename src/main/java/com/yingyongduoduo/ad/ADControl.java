@@ -421,6 +421,7 @@ public class ADControl {
 
             }
         };
+        adsParent.removeAllViews();
         SplashAD splashAD = new SplashAD((Activity) context, adplaceid, listener, 0);
         splashAD.fetchAndShowIn(adsParent);
 
