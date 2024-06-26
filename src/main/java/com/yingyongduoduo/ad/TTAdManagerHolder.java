@@ -82,7 +82,7 @@ public class TTAdManagerHolder {
 
             @Override
             public boolean isCanUseWifiState() {
-                return super.isCanUseWifiState();
+                return false;
             }
 
             @Override
