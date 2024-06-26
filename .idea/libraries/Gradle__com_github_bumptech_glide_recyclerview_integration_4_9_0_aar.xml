@@ -1,14 +1,14 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/33933073458a3d045b9d453ad937f9ec/recyclerview-integration-4.9.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/33933073458a3d045b9d453ad937f9ec/recyclerview-integration-4.9.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/5274d5f4a2682e3f73c8eb81e478f4ea/transformed/recyclerview-integration-4.9.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/5274d5f4a2682e3f73c8eb81e478f4ea/transformed/recyclerview-integration-4.9.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/recyclerview-integration/4.9.0/494ae13eea7b47749722d60fca784987b23a4cc6/recyclerview-integration-4.9.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/recyclerview-integration/4.9.0/494ae13eea7b47749722d60fca784987b23a4cc6/recyclerview-integration-4.9.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/recyclerview-integration/4.9.0/e4a6a86b29fb19530444b72ec0caa85355a4defd/recyclerview-integration-4.9.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/recyclerview-integration/4.9.0/e4a6a86b29fb19530444b72ec0caa85355a4defd/recyclerview-integration-4.9.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

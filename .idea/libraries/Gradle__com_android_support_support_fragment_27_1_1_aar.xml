@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.android.support:support-fragment:27.1.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/70b058f56c09e6aeb6b5f6aea6642ee7/support-fragment-27.1.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/70b058f56c09e6aeb6b5f6aea6642ee7/support-fragment-27.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/f7f81917a11f06c783147a3f0ab96afc/transformed/support-fragment-27.1.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/f7f81917a11f06c783147a3f0ab96afc/transformed/support-fragment-27.1.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/27.1.1/94732bda44fba11302c58e459b7c1f47e7521bf9/support-fragment-27.1.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/27.1.1/94732bda44fba11302c58e459b7c1f47e7521bf9/support-fragment-27.1.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

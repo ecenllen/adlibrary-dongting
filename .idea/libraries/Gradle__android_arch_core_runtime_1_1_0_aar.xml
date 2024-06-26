@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: android.arch.core:runtime:1.1.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/e719d6bcc7c983875bb4b61ee3cc4f35/runtime-1.1.0/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/transforms-2/files-2.1/e719d6bcc7c983875bb4b61ee3cc4f35/runtime-1.1.0/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/2c1db6ff52d569507e9f6cb12249e739/transformed/runtime-1.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/2c1db6ff52d569507e9f6cb12249e739/transformed/runtime-1.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../../Android/.gradle/caches/modules-2/files-2.1/android.arch.core/runtime/1.1.0/62944187d3ae3e7a4644b50da4e7b63c605a696/runtime-1.1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/modules-2/files-2.1/android.arch.core/runtime/1.1.0/62944187d3ae3e7a4644b50da4e7b63c605a696/runtime-1.1.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

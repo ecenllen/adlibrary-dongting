@@ -52,7 +52,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: android.arch.lifecycle:viewmodel:1.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.pangle.cn:mediation-sdk:6.1.0.4@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: D./WorkplaceF/AndroidNewADProject/adlibrary-dongting-master/libs/classes-dex2jar.jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: D./AndroidProject/AndroidOther/adlibrary-dongting-master/libs/classes-dex2jar.jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1" level="project" />
