@@ -157,6 +157,9 @@ public class AppConfig {
     private static void initADManager(Context context) {
         String kp_String = "";
         boolean isHasAppId = false;
+        if(!AppConfig.isShowKP()) {
+            return;
+        }
         if (AppConfig.configBean != null && AppConfig.configBean.ad_kp_idMap != null) {
 //            String kpType = AppConfig.getKPType();//获取开屏广告类型，baidu，gdt，google
 //            kp_String = AppConfig.configBean.ad_kp_idMap.get(kpType);
