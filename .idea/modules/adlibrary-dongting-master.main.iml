@@ -40,7 +40,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:common:9.6.7@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.8.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.563.1433@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.qq.e.union:union:4.580.1450@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment:27.1.1@aar" level="project" />
