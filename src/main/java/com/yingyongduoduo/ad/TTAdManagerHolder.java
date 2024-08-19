@@ -87,7 +87,7 @@ public class TTAdManagerHolder {
 
             @Override
             public String getMacAddress() {
-                return super.getMacAddress();
+                return "";
             }
 
             @Override
@@ -97,22 +97,22 @@ public class TTAdManagerHolder {
 
             @Override
             public String getDevOaid() {
-                return super.getDevOaid();
+                return "";
             }
 
             @Override
             public boolean isCanUseAndroidId() {
-                return super.isCanUseAndroidId();
+                return false;
             }
 
             @Override
             public String getAndroidId() {
-                return super.getAndroidId();
+                return "";
             }
 
             @Override
             public boolean isCanUsePermissionRecordAudio() {
-                return super.isCanUsePermissionRecordAudio();
+                return false;
             }
         };
     }
