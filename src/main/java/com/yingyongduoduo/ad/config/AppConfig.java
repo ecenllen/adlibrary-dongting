@@ -13,7 +13,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.qq.e.ads.dfa.GDTApk;
+import com.qq.e.ads.dfa.GDTApkManager;
 import com.qq.e.comm.managers.GDTAdSdk;
+import com.qq.e.comm.managers.setting.GlobalSetting;
 import com.yingyongduoduo.ad.TTAdManagerHolder;
 import com.yingyongduoduo.ad.bean.ADBean;
 import com.yingyongduoduo.ad.bean.ConfigBean;
@@ -157,7 +160,7 @@ public class AppConfig {
     private static void initADManager(Context context) {
         String kp_String = "";
         boolean isHasAppId = false;
-        if(!AppConfig.isShowKP()) {
+        if (!AppConfig.isShowKP()) {
             return;
         }
         if (AppConfig.configBean != null && AppConfig.configBean.ad_kp_idMap != null) {
@@ -176,6 +179,17 @@ public class AppConfig {
                                 if ("csj".equals(adType) || adType.startsWith("csj")) {
                                     TTAdManagerHolder.init(context.getApplicationContext(), appid);
                                 } else if ("gdt".equals(adType) || adType.startsWith("gdt")) {
+                                    /**
+                                     * 通过此接口传入地理位置信息或微信openid信息
+                                     */
+                                    //void setExtraUserData(Map<String, String> extraUserData);
+
+/**
+ * 通过此接口授权优量汇SDK获取设备上应用安装列表
+ */
+                                    //void setEnableCollectAppInstallStatus(boolean enable);
+
+                                    GlobalSetting.setEnableCollectAppInstallStatus(false);
                                     GDTAdSdk.initWithoutStart(context.getApplicationContext(), appid);
                                     GDTAdSdk.start(new GDTAdSdk.OnStartListener() {
                                         @Override
@@ -188,7 +202,7 @@ public class AppConfig {
 
                                         }
                                     });
-                                } else if("huawei".equals(adType) || adType.startsWith("huawei")){
+                                } else if ("huawei".equals(adType) || adType.startsWith("huawei")) {
                                     // 初始化鲸鸿动能SDK
 //                                    HwAds.init(context.getApplicationContext(), appid);
                                 }
@@ -241,6 +255,7 @@ public class AppConfig {
         AppConfig.URL_START_HTML = String.format("%s" + AppConfig.START_HTML_LOCAL_PATH, "file://");
         AppConfig.youkulibPath = context.getCacheDir() + File.separator + "videoparse.jar";// 初始化引擎存放位置
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
+        AppConfig.appstorePath = context.getCacheDir() + File.separator + "appstore.jar";
 //        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
         InitLocal(context);
@@ -331,6 +346,12 @@ public class AppConfig {
             }
             if (haveKey(jo, "baiduCloudSecret")) {
                 bean.baiduCloudSecret = jo.getString("baiduCloudSecret");
+            }
+            if (haveKey(jo, "csjbannerwidth")) {
+                bean.csjbannerwidth = jo.getString("csjbannerwidth");
+            }
+            if (haveKey(jo, "csjbannerheight")) {
+                bean.csjbannerheight = jo.getString("csjbannerheight");
             }
 
             if (haveKey(jo, "channel")) {
@@ -744,16 +765,17 @@ public class AppConfig {
     public static void initPublicConfigJson(Context context) {
         String ConfigJson = "";
         SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
-        ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
-        if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(configbaseURL1 + "publicconfig.json");
-        }
+        ConfigJson = getPubConfigJson(configbaseURL1 + "publicconfig.json");
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(configbaseURL2 + "publicconfig.json");
         }
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(configbaseURL3 + "publicconfig.json");
         }
+        if (TextUtils.isEmpty(ConfigJson)) {
+            ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
+        }
+
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
         }
@@ -1743,7 +1765,7 @@ public class AppConfig {
 
     public static String getKPType() {
         if (configBean == null) {
-            if(isHuaweiChannel()){
+            if (isHuaweiChannel()) {
                 return "huawei";
             }
             return "csj";
@@ -1759,7 +1781,7 @@ public class AppConfig {
 
             }
         }
-        if(isHuaweiChannel()){
+        if (isHuaweiChannel()) {
             return "huawei";
         }
         return "csj";
@@ -1768,7 +1790,7 @@ public class AppConfig {
 
     public static String getTPType() {
         if (configBean == null) {
-            if(isHuaweiChannel()){
+            if (isHuaweiChannel()) {
                 return "huawei";
             }
             return "gdtmb";
@@ -1784,7 +1806,7 @@ public class AppConfig {
 
             }
         }
-        if(isHuaweiChannel()){
+        if (isHuaweiChannel()) {
             return "huawei";
         }
         return "gdtmb";
@@ -1793,7 +1815,7 @@ public class AppConfig {
 
     public static String getCPType() {
         if (configBean == null) {
-            if(isHuaweiChannel()){
+            if (isHuaweiChannel()) {
                 return "huawei";
             }
             return "csj2";
@@ -1809,7 +1831,7 @@ public class AppConfig {
 
             }
         }
-        if(isHuaweiChannel()){
+        if (isHuaweiChannel()) {
             return "huawei";
         }
         return "csj2";
@@ -1860,6 +1882,7 @@ public class AppConfig {
         return configBean.indexurl;
 
     }
+
     public static String getCpuIdOrUrl() {
         if (configBean == null) {
             return "";
@@ -1886,7 +1909,7 @@ public class AppConfig {
 
     public static String getBannerType() {
         if (configBean == null) {
-            if(isHuaweiChannel()){
+            if (isHuaweiChannel()) {
                 return "huawei";
             }
             return "csj";
@@ -1902,14 +1925,28 @@ public class AppConfig {
 
             }
         }
-        if(isHuaweiChannel()){
+        if (isHuaweiChannel()) {
             return "huawei";
         }
         return "csj";
 
     }
 
-    private static boolean isHuaweiChannel(){
+    public static String getBannerWidthDP() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.csjbannerwidth;
+    }
+
+    public static String getBannerHeightDP() {
+        if (configBean == null) {
+            return "";
+        }
+        return configBean.csjbannerheight;
+    }
+
+    private static boolean isHuaweiChannel() {
 //        return Channel.startsWith("huawei");
         return false;
     }

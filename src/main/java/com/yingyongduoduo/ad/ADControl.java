@@ -818,13 +818,25 @@ public class ADControl {
         try {
 
             TTAdNative mTTAdNative = TTAdManagerHolder.get().createAdNative(context);
+            String widthDP = AppConfig.getBannerWidthDP();
+            String heightDP = AppConfig.getBannerHeightDP();
+            int bannerWidthDP = 0;
+            int bannerHeightDP = 0;
+            try {
+                bannerWidthDP = Integer.parseInt(widthDP);
+                bannerHeightDP = Integer.parseInt(heightDP);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             //step4:创建广告请求参数AdSlot,具体参数含义参考文档
             AdSlot adSlot = new AdSlot.Builder()
                     .setCodeId(adplaceid) //广告位id
                     .setAdCount(1) //请求广告数量为1到3条
-                    .setExpressViewAcceptedSize(ScreenUtils.px2dp(ScreenUtils.getScreenWidth(context)), 60) //期望模板广告view的size,单位dp
+                    .setExpressViewAcceptedSize(bannerWidthDP > 0 ? bannerWidthDP : ScreenUtils.px2dp(ScreenUtils.getScreenWidth(context)), bannerHeightDP > 0 ? bannerHeightDP : 50) //期望模板广告view的size,单位dp
+//                    .setExpressViewAcceptedSize(320, 50) //期望模板广告view的size,单位dp
                     .build();
+
             //step5:请求广告，对请求回调的广告作渲染处理
             mTTAdNative.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
                 @Override
