@@ -66,7 +66,7 @@ public class TTAdManagerHolder {
         return new TTAdConfig.Builder()
                 .customController(getTTCustomController()) // 隐私合规设置
                 .appId(appId)
-                .useTextureView(false) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
+//                .useTextureView(false) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
                 .allowShowNotify(true) //是否允许sdk展示通知栏提示
 //                .debug(false) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
                 .directDownloadNetworkType() //允许直接下载的网络状态集合, 不设置代表二次确认
