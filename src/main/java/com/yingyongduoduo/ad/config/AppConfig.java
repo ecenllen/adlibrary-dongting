@@ -1276,8 +1276,15 @@ public class AppConfig {
 
     public static void downloadjar(String jarUrl, String savePath) throws Exception {
         deleteFile(savePath);// 如果存在就先删除
-        boolean mkdirs = new File(savePath).mkdirs();
-        Log.e("downloadjar", mkdirs ? "创建下载目录成功" : "创建下载目录失败");
+        File file = new File(savePath);
+        String parent = file.getParent();
+        if (!TextUtils.isEmpty(parent)) {
+            File parenteFile = new File(parent);
+            if (!parenteFile.exists()) {
+                boolean mkdirs = file.mkdirs();
+                Log.e("downloadjar", mkdirs ? "创建下载目录成功" : "创建下载目录失败");
+            }
+        }
         URL url = new URL(jarUrl);
         URLConnection con = url.openConnection();
         int contentLength = con.getContentLength();
