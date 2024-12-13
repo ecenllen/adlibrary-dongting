@@ -748,9 +748,9 @@ public class AppConfig {
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getConfigJson(configbaseURL3 + APPKEY + "/" + "config.json");
         }
-        if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
-        }
+//        if (TextUtils.isEmpty(ConfigJson)) {
+//            ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
+//        }
         if (!TextUtils.isEmpty(ConfigJson)) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("ConfigJson", ConfigJson);
@@ -776,9 +776,9 @@ public class AppConfig {
             ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
         }
 
-        if (TextUtils.isEmpty(ConfigJson)) {
-            ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
-        }
+//        if (TextUtils.isEmpty(ConfigJson)) {
+//            ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
+//        }
         if (!ConfigJson.isEmpty()) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString(KEY_PUBLIC, ConfigJson);
@@ -846,8 +846,8 @@ public class AppConfig {
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
             }
-            if (TextUtils.isEmpty(VideoJson))
-                VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
+//            if (TextUtils.isEmpty(VideoJson))
+//                VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
 
             if (!VideoJson.isEmpty()) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -945,9 +945,9 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(configbaseURL3 + "selfad/selfad.json");
             }
-            if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
-            }
+//            if (TextUtils.isEmpty(SelfadJson)) {
+//                SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
+//            }
 
 
             if (!SelfadJson.isEmpty()) {
@@ -991,9 +991,9 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(configbaseURL3 + "zixun/zixun.json");
             }
-            if (TextUtils.isEmpty(SelfadJson)) {
-                SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
-            }
+//            if (TextUtils.isEmpty(SelfadJson)) {
+//                SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
+//            }
 
             if (!TextUtils.isEmpty(SelfadJson)) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -1059,9 +1059,9 @@ public class AppConfig {
             if (wxgzhJson.isEmpty()) {
                 wxgzhJson = getWXGZHJson(configbaseURL3 + "wxgzh/wxgzh.json");
             }
-            if (wxgzhJson.isEmpty()) {
-                wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
-            }
+//            if (wxgzhJson.isEmpty()) {
+//                wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
+//            }
 
             if (!wxgzhJson.isEmpty()) {
                 List<WXGZHBean> currentSelfAdBeans = getWXGZHBeans(wxgzhJson);
@@ -1153,23 +1153,23 @@ public class AppConfig {
         Boolean isneedUpdate = publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.videosourceVersion) && !publicConfigBean.videosourceVersion.equals(mSettings.getString("videosourceVersion", ""));
         if (isneedUpdate || (!(new File(youkulibPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.videosourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
+//            } catch (Exception e) {
             try {
-                downloadjar(String.format(getDongTingServerBaseUrl() + videoDownloadUrl, APPLICATION), youkulibPath);
-            } catch (Exception e) {
+                downloadjar(configbaseURL1 + "video/videoparse.jar", youkulibPath);
+            } catch (Exception e1) {
                 try {
-                    downloadjar(configbaseURL1 + "video/videoparse.jar", youkulibPath);
-                } catch (Exception e1) {
+                    downloadjar(configbaseURL2 + "video/videoparse.jar", youkulibPath);
+                } catch (Exception e2) {
                     try {
-                        downloadjar(configbaseURL2 + "video/videoparse.jar", youkulibPath);
-                    } catch (Exception e2) {
-                        try {
-                            downloadjar(configbaseURL3 + "video/videoparse.jar", youkulibPath);
-                        } catch (Exception e3) {//这一步则表示下载失败
-                            isSuccess = false;
-                        }
+                        downloadjar(configbaseURL3 + "video/videoparse.jar", youkulibPath);
+                    } catch (Exception e3) {//这一步则表示下载失败
+                        isSuccess = false;
                     }
                 }
             }
+//            }
             if (isSuccess) {
 
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -1189,23 +1189,23 @@ public class AppConfig {
         boolean isneedUpdate = publicConfigBean != null && !"".equals(publicConfigBean.appjarversion) && !publicConfigBean.appjarversion.equals(mSettings.getString("appstorejarversion", ""));
         if (isneedUpdate || (!TextUtils.isEmpty(appstorePath) && !(new File(appstorePath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.appjarversion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
+//            } catch (Exception e) {
             try {
-                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
-            } catch (Exception e) {
+                downloadjar(configbaseURL1 + "video/appstore.jar", appstorePath);
+            } catch (Exception e1) {
                 try {
-                    downloadjar(configbaseURL1 + "video/appstore.jar", appstorePath);
-                } catch (Exception e1) {
+                    downloadjar(configbaseURL2 + "video/appstore.jar", appstorePath);
+                } catch (Exception e2) {
                     try {
-                        downloadjar(configbaseURL2 + "video/appstore.jar", appstorePath);
-                    } catch (Exception e2) {
-                        try {
-                            downloadjar(configbaseURL3 + "video/appstore.jar", appstorePath);
-                        } catch (Exception e3) {//这一步则表示下载失败
-                            isSuccess = false;
-                        }
+                        downloadjar(configbaseURL3 + "video/appstore.jar", appstorePath);
+                    } catch (Exception e3) {//这一步则表示下载失败
+                        isSuccess = false;
                     }
                 }
             }
+//            }
 
             if (isSuccess) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -1230,27 +1230,28 @@ public class AppConfig {
         Boolean isneedUpdate = publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion) && !publicConfigBean.qhbsourceVersion.equals(mSettings.getString(QHB_VERSION_SP_KEY, ""));
         if (isneedUpdate || (!(new File(qhblibPath).exists()) && publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.qhbsourceVersion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
             Boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
+//            } catch (Exception e) {
             try {
-                downloadjar(String.format(getDongTingServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
-            } catch (Exception e) {
+                downloadjar(configbaseURL1 + "video/libqhb.so", qhblibPath);
+            } catch (Exception e1) {
                 try {
-                    downloadjar(configbaseURL1 + "video/libqhb.so", qhblibPath);
-                } catch (Exception e1) {
+                    downloadjar(configbaseURL2 + "video/libqhb.so", qhblibPath);
+                } catch (Exception e2) {
                     try {
-                        downloadjar(configbaseURL2 + "video/libqhb.so", qhblibPath);
-                    } catch (Exception e2) {
-                        try {
-                            downloadjar(configbaseURL3 + "video/libqhb.so", qhblibPath);
-                        } catch (Exception e3) {
-                            try {
-                                downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
-                            } catch (Exception e4) {//这一步则表示下载失败
-                                isSuccess = false;
-                            }
-                        }
+                        downloadjar(configbaseURL3 + "video/libqhb.so", qhblibPath);
+                    } catch (Exception e3) {
+                        isSuccess = false;
+//                            try {
+//                                downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
+//                            } catch (Exception e4) {//这一步则表示下载失败
+//                                isSuccess = false;
+//                            }
                     }
                 }
             }
+//            }
             if (isSuccess) {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(QHB_VERSION_SP_KEY, publicConfigBean.qhbsourceVersion);
