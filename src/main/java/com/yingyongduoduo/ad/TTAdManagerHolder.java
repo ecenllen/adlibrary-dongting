@@ -1,12 +1,14 @@
 package com.yingyongduoduo.ad;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTCustomController;
+import com.bytedance.sdk.openadsdk.mediation.init.IMediationPrivacyConfig;
 
 
 /**
@@ -86,6 +88,16 @@ public class TTAdManagerHolder {
             }
 
             @Override
+            public boolean isCanUsePhoneState() {
+                return false;
+            }
+
+            @Override
+            public boolean isCanUseLocation() {
+                return false;
+            }
+
+            @Override
             public String getMacAddress() {
                 return "";
             }
@@ -113,6 +125,12 @@ public class TTAdManagerHolder {
             @Override
             public boolean isCanUsePermissionRecordAudio() {
                 return false;
+            }
+
+            @Nullable
+            @Override
+            public IMediationPrivacyConfig getMediationPrivacyConfig() {
+                return super.getMediationPrivacyConfig();
             }
         };
     }
