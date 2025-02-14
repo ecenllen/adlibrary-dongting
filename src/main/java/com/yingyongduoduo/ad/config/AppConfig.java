@@ -487,6 +487,9 @@ public class AppConfig {
             if (haveKey(jo, "dashangContent")) {
                 bean.dashangContent = jo.getString("dashangContent");
             }
+            if (haveKey(jo, "appjarversion")) {
+                bean.appjarversion = jo.getString("appjarversion");
+            }
             if (haveKey(jo, "qhbsourceVersion")) {
                 bean.qhbsourceVersion = jo.getString("qhbsourceVersion");
             }
