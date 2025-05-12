@@ -97,7 +97,7 @@ dependencies {
     // 下面各SDK根据宿主App是否使用相关业务按需引入。
     // OAID目前为目前国内市场主流的Android Q设备标识，可根据需要选择。
     // 友盟统计SDK
-    api 'com.umeng.umsdk:common:9.6.7' // (必选)版本号
+    api 'com.umeng.umsdk:common:9.8.0' // (必选)版本号
 //    implementation  'com.umeng.umsdk:game:9.x.x+G' // 游戏统计SDK依赖(可选)
     api 'com.umeng.umsdk:asms:1.8.0' // asms包依赖(必选)
 //    api 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
@@ -112,7 +112,7 @@ dependencies {
 
     // 穿山甲
 //    api 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
-    implementation "com.pangle.cn:mediation-sdk:6.5.0.2"  //融合SDK
+//    implementation "com.pangle.cn:mediation-sdk:6.5.0.2"  //融合SDK
 
     //华为广告
 //    implementation 'com.huawei.hms:ads-lite:13.4.70.300'

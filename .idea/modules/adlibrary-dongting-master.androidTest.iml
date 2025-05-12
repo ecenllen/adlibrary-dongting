@@ -36,8 +36,9 @@
     <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="adlibrary-dongting-master.main" scope="TEST" />
+    <orderEntry type="library" scope="TEST" name="Gradle: D./AndroidProject/AndroidOther/adlibrary-dongting-master/libs/open_ad_sdk_6.8.1.7.aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core:2.2.2@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:common:9.6.7@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:common:9.8.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:asms:1.8.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:rules:0.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:runner:0.5@aar" level="project" />
@@ -57,7 +58,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: android.arch.core:runtime:1.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: android.arch.lifecycle:viewmodel:1.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.bumptech.glide:recyclerview-integration:4.9.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.pangle.cn:mediation-sdk:6.5.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: D./AndroidProject/AndroidOther/adlibrary-dongting-master/libs/classes-dex2jar.jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0" level="project" />

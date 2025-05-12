@@ -389,6 +389,12 @@ public class AppConfig {
                     if (haveKey(jo_channelInfo, "noshipingadchannel")) {
                         bean.noshipingadchannel = jo_channelInfo.getString("noshipingadchannel");
                     }
+                    if (haveKey(jo_channelInfo, "noCanUsePhoneState")) {
+                        bean.noCanUsePhoneState = jo_channelInfo.getString("noCanUsePhoneState");
+                    }
+                    if (haveKey(jo_channelInfo, "noCanUseLocation")) {
+                        bean.noCanUseLocation = jo_channelInfo.getString("noCanUseLocation");
+                    }
                     if (haveKey(jo_channelInfo, "noadkpchannel")) {
                         bean.noadkpchannel = jo_channelInfo.getString("noadkpchannel");
                     }
@@ -1542,6 +1548,32 @@ public class AppConfig {
         return true;
     }
 
+    public static boolean isCanUsePhoneState() {
+        if (configBean == null) {//如果configbean都没有获取到
+            return true;
+        }
+        if (TextUtils.isEmpty(configBean.noCanUsePhoneState))
+            return true;
+        for (String version : configBean.noCanUsePhoneState.split(",")) {
+            if (version.equals(versioncode)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean isCanUseLocation() {
+        if (configBean == null) {//如果configbean都没有获取到
+            return true;
+        }
+        if (TextUtils.isEmpty(configBean.noCanUseLocation))
+            return true;
+        for (String version : configBean.noCanUseLocation.split(",")) {
+            if (version.equals(versioncode)) {
+                return false;
+            }
+        }
+        return true;
+    }
     public static boolean isShowKP() {
         if (configBean == null) {//如果configbean都没有获取到
             return false;

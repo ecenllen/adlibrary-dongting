@@ -833,6 +833,7 @@ public class ADControl {
             AdSlot adSlot = new AdSlot.Builder()
                     .setCodeId(adplaceid) //广告位id
                     .setAdCount(1) //请求广告数量为1到3条
+//                    .setImageAcceptedSize()
                     .setExpressViewAcceptedSize(bannerWidthDP > 0 ? bannerWidthDP : ScreenUtils.px2dp(ScreenUtils.getScreenWidth(context)), bannerHeightDP > 0 ? bannerHeightDP : 50) //期望模板广告view的size,单位dp
 //                    .setExpressViewAcceptedSize(320, 50) //期望模板广告view的size,单位dp
                     .build();
