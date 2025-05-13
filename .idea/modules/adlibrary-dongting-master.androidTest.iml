@@ -33,7 +33,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src/androidTest/java" isTestSource="true" />
     </content>
     <content url="file://$MODULE_DIR$/../../src/androidTestDebug" />
-    <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="adlibrary-dongting-master.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: D./AndroidProject/AndroidOther/adlibrary-dongting-master/libs/open_ad_sdk_6.8.1.7.aar" level="project" />

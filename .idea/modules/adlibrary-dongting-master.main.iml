@@ -36,7 +36,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/res" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: D./AndroidProject/AndroidOther/adlibrary-dongting-master/libs/open_ad_sdk_6.8.1.7.aar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:common:9.8.0@aar" level="project" />
