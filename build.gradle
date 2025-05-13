@@ -38,6 +38,7 @@ android {
 
 }
 
+
 buildscript {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
@@ -85,6 +86,7 @@ buildscript {
             }
             // 配置鲸鸿动能SDK的Maven仓地址
 //            maven { url 'https://developer.huawei.com/repo/' }
+
         }
     }
 }
