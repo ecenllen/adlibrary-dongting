@@ -24,6 +24,9 @@ android {
     }
 
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
+        maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
@@ -37,6 +40,9 @@ android {
 
 buildscript {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
+        maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
         //mintegral sdk依赖   引入mintegral sdk需要添加此maven
         maven {
             url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/"
@@ -59,6 +65,9 @@ buildscript {
     }
     allprojects {
         repositories {
+            maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
+            maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
+            maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
             //mintegral sdk依赖   引入mintegral sdk需要添加此maven
             maven {
                 url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/"
@@ -82,7 +91,7 @@ buildscript {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation fileTree(include: ['*.aar'], dir: 'libs')
-    implementation(name: 'open_ad_sdk_6.8.1.7', ext: 'aar')
+    api files('libs/open_ad_sdk_6.8.1.7.aar')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
