@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 group = 'com.github.ecenllen'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildToolsVersion '30.0.2'
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -50,8 +50,8 @@ buildscript {
         maven {
             url "https://artifact.bytedance.com/repository/pangle"
         }
-        jcenter()
         mavenCentral()
+        jcenter()
         google()
         maven { url 'https://repo1.maven.org/maven2/' }
         // 配置鲸鸿动能SDK的Maven仓地址
@@ -75,6 +75,7 @@ buildscript {
             maven {
                 url "https://artifact.bytedance.com/repository/pangle"
             }
+            mavenCentral()
             jcenter()
             maven { url 'https://jitpack.io' }
             maven { url 'https://repo1.maven.org/maven2/' }
