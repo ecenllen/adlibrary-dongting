@@ -1,0 +1,44 @@
+def pomGroupId = 'com.github.ecenllen'
+def pomArtifactId = 'csjaar'
+def pomVersion = '1.0.0'
+def pomDescription = "upload JsBridge ${pomVersion}，CSJ sdk"
+
+apply plugin: 'maven-publish'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = pomGroupId
+                artifactId = pomArtifactId
+                version = pomVersion
+                description = pomDescription
+
+                artifact file("open_ad_sdk_6.8.1.7.aar")
+            }
+        }
+
+        repositories {
+            maven {
+                Properties versionProperties = new Properties()
+                File proFile = project.rootProject.file('mavenConfig.properties');
+                if(proFile.canRead()){
+                    InputStream versionIs = proFile.newDataInputStream()
+                    versionProperties.load(versionIs)
+                    versionIs.close()
+                    allowInsecureProtocol true  // 如果PUBLISH_URL是http，此处必须为true，如果是https，则可以删除此项
+                    name = "adlibrary-dongting-master"  // 配置后在Gradle > Tasks > publishing 下会显示对应的名称，容易区分
+                    url = uri(versionProperties.NEXUS_REPOSITORY_URL)
+                    credentials {
+                        username = versionProperties.NEXUS_USERNAME
+                        password = versionProperties.NEXUS_PASSWORD
+                    }
+                    println("maven " + versionProperties.NEXUS_REPOSITORY_URL)
+                    println("maven " + versionProperties.NEXUS_USERNAME)
+                    println("maven " + versionProperties.NEXUS_PASSWORD)
+                }else {
+                    println("maven properties 属性文件不存在")
+                }
+            }
+        }
+    }
+}
