@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 group = 'com.github.ecenllen'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
@@ -24,23 +25,41 @@ android {
     }
 
     repositories {
+        mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
         maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://jitpack.io' }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    afterEvaluate {
+        publishing {
+            publications {
+                // Creates a Maven publication called "release".
+                release(MavenPublication) {
+                    from components.release
+                    //建议和github地址对应，否则对jitpack无效
+                    groupId = 'com.github.ecenllen'
+                    //建议和github仓库名称对应，否则对jitpack无效
+                    artifactId = 'csjaar'
+                    //建议和release的tag相同，否则对jitpack无效
+                    version = '1.0'
+                }
+            }
+        }
+    }
 
 }
 
 
 buildscript {
     repositories {
+        mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
         maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
@@ -51,6 +70,7 @@ buildscript {
         maven {
             url "https://artifact.bytedance.com/repository/pangle"
         }
+        maven { url 'https://jitpack.io' }
         mavenCentral()
         jcenter()
         google()
@@ -66,6 +86,7 @@ buildscript {
     }
     allprojects {
         repositories {
+            mavenLocal()
             maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
             maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
             maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
