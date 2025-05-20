@@ -1,2 +1,41 @@
 configurations.maybeCreate("default")
 artifacts.add("default", file("open_ad_sdk_6.8.1.7.aar"))
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 34
+    defaultConfig {
+        minSdkVersion 21
+        versionCode 1
+        versionName "1.0.0"
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId 'com.github.ecenllen'
+                artifactId project.name
+                version android.defaultConfig.versionName
+                artifact bundleReleaseAar
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            artifact sourcesJar
+        }
+    }
+}
+
