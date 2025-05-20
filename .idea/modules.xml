@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.iml" filepath="$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.main.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalAar/adlibrary-dongting-master.LocalAar.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.main.iml" filepath="$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/adlibrary-dongting-master.unitTest.iml" />
