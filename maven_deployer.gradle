@@ -13,7 +13,7 @@ afterEvaluate {
                 version = pomVersion
                 description = pomDescription
 
-                artifact file("/libs/open_ad_sdk_6.8.1.7.aar")
+                artifact file("open_ad_sdk_6.8.1.7.aar")
             }
         }
 
