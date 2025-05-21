@@ -1,6 +1,6 @@
 def pomGroupId = 'com.github.ecenllen'
-def pomArtifactId = 'csjaar'
-def pomVersion = '1.0.0'
+def pomArtifactId = 'adlibrary-dongting-master'
+def pomVersion = '9.8.6.2'
 def pomDescription = "upload JsBridge ${pomVersion}，CSJ sdk"
 
 apply plugin: 'maven-publish'
@@ -13,7 +13,7 @@ afterEvaluate {
                 version = pomVersion
                 description = pomDescription
 
-                artifact file("open_ad_sdk_6.8.1.7.aar")
+                artifact file("/libs/open_ad_sdk_6.8.1.7.aar")
             }
         }
 
