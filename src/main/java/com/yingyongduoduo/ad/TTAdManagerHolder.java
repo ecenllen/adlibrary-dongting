@@ -36,12 +36,11 @@ public class TTAdManagerHolder {
     private static void doInit(Context context) {
         if (!sInit) {
             //TTAdSdk.init(context, buildConfig(context));
-            TTAdSdk.init(context, buildConfig(context));
+            sInit = TTAdSdk.init(context, buildConfig(context));
             TTAdSdk.start(new TTAdSdk.Callback() {
                 @Override
                 public void success() {
                     Log.i(TAG, "success: "+ TTAdSdk.isInitSuccess());
-                    sInit = true;
                 }
 
                 @Override
@@ -74,8 +73,8 @@ public class TTAdManagerHolder {
                 .allowShowNotify(true) //是否允许sdk展示通知栏提示
 //                .debug(false) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
                 .directDownloadNetworkType() //允许直接下载的网络状态集合, 不设置代表二次确认
-                .supportMultiProcess(true)//是否支持多进程
-                .useMediation(true)//④兜底需要设置useMediation(true)，否则无效。
+                .supportMultiProcess(false)//是否支持多进程
+                .useMediation(false)//④兜底需要设置useMediation(true)，否则无效。
 //                .needClearTaskReset()
                 .build();
     }

@@ -100,17 +100,17 @@ public class ADControl {
         //创建TTAdNative对象，createAdNative(Context context) context需要传入Activity对象
         TTAdNative mTTAdNative = TTAdManagerHolder.get().createAdNative(context);
 //第一步、创建开屏自定义兜底对象
-        MediationSplashRequestInfo csjSplashRequestInfo = new MediationSplashRequestInfo(
-                MediationConstant.ADN_PANGLE, // 穿山甲
-                adplaceid, // adn开屏广告代码位Id，注意不是聚合广告位Id
-                appid,   // adn应用id，注意要跟初始化传入的保持一致
-                ""   // adn没有appKey时，传入空即可
-        ) {};
+//        MediationSplashRequestInfo csjSplashRequestInfo = new MediationSplashRequestInfo(
+//                MediationConstant.ADN_PANGLE, // 穿山甲
+//                adplaceid, // adn开屏广告代码位Id，注意不是聚合广告位Id
+//                appid,   // adn应用id，注意要跟初始化传入的保持一致
+//                ""   // adn没有appKey时，传入空即可
+//        ) {};
 
         AdSlot adSlot = new AdSlot.Builder()
                 .setCodeId(adplaceid)
                 .setImageAcceptedSize(ScreenUtils.getScreenWidth(context), ScreenUtils.getScreenHeight(context) - ScreenUtils.getVirtualBarHeigh(context))//单位 px
-                .setMediationAdSlot(new MediationAdSlot.Builder().setMediationSplashRequestInfo(csjSplashRequestInfo).build())
+//                .setMediationAdSlot(new MediationAdSlot.Builder().setMediationSplashRequestInfo(csjSplashRequestInfo).build())
                 .setAdLoadType(LOAD)//推荐使用，用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，方便后续为开发者优化相关策略
                 .build();
 

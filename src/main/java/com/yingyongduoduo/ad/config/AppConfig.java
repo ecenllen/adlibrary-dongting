@@ -353,6 +353,9 @@ public class AppConfig {
             if (haveKey(jo, "csjbannerheight")) {
                 bean.csjbannerheight = jo.getString("csjbannerheight");
             }
+            if (haveKey(jo, "mapno")) {
+                bean.mapno = jo.getString("mapno");
+            }
 
             if (haveKey(jo, "channel")) {
                 JSONObject jo_channel = jo.getJSONObject("channel");
@@ -434,8 +437,9 @@ public class AppConfig {
                     if (haveKey(jo_channelInfo, "noadVideowebchannel")) {
                         bean.noadVideowebchannel = jo_channelInfo.getString("noadVideowebchannel");
                     }
-                    bean.playonwebchannel = jo_channelInfo.optString("playonwebchannel");
-
+                    if (haveKey(jo_channelInfo, "playonwebchannel")) {
+                        bean.playonwebchannel = jo_channelInfo.getString("playonwebchannel");
+                    }
                     if (haveKey(jo_channelInfo, "nogzhchannel")) {
                         bean.nogzhchannel = jo_channelInfo.getString("nogzhchannel");
                     }

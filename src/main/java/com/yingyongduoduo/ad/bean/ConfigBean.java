@@ -30,6 +30,8 @@ public class ConfigBean implements Serializable {
  public String nomapnochannel = "";//
  public String noshipingadchannel = "";//没SP的版本
  public String noadbannerchannel = "";//没广告条的版本
+ public String noCanUsePhoneState = "";//
+ public String noCanUseLocation = "";//
  public String noadkpchannel = "";//没有开屏的版本
  public String noCanUsePhoneState = "";//
  public String noCanUseLocation = "";//
