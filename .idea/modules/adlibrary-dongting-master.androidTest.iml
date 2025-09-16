@@ -37,8 +37,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="adlibrary-dongting-master.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core:2.2.2@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:common:9.8.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:asms:1.8.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:common:9.8.7@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.umeng.umsdk:asms:1.8.7.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:rules:0.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:runner:0.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:exposed-instrumentation-api-publish:0.5@aar" level="project" />
