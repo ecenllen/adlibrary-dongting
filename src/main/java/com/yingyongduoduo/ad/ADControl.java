@@ -97,16 +97,19 @@ public class ADControl {
         ADControl.oldADVersition = newVersion;
     }
 
+    private CSJSplashAd csjSplashAd;
+
     private void ShowCSJKP(final Activity context, final RelativeLayout adsParent, View skip_view, final KPAdListener kpAdListener, String appid, String adplaceid) {
         //创建TTAdNative对象，createAdNative(Context context) context需要传入Activity对象
         TTAdNative mTTAdNative = TTAdManagerHolder.get().createAdNative(context);
 //第一步、创建开屏自定义兜底对象
 //        MediationSplashRequestInfo csjSplashRequestInfo = new MediationSplashRequestInfo(
-//                MediationConstant.ADN_PANGLE, // 穿山甲
+//                MediationConstant.ADN_MINTEGRAL, // 穿山甲
 //                adplaceid, // adn开屏广告代码位Id，注意不是聚合广告位Id
 //                appid,   // adn应用id，注意要跟初始化传入的保持一致
 //                ""   // adn没有appKey时，传入空即可
-//        ) {};
+//        ) {
+//        };
 
         AdSlot adSlot = new AdSlot.Builder()
                 .setCodeId(adplaceid)
@@ -146,6 +149,7 @@ public class ADControl {
 
             @Override
             public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
+                ADControl.this.csjSplashAd = csjSplashAd;
                 if (csjSplashAd == null) {
                     kpAdListener.onAdDismissed();
                     return;
@@ -1701,6 +1705,9 @@ public class ADControl {
         if (mTTFullVideoAd != null)
             mTTFullVideoAd = null;
 
+        if (csjSplashAd != null && csjSplashAd.getMediationManager() != null) {
+            csjSplashAd.getMediationManager().destroy();
+        }
         if (interAd != null) {
             if (interAd.isValid())
                 interAd.close();
