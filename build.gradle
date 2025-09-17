@@ -23,7 +23,6 @@ android {
     }
 
     repositories {
-        mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
         maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
