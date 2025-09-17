@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-group = 'com.github.ecenllen'
 
 android {
     compileSdkVersion 30
