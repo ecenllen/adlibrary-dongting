@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -151,6 +152,9 @@ public class ADControl {
                 }
                 //获取SplashView
                 View view = csjSplashAd.getSplashView();
+                if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
+                    ((ViewGroup) view.getParent()).removeView(view);
+                }
                 if (view != null && adsParent != null && !context.isFinishing()) {
                     adsParent.removeAllViews();
                     //把SplashView 添加到ViewGroup中,注意开屏广告view：width =屏幕宽；height >=75%屏幕高
@@ -1042,7 +1046,7 @@ public class ADControl {
 
                 @Override
                 public void onADExposure() {
-                    if (lyt != null){
+                    if (lyt != null) {
                         lyt.removeAllViews();
                         lyt.addView(unifiedBannerView, getUnifiedBannerLayoutParams(context));
                     }
@@ -1517,7 +1521,7 @@ public class ADControl {
     public void addBannerAd(LinearLayout lyt, Activity context) {
         ShowCp(context);
         homeGet5Score(context);
-        if(isRenderSuccessBanner) return;
+        if (isRenderSuccessBanner) return;
         if (AppConfig.isShowBanner() && lyt != null)//展示广告条广告
         {
             String bannerType = AppConfig.getBannerType();//获取开屏广告类型，baidu，gdt，google
