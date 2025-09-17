@@ -44,7 +44,6 @@ android {
 
 buildscript {
     repositories {
-        mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
         maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
@@ -71,7 +70,6 @@ buildscript {
     }
     allprojects {
         repositories {
-            mavenLocal()
             maven { url 'https://maven.aliyun.com/repository/public/' } //代理 mavenCentral 和 jcenter
             maven { url 'https://maven.aliyun.com/repository/google' }  //代理 google
             maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
@@ -102,7 +100,6 @@ buildscript {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation fileTree(include: ['*.aar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -135,7 +132,7 @@ dependencies {
 //    implementation "com.pangle.cn:mediation-sdk:6.5.0.2"  //融合SDK
     implementation 'com.pangle_beta.cn:mediation-sdk:7.1.0.5' //穿山甲融合SDK
     //需在应用中的build.gradle中添加SDK下载库依赖项
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
     //华为广告
 //    implementation 'com.huawei.hms:ads-lite:13.4.70.300'
