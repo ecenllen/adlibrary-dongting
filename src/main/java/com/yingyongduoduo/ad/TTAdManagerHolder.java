@@ -9,7 +9,10 @@ import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTCustomController;
 import com.bytedance.sdk.openadsdk.mediation.init.IMediationPrivacyConfig;
+import com.bytedance.sdk.openadsdk.mediation.init.MediationPrivacyConfig;
 import com.yingyongduoduo.ad.config.AppConfig;
+
+import java.util.List;
 
 
 /**
@@ -131,7 +134,34 @@ public class TTAdManagerHolder {
             @Nullable
             @Override
             public IMediationPrivacyConfig getMediationPrivacyConfig() {
-                return super.getMediationPrivacyConfig();
+                return new MediationPrivacyConfig() {
+                    @Nullable
+                    @Override
+                    public List<String> getCustomAppList() {
+                        return super.getCustomAppList();
+                    }
+
+                    @Nullable
+                    @Override
+                    public List<String> getCustomDevImeis() {
+                        return super.getCustomDevImeis();
+                    }
+
+                    @Override
+                    public boolean isCanUseOaid() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isLimitPersonalAds() {
+                        return super.isLimitPersonalAds();
+                    }
+
+                    @Override
+                    public boolean isProgrammaticRecommend() {
+                        return super.isProgrammaticRecommend();
+                    }
+                };
             }
         };
     }
