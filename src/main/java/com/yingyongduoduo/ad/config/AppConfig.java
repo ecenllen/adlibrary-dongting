@@ -761,9 +761,9 @@ public class AppConfig {
         if (TextUtils.isEmpty(ConfigJson)) {
             ConfigJson = getConfigJson(configbaseURL3 + APPKEY + "/" + "config.json");
         }
-//        if (TextUtils.isEmpty(ConfigJson)) {
-//            ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
-//        }
+        if (TextUtils.isEmpty(ConfigJson)) {
+            ConfigJson = getConfigJson(getOldServerBaseUrl() + configAPI + getParameters(context));
+        }
         if (!TextUtils.isEmpty(ConfigJson)) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("ConfigJson", ConfigJson);
@@ -789,9 +789,9 @@ public class AppConfig {
             ConfigJson = getPubConfigJson(getDongTingServerBaseUrl() + publicAPI + getParameters(context));
         }
 
-//        if (TextUtils.isEmpty(ConfigJson)) {
-//            ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
-//        }
+        if (TextUtils.isEmpty(ConfigJson)) {
+            ConfigJson = getPubConfigJson(getOldServerBaseUrl() + publicAPI + getParameters(context));
+        }
         if (!ConfigJson.isEmpty()) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString(KEY_PUBLIC, ConfigJson);
@@ -859,8 +859,8 @@ public class AppConfig {
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
             }
-//            if (TextUtils.isEmpty(VideoJson))
-//                VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
+            if (TextUtils.isEmpty(VideoJson))
+                VideoJson = getVideoJson(getOldServerBaseUrl() + videoAPI + getParameters(context));
 
             if (!VideoJson.isEmpty()) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -958,9 +958,9 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getSelfadJson(configbaseURL3 + "selfad/selfad.json");
             }
-//            if (TextUtils.isEmpty(SelfadJson)) {
-//                SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
-//            }
+            if (TextUtils.isEmpty(SelfadJson)) {
+                SelfadJson = getSelfadJson(getOldServerBaseUrl() + selfadAPI + getParameters(context));
+            }
 
 
             if (!SelfadJson.isEmpty()) {
@@ -1004,9 +1004,9 @@ public class AppConfig {
             if (TextUtils.isEmpty(SelfadJson)) {
                 SelfadJson = getZixunJson(configbaseURL3 + "zixun/zixun.json");
             }
-//            if (TextUtils.isEmpty(SelfadJson)) {
-//                SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
-//            }
+            if (TextUtils.isEmpty(SelfadJson)) {
+                SelfadJson = getZixunJson(getOldServerBaseUrl() + zixunAPI + getParameters(context));
+            }
 
             if (!TextUtils.isEmpty(SelfadJson)) {
                 SharedPreferences.Editor editor = mSettings.edit();
@@ -1072,9 +1072,9 @@ public class AppConfig {
             if (wxgzhJson.isEmpty()) {
                 wxgzhJson = getWXGZHJson(configbaseURL3 + "wxgzh/wxgzh.json");
             }
-//            if (wxgzhJson.isEmpty()) {
-//                wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
-//            }
+            if (wxgzhJson.isEmpty()) {
+                wxgzhJson = getWXGZHJson(getOldServerBaseUrl() + gzhAPI + getParameters(context));
+            }
 
             if (!wxgzhJson.isEmpty()) {
                 List<WXGZHBean> currentSelfAdBeans = getWXGZHBeans(wxgzhJson);
@@ -1255,12 +1255,11 @@ public class AppConfig {
                     try {
                         downloadjar(configbaseURL3 + "video/libqhb.so", qhblibPath);
                     } catch (Exception e3) {
-                        isSuccess = false;
-//                            try {
-//                                downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
-//                            } catch (Exception e4) {//这一步则表示下载失败
-//                                isSuccess = false;
-//                            }
+                            try {
+                                downloadjar(String.format(getOldServerBaseUrl() + qhbDownloadUrl, APPLICATION), qhblibPath);
+                            } catch (Exception e4) {//这一步则表示下载失败
+                                isSuccess = false;
+                            }
                     }
                 }
             }
@@ -1565,6 +1564,7 @@ public class AppConfig {
         }
         return true;
     }
+
     public static boolean isCanUseLocation() {
         if (configBean == null) {//如果configbean都没有获取到
             return true;
@@ -1578,6 +1578,7 @@ public class AppConfig {
         }
         return true;
     }
+
     public static boolean isShowKP() {
         if (configBean == null) {//如果configbean都没有获取到
             return false;

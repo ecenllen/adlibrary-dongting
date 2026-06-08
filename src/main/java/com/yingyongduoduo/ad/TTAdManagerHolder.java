@@ -11,8 +11,11 @@ import com.bytedance.sdk.openadsdk.TTCustomController;
 import com.bytedance.sdk.openadsdk.mediation.init.IMediationPrivacyConfig;
 import com.bytedance.sdk.openadsdk.mediation.init.MediationPrivacyConfig;
 import com.yingyongduoduo.ad.config.AppConfig;
+import com.yingyongduoduo.ad.utils.PublicUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -70,7 +73,7 @@ public class TTAdManagerHolder {
 
     private static TTAdConfig buildConfig(Context context) {
         return new TTAdConfig.Builder()
-                .customController(getTTCustomController()) // 隐私合规设置
+                .customController(getTTCustomController(context)) // 隐私合规设置
                 .appId(appId)
 //                .useTextureView(false) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
                 .allowShowNotify(true) //是否允许sdk展示通知栏提示
@@ -83,8 +86,14 @@ public class TTAdManagerHolder {
     }
 
     //函数返回值表示隐私开关开启状态，未重写函数使用默认值
-    private static TTCustomController getTTCustomController(){
+    private static TTCustomController getTTCustomController(final Context context){
         return new TTCustomController() {
+
+            //【新增】新支持开发者控制弹出app下载完成安装/app安装完成打开通知;
+            @Override
+            public boolean isCanUseMessage() {
+                return super.isCanUseMessage();
+            }
 
             @Override
             public boolean isCanUseWifiState() {
@@ -102,6 +111,14 @@ public class TTAdManagerHolder {
             }
 
             @Override
+            public Map<String, Object> userPrivacyConfig() {
+                Map<String, Object> map = new HashMap<>();
+                // 控制oaid获取频率，"0"表示关闭，"1"或者其他值表示打开。
+                map.put("mcod", "0");
+                return map;
+            }
+
+            @Override
             public String getMacAddress() {
                 return "";
             }
@@ -113,7 +130,7 @@ public class TTAdManagerHolder {
 
             @Override
             public String getDevOaid() {
-                return "";
+                return PublicUtil.metadata(context, "UMENG_APPKEY");
             }
 
             @Override
