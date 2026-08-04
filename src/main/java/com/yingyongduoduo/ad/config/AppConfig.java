@@ -89,6 +89,7 @@ public class AppConfig {
     private static String download_qingxidu = "1";
     public static String youkulibPath;
     public static String appstorePath;
+    public static String aitoolPath;
     public static String qhblibPath; //抢红包本地路径
     public static boolean isshowHDPicture = true;
     public static String GZHPath;
@@ -153,6 +154,7 @@ public class AppConfig {
         initQhbsourceVersion(context);
         initvideosourceVersion(context);
         initJarResource(context);
+        initAitoolJarResource(context);
         initADManager(context);
 
     }
@@ -256,6 +258,7 @@ public class AppConfig {
         AppConfig.youkulibPath = context.getCacheDir() + File.separator + "videoparse.jar";// 初始化引擎存放位置
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
         AppConfig.appstorePath = context.getCacheDir() + File.separator + "appstore.jar";
+        AppConfig.aitoolPath = context.getCacheDir() + File.separator + "aitool.jar";
 //        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
         InitLocal(context);
@@ -499,6 +502,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "appjarversion")) {
                 bean.appjarversion = jo.getString("appjarversion");
+            }
+            if (haveKey(jo, "aitooljarversion")) {
+                bean.aitooljarversion = jo.getString("aitooljarversion");
             }
             if (haveKey(jo, "qhbsourceVersion")) {
                 bean.qhbsourceVersion = jo.getString("qhbsourceVersion");
@@ -1228,6 +1234,41 @@ public class AppConfig {
                 deleteFile(appstorePath);
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("appstorejarversion", "");
+                editor.apply();
+            }
+        }
+    }
+    public static void initAitoolJarResource(Context context) {
+        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isneedUpdate = publicConfigBean != null && !"".equals(publicConfigBean.aitooljarversion) && !publicConfigBean.aitooljarversion.equals(mSettings.getString("aitoolJarversion", ""));
+        if (isneedUpdate || (!TextUtils.isEmpty(aitoolPath) && !(new File(aitoolPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.aitooljarversion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
+            boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
+//            } catch (Exception e) {
+            try {
+                downloadjar(configbaseURL1 + "video/aitool.jar", aitoolPath);
+            } catch (Exception e1) {
+                try {
+                    downloadjar(configbaseURL2 + "video/aitool.jar", aitoolPath);
+                } catch (Exception e2) {
+                    try {
+                        downloadjar(configbaseURL3 + "video/aitool.jar", aitoolPath);
+                    } catch (Exception e3) {//这一步则表示下载失败
+                        isSuccess = false;
+                    }
+                }
+            }
+//            }
+
+            if (isSuccess) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("aitoolJarversion", publicConfigBean.aitooljarversion);
+                editor.apply();
+            } else {
+                deleteFile(appstorePath);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("aitoolJarversion", "");
                 editor.apply();
             }
         }

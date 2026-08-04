@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pangle_beta.cn:mediation-sdk:7.6.1.1@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/bbec1f260cecf932de7d1ede5f514759/transformed/mediation-sdk-7.6.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/bbec1f260cecf932de7d1ede5f514759/transformed/mediation-sdk-7.6.1.1/res" />
+      <root url="file://$PROJECT_DIR$/../../../Program Files/Android/gradle/caches/transforms-3/bbec1f260cecf932de7d1ede5f514759/transformed/mediation-sdk-7.6.1.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
