@@ -841,8 +841,7 @@ public class ADControl {
             mTTAd.destroy();
             mTTAd = null;
         }
-        if (lyt != null)
-            lyt.removeAllViews();
+
         if (context == null || context.isFinishing()) return;
         try {
 
@@ -873,7 +872,6 @@ public class ADControl {
                 public void onError(int code, String message) {
                     Log.e("lhp", "addCSJBanner onError = " + message);
                     if (lyt != null) {
-                        lyt.removeAllViews();
                         if ("csj".equals(AppConfig.getBannerType())) {
                             String banner_String = AppConfig.configBean.ad_banner_idMap.get("gdt2");
                             if (!TextUtils.isEmpty(banner_String)) {
@@ -1032,9 +1030,6 @@ public class ADControl {
 
     private void addGDTBanner2(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
 
-        if (lyt != null)
-            lyt.removeAllViews();
-
         if (unifiedBannerView != null) {
             unifiedBannerView.destroy();
             unifiedBannerView = null;
@@ -1046,7 +1041,6 @@ public class ADControl {
                 @Override
                 public void onNoAD(AdError adError) {
                     if (lyt != null) {
-                        lyt.removeAllViews();
                         if ("gdt2".equals(AppConfig.getBannerType())) {
 
                             String banner_String = AppConfig.configBean.ad_banner_idMap.get("csj");
@@ -1126,9 +1120,6 @@ public class ADControl {
     }
 
     public void addSelfBanner(LinearLayout lyt, final Activity context) {
-        if (lyt != null) {
-            lyt.removeAllViews();
-        }
         if (!AppConfig.isShowSelfAD()) {
             return;
         }
@@ -1156,8 +1147,10 @@ public class ADControl {
 //                    }
                 }
             });
-            if (lyt != null)
+            if (lyt != null){
+                lyt.removeAllViews();
                 lyt.addView(bv);
+            }
             isRenderSuccessBanner = true;
 
         } catch (Exception e1) {
@@ -1560,7 +1553,7 @@ public class ADControl {
     public void myBannerAd(LinearLayout lyt, Activity context) {
         ShowCp(context);
         homeGet5Score(context);
-        if (isRenderSuccessBanner) return;
+//        if (isRenderSuccessBanner) return;
         if (AppConfig.isShowBanner() && lyt != null)//展示广告条广告
         {
             String bannerType = AppConfig.getBannerType();//获取开屏广告类型，baidu，gdt，google

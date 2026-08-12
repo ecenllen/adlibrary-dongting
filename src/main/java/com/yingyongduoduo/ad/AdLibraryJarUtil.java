@@ -24,14 +24,19 @@ public class AdLibraryJarUtil {
 
     private DexClassLoader loader;
     private static AdLibraryJarUtil util;
-    private static Context mContext;
+
+    // 全局缓存变量，只初始化一次
+    private Class<?> adControlClass;
+    private Object adControlInstance;
+    private Method myKpMethod;
+    private Method myBannerMethod;
+    private Method myTPMethod;
 
     private AdLibraryJarUtil(Context context) {
         try {
-
             File dexfile = new File(AppConfig.adPath);
             if (!dexfile.exists()) {
-                copyLocal(AppConfig.adPath);
+                copyLocal(context, AppConfig.adPath);
             }
             String libDir = context.getCacheDir() + File.separator;
             ClassLoader parent = context.getClassLoader();
@@ -44,7 +49,6 @@ public class AdLibraryJarUtil {
     }
 
     public static AdLibraryJarUtil getInstance(Context context) {
-        mContext = context;
         if (util == null) {
             util = new AdLibraryJarUtil(context);
         }
@@ -57,32 +61,53 @@ public class AdLibraryJarUtil {
         }
     }
 
-    public String myKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) throws Exception {
-        Class z = loader.loadClass("com.yingyongduoduo.ad.ADControl");
-        Object obj = z.newInstance();
-        Method ms = z.getMethod("myKp", Activity.class, RelativeLayout.class, View.class, KPAdListener.class);// type,id
-        return (String) ms.invoke(obj, context, adsParent, skipView, kpAdListener);
+    public void myKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) throws Exception {
+        if (adControlClass == null) {
+            adControlClass = loader.loadClass("com.yingyongduoduo.ad.ADControl");
+            adControlInstance = adControlClass.newInstance();
+        }
+        if (myKpMethod == null) {
+            myKpMethod = adControlClass.getMethod("myKp", Activity.class, RelativeLayout.class, View.class, KPAdListener.class);// type,id
+            // 关闭权限校验，提速
+            myKpMethod.setAccessible(true);
+        }
+        myKpMethod.invoke(adControlInstance, context, adsParent, skipView, kpAdListener);
     }
 
-    public String myBannerAd(LinearLayout lyt, Activity context) throws Exception {
-        Class z = loader.loadClass("com.yingyongduoduo.ad.ADControl");
-        Object obj = z.newInstance();
-        Method ms = z.getMethod("myBannerAd", LinearLayout.class, Activity.class);// type,id
-        return (String) ms.invoke(obj, lyt, context);
+    public void myBannerAd(LinearLayout lyt, Activity context) throws Exception {
+        if (adControlClass == null) {
+            adControlClass = loader.loadClass("com.yingyongduoduo.ad.ADControl");
+            adControlInstance = adControlClass.newInstance();
+        }
+
+        if (myBannerMethod == null) {
+            myBannerMethod = adControlClass.getMethod("myBannerAd", LinearLayout.class, Activity.class);// type,id
+            // 关闭权限校验，提速
+            myBannerMethod.setAccessible(true);
+        }
+
+        myBannerMethod.invoke(adControlInstance, lyt, context);
     }
 
     public boolean myTPAD(Activity context) throws Exception {
-        Class z = loader.loadClass("com.yingyongduoduo.ad.ADControl");
-        Object obj = z.newInstance();
-        Method ms = z.getMethod("myTPAD", Activity.class);// type,id
-        return (Boolean) ms.invoke(obj, context);
+        if (adControlClass == null) {
+            adControlClass = loader.loadClass("com.yingyongduoduo.ad.ADControl");
+            adControlInstance = adControlClass.newInstance();
+        }
+        if (myTPMethod == null) {
+            myTPMethod = adControlClass.getMethod("myTPAD", Activity.class);// type,id
+            // 关闭权限校验，提速
+            myTPMethod.setAccessible(true);
+        }
+
+        return (Boolean) myTPMethod.invoke(adControlInstance, context);
     }
 
-    private static void copyLocal(String dexpath) {
+    private static void copyLocal(Context context, String dexpath) {
         InputStream is = null;
         OutputStream outputStream = null;
         try {
-            is = mContext.getAssets().open("libad.so");
+            is = context.getAssets().open("libad.so");
             outputStream = new FileOutputStream(dexpath);
             byte[] buffer = new byte[1024];
             int byteCount = 0;
