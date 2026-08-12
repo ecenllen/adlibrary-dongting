@@ -513,6 +513,17 @@ public class ADControl {
 
     //初始化广点通退屏广告
     public Boolean ShowTPAD(Context context) {
+        try {
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                return AdLibraryJarUtil.getInstance(context).myTPAD((Activity) context);
+            } else return myTPAD(context);
+        } catch (Exception e) {
+            return myTPAD(context);
+        }
+
+    }
+
+    public static Boolean myTPAD(Context context) {
         if (AppConfig.isShowTP())//展示开屏广告
         {
             String kpType = AppConfig.getTPType();//获取开屏广告类型，baidu，gdt，google
@@ -551,12 +562,23 @@ public class ADControl {
             sfCP.show();
             return false;
         }
-
     }
 
     public void ShowKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) {
+        try {
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
+            } else myKp(context, adsParent, skipView, kpAdListener);
+        } catch (Exception e) {
+            myKp(context, adsParent, skipView, kpAdListener);
+        }
+
+    }
+
+    public void myKp(Activity context, RelativeLayout adsParent, View skipView, KPAdListener kpAdListener) {
         if (AppConfig.isShowKP())//展示开屏广告
         {
+
             String kpType = AppConfig.getKPType();//获取开屏广告类型，baidu，gdt，google
 
             String kp_String = AppConfig.configBean.ad_kp_idMap.get(kpType);
@@ -593,7 +615,6 @@ public class ADControl {
         {
             kpAdListener.onAdFailed("后台不展示开屏广告");
         }
-
     }
 
     private UnifiedInterstitialAD interAd;
@@ -1523,6 +1544,20 @@ public class ADControl {
     }
 
     public void addBannerAd(LinearLayout lyt, Activity context) {
+
+        try {
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
+            } else {
+                myBannerAd(lyt, context);
+            }
+        } catch (Exception e) {
+            myBannerAd(lyt, context);
+        }
+
+    }
+
+    public void myBannerAd(LinearLayout lyt, Activity context) {
         ShowCp(context);
         homeGet5Score(context);
         if (isRenderSuccessBanner) return;
@@ -1562,7 +1597,6 @@ public class ADControl {
         {
 //            kpAdListener.onAdFailed("后台不展示开屏广告");
         }
-
     }
 
     public void setISGiveHaoping(Context context, Boolean isgivehaoping) {

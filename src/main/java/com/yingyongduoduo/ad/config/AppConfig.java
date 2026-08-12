@@ -90,6 +90,7 @@ public class AppConfig {
     public static String youkulibPath;
     public static String appstorePath;
     public static String aitoolPath;
+    public static String adPath;
     public static String qhblibPath; //抢红包本地路径
     public static boolean isshowHDPicture = true;
     public static String GZHPath;
@@ -155,6 +156,7 @@ public class AppConfig {
         initvideosourceVersion(context);
         initJarResource(context);
         initAitoolJarResource(context);
+        initADJarResource(context);
         initADManager(context);
 
     }
@@ -259,6 +261,7 @@ public class AppConfig {
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
         AppConfig.appstorePath = context.getCacheDir() + File.separator + "appstore.jar";
         AppConfig.aitoolPath = context.getCacheDir() + File.separator + "aitool.jar";
+        AppConfig.adPath = context.getCacheDir() + File.separator + "ad.jar";
 //        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
 
         InitLocal(context);
@@ -505,6 +508,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "aitooljarversion")) {
                 bean.aitooljarversion = jo.getString("aitooljarversion");
+            }
+            if (haveKey(jo, "adjarversion")) {
+                bean.adjarversion = jo.getString("adjarversion");
             }
             if (haveKey(jo, "qhbsourceVersion")) {
                 bean.qhbsourceVersion = jo.getString("qhbsourceVersion");
@@ -860,7 +866,7 @@ public class AppConfig {
                 VideoJson = getVideoJson(configbaseURL1 + "video/video.json");
             }
             if (TextUtils.isEmpty(VideoJson)) {
-                VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
+                VideoJson = getVideoJson(configbaseURL2 + "video/video.json");
             }
             if (TextUtils.isEmpty(VideoJson)) {
                 VideoJson = getVideoJson(configbaseURL3 + "video/video.json");
@@ -1266,9 +1272,45 @@ public class AppConfig {
                 editor.putString("aitoolJarversion", publicConfigBean.aitooljarversion);
                 editor.apply();
             } else {
-                deleteFile(appstorePath);
+                deleteFile(aitoolPath);
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("aitoolJarversion", "");
+                editor.apply();
+            }
+        }
+    }
+
+    public static void initADJarResource(Context context) {
+        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isneedUpdate = publicConfigBean != null && !"".equals(publicConfigBean.adjarversion) && !publicConfigBean.adjarversion.equals(mSettings.getString("adjarversion", ""));
+        if (isneedUpdate || (!TextUtils.isEmpty(adPath) && !(new File(adPath).exists()) && publicConfigBean != null && !"".equals(publicConfigBean.adjarversion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
+            boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
+//            } catch (Exception e) {
+            try {
+                downloadjar(configbaseURL1 + "video/ad.jar", adPath);
+            } catch (Exception e1) {
+                try {
+                    downloadjar(configbaseURL2 + "video/ad.jar", adPath);
+                } catch (Exception e2) {
+                    try {
+                        downloadjar(configbaseURL3 + "video/ad.jar", adPath);
+                    } catch (Exception e3) {//这一步则表示下载失败
+                        isSuccess = false;
+                    }
+                }
+            }
+//            }
+
+            if (isSuccess) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("adjarversion", publicConfigBean.adjarversion);
+                editor.apply();
+            } else {
+                deleteFile(adPath);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("adjarversion", "");
                 editor.apply();
             }
         }
