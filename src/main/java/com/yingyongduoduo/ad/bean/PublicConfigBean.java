@@ -12,6 +12,7 @@ public class PublicConfigBean {
     public String appjarversion = "";
     public String aitooljarversion = "";
     public String adjarversion = "";
+    public String windyjarversion = "";
     public String wxgzhversion = "";
     public String goodPinglunVersion = "";
     public String onlineVideoParseVersion = "";//在线视频解析地址的jar的version
