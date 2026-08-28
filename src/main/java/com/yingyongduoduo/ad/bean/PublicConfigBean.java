@@ -11,6 +11,7 @@ public class PublicConfigBean {
     public String qhbsourceVersion = "";
     public String appjarversion = "";
     public String aitooljarversion = "";
+    public String sunojarversion = "";
     public String adjarversion = "";
     public String windyjarversion = "";
     public String wxgzhversion = "";

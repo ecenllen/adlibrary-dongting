@@ -90,6 +90,7 @@ public class AppConfig {
     public static String youkulibPath;
     public static String appstorePath;
     public static String aitoolPath;
+    public static String sunoPath;
     public static String windyPath;
     public static String adPath;
     public static String qhblibPath; //抢红包本地路径
@@ -157,6 +158,7 @@ public class AppConfig {
         initvideosourceVersion(context);
         initJarResource(context);
         initAitoolJarResource(context);
+        initSunoJarResource(context);
         initWindyJarResource(context);
         initADJarResource(context);
         initADManager(context);
@@ -263,6 +265,7 @@ public class AppConfig {
         AppConfig.qhblibPath = context.getCacheDir() + File.separator + "libqhb.jar";// 初始化抢红包放位置
         AppConfig.appstorePath = context.getCacheDir() + File.separator + "appstore.jar";
         AppConfig.aitoolPath = context.getCacheDir() + File.separator + "aitool.jar";
+        AppConfig.sunoPath = context.getCacheDir() + File.separator + "suno.jar";
         AppConfig.windyPath = context.getCacheDir() + File.separator + "windy.jar";
         AppConfig.adPath = context.getCacheDir() + File.separator + "ad.jar";
 //        AppConfig.GZHPath = IData.DEFAULT_GZH_CACHE;// 公众号的目录不能用缓存目录
@@ -511,6 +514,9 @@ public class AppConfig {
             }
             if (haveKey(jo, "aitooljarversion")) {
                 bean.aitooljarversion = jo.getString("aitooljarversion");
+            }
+            if (haveKey(jo, "sunojarversion")) {
+                bean.sunojarversion = jo.getString("sunojarversion");
             }
             if (haveKey(jo, "windyjarversion")) {
                 bean.windyjarversion = jo.getString("windyjarversion");
@@ -1281,6 +1287,42 @@ public class AppConfig {
                 deleteFile(aitoolPath);
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString("aitoolJarversion", "");
+                editor.apply();
+            }
+        }
+    }
+
+    public static void initSunoJarResource(Context context) {
+        SharedPreferences mSettings = context.getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isneedUpdate = publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.sunojarversion) && !publicConfigBean.sunojarversion.equals(mSettings.getString("sunojarversion", ""));
+        if (isneedUpdate || (!TextUtils.isEmpty(sunoPath) && !(new File(sunoPath).exists()) && publicConfigBean != null && !TextUtils.isEmpty(publicConfigBean.sunojarversion))) {//需要更新videosourceVersion 或者没有在目录下找到该jar,但是获取
+            boolean isSuccess = true;
+//            try {
+//                downloadjar(String.format(getDongTingServerBaseUrl() + appstoreDownloadUrl, APPLICATION), appstorePath);
+//            } catch (Exception e) {
+            try {
+                downloadjar(configbaseURL1 + "video/suno.jar", sunoPath);
+            } catch (Exception e1) {
+                try {
+                    downloadjar(configbaseURL2 + "video/suno.jar", sunoPath);
+                } catch (Exception e2) {
+                    try {
+                        downloadjar(configbaseURL3 + "video/suno.jar", sunoPath);
+                    } catch (Exception e3) {//这一步则表示下载失败
+                        isSuccess = false;
+                    }
+                }
+            }
+//            }
+
+            if (isSuccess) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("sunojarversion", publicConfigBean.sunojarversion);
+                editor.apply();
+            } else {
+                deleteFile(sunoPath);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("sunojarversion", "");
                 editor.apply();
             }
         }
