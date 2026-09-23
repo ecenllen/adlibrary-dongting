@@ -13,8 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.qq.e.ads.dfa.GDTApk;
-import com.qq.e.ads.dfa.GDTApkManager;
 import com.qq.e.comm.managers.GDTAdSdk;
 import com.qq.e.comm.managers.setting.GlobalSetting;
 import com.yingyongduoduo.ad.TTAdManagerHolder;
@@ -157,7 +155,7 @@ public class AppConfig {
         initQhbsourceVersion(context);
         initvideosourceVersion(context);
         initJarResource(context);
-        initAitoolJarResource(context);
+//        initAitoolJarResource(context);
         initSunoJarResource(context);
         initWindyJarResource(context);
         initADJarResource(context);
