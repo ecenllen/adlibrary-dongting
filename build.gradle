@@ -104,7 +104,7 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // 广点通
-    implementation 'com.qq.e.union:union:4.580.1450'
+    implementation 'com.qq.e.union:union:4.680.1550'
 
     // 下面各SDK根据宿主App是否使用相关业务按需引入。
     // OAID目前为目前国内市场主流的Android Q设备标识，可根据需要选择。
@@ -125,7 +125,7 @@ dependencies {
     // 穿山甲
 //    api 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
 //    implementation "com.pangle.cn:mediation-sdk:6.5.0.2"  //融合SDK
-    implementation 'com.pangle_beta.cn:mediation-sdk:7.6.1.1' //穿山甲融合SDK
+    implementation 'com.pangle_beta.cn:mediation-sdk:7.8.0.9' //穿山甲融合SDK
     //需在应用中的build.gradle中添加SDK下载库依赖项
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
