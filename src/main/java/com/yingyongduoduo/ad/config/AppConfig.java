@@ -155,8 +155,8 @@ public class AppConfig {
         initQhbsourceVersion(context);
         initvideosourceVersion(context);
         initJarResource(context);
-        initAitoolJarResource(context);
-//        initSunoJarResource(context);
+//        initAitoolJarResource(context);
+        initSunoJarResource(context);
         initWindyJarResource(context);
         initADJarResource(context);
         initADManager(context);
