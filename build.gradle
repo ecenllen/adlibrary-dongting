@@ -28,7 +28,7 @@ android {
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }  //代理 gradle-plugin
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://jitpack.io' }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -49,7 +49,6 @@ buildscript {
         maven {
             url "https://artifact.bytedance.com/repository/pangle"
         }
-        maven { url 'https://jitpack.io' }
         mavenCentral()
         jcenter()
         google()
@@ -77,7 +76,7 @@ buildscript {
             }
             mavenCentral()
             jcenter()
-            maven { url 'https://jitpack.io' }
+
             maven { url 'https://repo1.maven.org/maven2/' }
             google()
             flatDir {
@@ -125,7 +124,7 @@ dependencies {
     // 穿山甲
 //    api 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
 //    implementation "com.pangle.cn:mediation-sdk:6.5.0.2"  //融合SDK
-    implementation 'com.pangle_beta.cn:mediation-sdk:7.6.1.1' //穿山甲融合SDK
+    implementation 'com.pangle_beta.cn:mediation-sdk:7.8.0.9' //穿山甲融合SDK
     //需在应用中的build.gradle中添加SDK下载库依赖项
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
