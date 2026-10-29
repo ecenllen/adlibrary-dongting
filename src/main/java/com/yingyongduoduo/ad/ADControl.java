@@ -15,15 +15,20 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.CSJAdError;
 import com.bytedance.sdk.openadsdk.CSJSplashAd;
@@ -33,6 +38,7 @@ import com.bytedance.sdk.openadsdk.TTAdLoadType;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd;
+import com.bytedance.sdk.openadsdk.TTNativeAd;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
@@ -59,6 +65,7 @@ import com.yingyongduoduo.ad.interfaceimpl.SelfKPAdListener;
 import com.yingyongduoduo.ad.interfaceimpl.SelfKPView;
 import com.yingyongduoduo.ad.utils.ScreenUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +102,14 @@ public class ADControl {
     }
 
     private CSJSplashAd csjSplashAd;
+    private int csjKPFailCount;
 
-    private void ShowCSJKP(final Activity context, final RelativeLayout adsParent, View skip_view, final KPAdListener kpAdListener, String appid, String adplaceid) {
+    private void ShowCSJKP(Activity context, final RelativeLayout adsParent, View skip_view, final KPAdListener kpAdListener, String appid, String adplaceid) {
+        if (csjKPFailCount > 3) {
+            if (kpAdListener != null) kpAdListener.onAdDismissed();
+            return;
+        }
+
         //创建TTAdNative对象，createAdNative(Context context) context需要传入Activity对象
         TTAdNative mTTAdNative = TTAdManagerHolder.get().createAdNative(context);
 //第一步、创建开屏自定义兜底对象
@@ -118,7 +131,8 @@ public class ADControl {
         mTTAdNative.loadSplashAd(adSlot, new TTAdNative.CSJSplashAdListener() {
             @Override
             public void onSplashLoadSuccess(CSJSplashAd csjSplashAd) {
-
+                Log.e("lhp", "ShowCSJKP onSplashLoadSuccess");
+                kpAdListener.onAdPresent();
             }
 
             @Override
@@ -146,6 +160,19 @@ public class ADControl {
 
             @Override
             public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
+                if (ADControl.this.csjSplashAd != null && ADControl.this.csjSplashAd.getMediationManager() != null) {
+                    ADControl.this.csjSplashAd.getMediationManager().destroy();
+                }
+
+                if (context == null || context.isFinishing() || context.isDestroyed()) {
+                    Log.e("lhp", "onSplashRenderSuccess context == null");
+                    if (csjSplashAd != null && csjSplashAd.getMediationManager() != null) {
+                        csjSplashAd.getMediationManager().destroy();
+                    }
+                    context.finish();
+                    return;
+                }
+
                 ADControl.this.csjSplashAd = csjSplashAd;
                 if (csjSplashAd == null) {
                     kpAdListener.onAdDismissed();
@@ -156,6 +183,13 @@ public class ADControl {
                 if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
                     ((ViewGroup) view.getParent()).removeView(view);
                 }
+
+                if (isFilterText(collectCSJKPText(view))) {
+                    csjKPFailCount++;
+                    ShowCSJKP(context, adsParent, skip_view, kpAdListener, appid, adplaceid);
+                    return;
+                }
+
                 if (view != null && adsParent != null && !context.isFinishing()) {
                     adsParent.removeAllViews();
                     //把SplashView 添加到ViewGroup中,注意开屏广告view：width =屏幕宽；height >=75%屏幕高
@@ -511,9 +545,7 @@ public class ADControl {
     //初始化广点通退屏广告
     public Boolean ShowTPAD(Context context) {
         try {
-            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
-                return AdLibraryJarUtil.getInstance(context).myTPAD((Activity) context);
-            } else return myTPAD(context);
+            return AdLibraryJarUtil.getInstance(context).myTPAD((Activity) context);
         } catch (Exception e) {
             return myTPAD(context);
         }
@@ -563,9 +595,7 @@ public class ADControl {
 
     public void ShowKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) {
         try {
-            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
-                AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
-            } else myKp(context, adsParent, skipView, kpAdListener);
+            AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
         } catch (Exception e) {
             myKp(context, adsParent, skipView, kpAdListener);
         }
@@ -833,11 +863,15 @@ public class ADControl {
 
     }
 
-    private void addCSJBanner(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
+    private int bannerFailCount;
+
+    private void addCSJBanner(final ViewGroup lyt, final Activity context, final String appid, final String adplaceid) {
         if (mTTAd != null) {
             mTTAd.destroy();
             mTTAd = null;
         }
+
+        if (bannerFailCount > 3) return;
 
         if (context == null || context.isFinishing()) return;
         try {
@@ -863,7 +897,6 @@ public class ADControl {
 //                    .setExpressViewAcceptedSize(320, 50) //期望模板广告view的size,单位dp
                     .build();
 
-            //step5:请求广告，对请求回调的广告作渲染处理
             mTTAdNative.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
                 @Override
                 public void onError(int code, String message) {
@@ -887,21 +920,25 @@ public class ADControl {
 
                 @Override
                 public void onNativeExpressAdLoad(List<TTNativeExpressAd> ads) {
-                    if (ads == null || ads.size() == 0) {
+                    if (ads == null || ads.isEmpty()) {
                         return;
                     }
                     mTTAd = ads.get(0);
                     if (mTTAd == null) {
                         return;
                     }
+
                     mTTAd.setSlideIntervalTime(30 * 1000);
                     mTTAd.setExpressInteractionListener(new TTNativeExpressAd.ExpressAdInteractionListener() {
                         @Override
                         public void onAdClicked(View view, int type) {
+
                         }
 
                         @Override
                         public void onAdShow(View view, int type) {
+                            Log.e("lhp", "csjbanner onAdShow");
+                            conectCSJBannerText(context, view, lyt, appid, adplaceid, false);
                         }
 
                         @Override
@@ -910,12 +947,8 @@ public class ADControl {
 
                         @Override
                         public void onRenderSuccess(View view, float width, float height) {
-                            //返回view的宽高 单位 dp
-                            if (lyt != null) {
-                                lyt.removeAllViews();
-                                lyt.addView(view);
-                            }
-                            isRenderSuccessBanner = true;
+                            conectCSJBannerText(context, view, lyt, appid, adplaceid, true);
+
                         }
                     });
                     mTTAd.render();
@@ -949,6 +982,138 @@ public class ADControl {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void conectCSJBannerText(Activity context, View view, ViewGroup lyt, String appid, String adplaceid, boolean isShow) {
+        if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+
+        WebView wv = findWebView(view);
+        if (wv != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                wv.evaluateJavascript("document.body.innerText", value -> {
+                    // value 是 JSON 转义后的字符串，如 "\"标题\\n描述\""
+                    Log.e("lhp", "csjbanner innerText = " + value);
+                    if (!TextUtils.isEmpty(value)) {
+                        if (isFilterText(value)) {
+                            //获取SplashView
+//                                                if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
+//                                                    ((ViewGroup) view.getParent()).removeView(view);
+//                                                }
+                            if (lyt != null) {
+                                lyt.removeAllViews();
+                                lyt.setVisibility(View.GONE);
+                            }
+                            bannerFailCount++;
+                            addCSJBanner(lyt, context, appid, adplaceid);
+                        } else {
+                            if (isShow) {
+                                //返回view的宽高 单位 dp
+                                if (lyt != null) {
+                                    lyt.setVisibility(View.VISIBLE);
+                                    lyt.removeAllViews();
+                                    lyt.addView(view);
+                                }
+                                isRenderSuccessBanner = true;
+                            }
+                        }
+
+                    }
+                });
+            }
+        }
+    }
+
+    private static boolean isFilterText(String value) {
+        List<String> list = new ArrayList<>();
+        list.add(value);
+        return isFilterText(list);
+    }
+
+    private static boolean isFilterText(List<String> adTextList) {
+        if (adTextList == null) return false;
+        List<String> filterList = getFilterList();
+        if (filterList != null) {
+            for (String fileText : filterList) {
+                for (String adText : adTextList) {
+                    if (adText.contains(fileText)) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static List<String> getFilterList() {
+        if (AppConfig.configFilterList != null && !AppConfig.configFilterList.isEmpty())
+            return AppConfig.configFilterList;
+
+        List<String> filterText = new ArrayList<>();
+        filterText.add("登录");
+        filterText.add("登陆");
+        filterText.add("手机号");
+        filterText.add("还未");
+        filterText.add("滑动");
+        filterText.add("激活");
+        filterText.add("授权");
+        filterText.add("联通");
+        filterText.add("验证");
+        filterText.add("解锁");
+        filterText.add("订阅");
+        filterText.add("提现");
+        filterText.add("领取");
+        filterText.add("移动");
+        filterText.add("认证");
+        filterText.add("话费");
+        filterText.add("红包");
+        return filterText;
+    }
+
+    public static WebView findWebView(View v) {
+        if (v instanceof WebView) return (WebView) v;
+        if (v instanceof ViewGroup) {
+            ViewGroup g = (ViewGroup) v;
+            for (int i = 0; i < g.getChildCount(); i++) {
+                WebView w = findWebView(g.getChildAt(i));
+                if (w != null) return w;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 穿山甲是否包含有过滤文本
+     *
+     * @param view
+     * @return
+     */
+    public static List<String> collectCSJKPText(View view) {
+        List<String> result = new ArrayList<>();
+        collectCSJKPText(view, result);
+        return result;
+    }
+
+    private static void collectCSJKPText(View view, List<String> result) {
+        if (view instanceof TextView) {
+            CharSequence t = ((TextView) view).getText();
+            if (t != null && !t.toString().trim().isEmpty()) {
+                Log.e("lhp", "CSJ KP collectText = " + t);
+                result.add(t.toString());
+            }
+        } else if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                collectCSJKPText(group.getChildAt(i), result);
+            }
+        }
+    }
+
+
+    /**
+     * 图片加载，你项目里有 Glide，直接用你自己的 GlideUtil 即可
+     */
+    private void loadImage(String url, ImageView iv) {
+        Glide.with(iv.getContext()).load(url).into(iv);
     }
 
 //    private void addHuaweiBanner(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
@@ -1025,7 +1190,7 @@ public class ADControl {
 //        hwBannerView.setAdListener(adListener);
 //    }
 
-    private void addGDTBanner2(final LinearLayout lyt, final Activity context, final String appid, final String adplaceid) {
+    private void addGDTBanner2(final ViewGroup lyt, final Activity context, final String appid, final String adplaceid) {
 
         if (unifiedBannerView != null) {
             unifiedBannerView.destroy();
@@ -1112,11 +1277,11 @@ public class ADControl {
         return new LinearLayout.LayoutParams(screenSize.x, Math.round(screenSize.x / 6.4F));
     }
 
-    public void addGoogleBanner(final LinearLayout lyt, final Activity context, String appid, String adplaceid) {
+    public void addGoogleBanner(final ViewGroup lyt, final Activity context, String appid, String adplaceid) {
         lyt.removeAllViews();
     }
 
-    public void addSelfBanner(LinearLayout lyt, final Activity context) {
+    public void addSelfBanner(ViewGroup lyt, final Activity context) {
         if (!AppConfig.isShowSelfAD()) {
             return;
         }
@@ -1144,7 +1309,7 @@ public class ADControl {
 //                    }
                 }
             });
-            if (lyt != null){
+            if (lyt != null) {
                 lyt.removeAllViews();
                 lyt.addView(bv);
             }
@@ -1527,27 +1692,24 @@ public class ADControl {
 
     private UnifiedBannerView unifiedBannerView;
     private TTNativeExpressAd mTTAd;
+    private TTNativeAd mTTAd2;
 //    private BannerView hwBannerView;
 
-    public void addAd(LinearLayout lyt, Activity context) {
+    public void addAd(ViewGroup lyt, Activity context) {
         addBannerAd(lyt, context);
     }
 
-    public void addBannerAd(LinearLayout lyt, Activity context) {
+    public void addBannerAd(ViewGroup lyt, Activity context) {
 
         try {
-            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
-                AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
-            } else {
-                myBannerAd(lyt, context);
-            }
+            AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
         } catch (Exception e) {
             myBannerAd(lyt, context);
         }
 
     }
 
-    public void myBannerAd(LinearLayout lyt, Activity context) {
+    public void myBannerAd(ViewGroup lyt, Activity context) {
         ShowCp(context);
         homeGet5Score(context);
 //        if (isRenderSuccessBanner) return;
@@ -1745,6 +1907,10 @@ public class ADControl {
         if (mTTAd != null) {
             mTTAd.destroy();
             mTTAd = null;
+        }
+        if (mTTAd2 != null) {
+            mTTAd2.destroy();
+            mTTAd2 = null;
         }
 //        if (hwBannerView != null) {
 //            hwBannerView.destroy();

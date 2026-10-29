@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -29,6 +30,7 @@ public class AdLibraryJarUtil {
     private Class<?> adControlClass;
     private Object adControlInstance;
     private Method myKpMethod;
+    private Method myCpMethod;
     private Method myBannerMethod;
     private Method myTPMethod;
 
@@ -61,27 +63,27 @@ public class AdLibraryJarUtil {
         }
     }
 
-    public void myKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) throws Exception {
+    public void myKp(Activity context, ViewGroup adsParent, View skipView, final KPAdListener kpAdListener) throws Exception {
         if (adControlClass == null) {
             adControlClass = loader.loadClass("com.yingyongduoduo.ad.ADControl");
             adControlInstance = adControlClass.newInstance();
         }
         if (myKpMethod == null) {
-            myKpMethod = adControlClass.getMethod("myKp", Activity.class, RelativeLayout.class, View.class, KPAdListener.class);// type,id
+            myKpMethod = adControlClass.getMethod("myKp", Activity.class, ViewGroup.class, View.class, KPAdListener.class);// type,id
             // 关闭权限校验，提速
             myKpMethod.setAccessible(true);
         }
         myKpMethod.invoke(adControlInstance, context, adsParent, skipView, kpAdListener);
     }
 
-    public void myBannerAd(LinearLayout lyt, Activity context) throws Exception {
+    public void myBannerAd(ViewGroup lyt, Activity context) throws Exception {
         if (adControlClass == null) {
             adControlClass = loader.loadClass("com.yingyongduoduo.ad.ADControl");
             adControlInstance = adControlClass.newInstance();
         }
 
         if (myBannerMethod == null) {
-            myBannerMethod = adControlClass.getMethod("myBannerAd", LinearLayout.class, Activity.class);// type,id
+            myBannerMethod = adControlClass.getMethod("myBannerAd", ViewGroup.class, Activity.class);// type,id
             // 关闭权限校验，提速
             myBannerMethod.setAccessible(true);
         }

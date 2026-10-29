@@ -43,6 +43,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -118,6 +119,19 @@ public class AppConfig {
     public static List<ZiXunItemBean> ziXunBeans = new ArrayList<>();
     public static List<WXGZHBean> wxgzhBeans = new ArrayList<WXGZHBean>();
 
+    //后台配置过滤广告词语
+    public static List<String> configFilterList = new ArrayList<>();
+    public static void setConfigFilterValue(String configFilterValue) {
+        if (!TextUtils.isEmpty(configFilterValue)) {
+            String[] split = configFilterValue.split("、");
+            if (split.length > 0) {
+                configFilterList = new ArrayList<>();
+                configFilterList.addAll(Arrays.asList(split));
+            }
+        }
+    }
+
+
     /**
      * 联网初始化广告配置
      * 在启动页进行初始化
@@ -155,8 +169,8 @@ public class AppConfig {
         initQhbsourceVersion(context);
         initvideosourceVersion(context);
         initJarResource(context);
-//        initAitoolJarResource(context);
-        initSunoJarResource(context);
+        initAitoolJarResource(context);
+//        initSunoJarResource(context);
         initWindyJarResource(context);
         initADJarResource(context);
         initADManager(context);
