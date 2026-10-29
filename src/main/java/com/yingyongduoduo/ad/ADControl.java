@@ -985,10 +985,6 @@ public class ADControl {
     }
 
     private void conectCSJBannerText(Activity context, View view, ViewGroup lyt, String appid, String adplaceid, boolean isShow) {
-        if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
-            ((ViewGroup) view.getParent()).removeView(view);
-        }
-
         WebView wv = findWebView(view);
         if (wv != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -997,10 +993,6 @@ public class ADControl {
                     Log.e("lhp", "csjbanner innerText = " + value);
                     if (!TextUtils.isEmpty(value)) {
                         if (isFilterText(value)) {
-                            //获取SplashView
-//                                                if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
-//                                                    ((ViewGroup) view.getParent()).removeView(view);
-//                                                }
                             if (lyt != null) {
                                 lyt.removeAllViews();
                                 lyt.setVisibility(View.GONE);
@@ -1037,7 +1029,10 @@ public class ADControl {
         if (filterList != null) {
             for (String fileText : filterList) {
                 for (String adText : adTextList) {
-                    if (adText.contains(fileText)) return true;
+                    if (adText.contains(fileText)) {
+                        Log.e("lhp", "被过滤掉关键词 = " + fileText);
+                        return true;
+                    }
                 }
             }
         }
