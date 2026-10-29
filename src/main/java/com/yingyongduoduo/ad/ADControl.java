@@ -545,7 +545,9 @@ public class ADControl {
     //初始化广点通退屏广告
     public Boolean ShowTPAD(Context context) {
         try {
-            return AdLibraryJarUtil.getInstance(context).myTPAD((Activity) context);
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                return AdLibraryJarUtil.getInstance(context).myTPAD((Activity) context);
+            } else return myTPAD(context);
         } catch (Exception e) {
             return myTPAD(context);
         }
@@ -595,8 +597,9 @@ public class ADControl {
 
     public void ShowKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) {
         try {
-            csjKPFailCount = 0;
-            AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
+            } else myKp(context, adsParent, skipView, kpAdListener);
         } catch (Exception e) {
             myKp(context, adsParent, skipView, kpAdListener);
         }
@@ -1698,8 +1701,11 @@ public class ADControl {
     public void addBannerAd(ViewGroup lyt, Activity context) {
 
         try {
-            csjBannerFailCount = 0;
-            AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
+            if (AppConfig.publicConfigBean != null && !TextUtils.isEmpty(AppConfig.publicConfigBean.adjarversion)) {
+                AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
+            } else {
+                myBannerAd(lyt, context);
+            }
         } catch (Exception e) {
             myBannerAd(lyt, context);
         }
