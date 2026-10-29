@@ -105,7 +105,7 @@ public class ADControl {
     private int csjKPFailCount;
 
     private void ShowCSJKP(Activity context, final RelativeLayout adsParent, View skip_view, final KPAdListener kpAdListener, String appid, String adplaceid) {
-        if (csjKPFailCount > 3) {
+        if (csjKPFailCount >= AppConfig.failMaxCount) {
             if (kpAdListener != null) kpAdListener.onAdDismissed();
             return;
         }
@@ -595,6 +595,7 @@ public class ADControl {
 
     public void ShowKp(Activity context, RelativeLayout adsParent, View skipView, final KPAdListener kpAdListener) {
         try {
+            csjKPFailCount = 0;
             AdLibraryJarUtil.getInstance(context).myKp(context, adsParent, skipView, kpAdListener);
         } catch (Exception e) {
             myKp(context, adsParent, skipView, kpAdListener);
@@ -863,7 +864,7 @@ public class ADControl {
 
     }
 
-    private int bannerFailCount;
+    private int csjBannerFailCount;
 
     private void addCSJBanner(final ViewGroup lyt, final Activity context, final String appid, final String adplaceid) {
         if (mTTAd != null) {
@@ -871,7 +872,7 @@ public class ADControl {
             mTTAd = null;
         }
 
-        if (bannerFailCount > 3) return;
+        if (csjBannerFailCount >= AppConfig.failMaxCount) return;
 
         if (context == null || context.isFinishing()) return;
         try {
@@ -997,7 +998,7 @@ public class ADControl {
                                 lyt.removeAllViews();
                                 lyt.setVisibility(View.GONE);
                             }
-                            bannerFailCount++;
+                            csjBannerFailCount++;
                             addCSJBanner(lyt, context, appid, adplaceid);
                         } else {
                             if (isShow) {
@@ -1697,6 +1698,7 @@ public class ADControl {
     public void addBannerAd(ViewGroup lyt, Activity context) {
 
         try {
+            csjBannerFailCount = 0;
             AdLibraryJarUtil.getInstance(context).myBannerAd(lyt, context);
         } catch (Exception e) {
             myBannerAd(lyt, context);

@@ -84,6 +84,8 @@ public class AppConfig {
 
     public static boolean isShowBanner = true;
 
+    public static int failMaxCount = 2;
+
     private static String play_qingxidu = "1";//清晰度 0,1,2 对应标清，高清，超清
     private static String download_qingxidu = "1";
     public static String youkulibPath;
